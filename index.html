@@ -429,10 +429,10 @@
     .stat span { color: var(--muted2); font-weight: 650; font-size: 0.92rem; }
 
     /* Hero preview area */
-    .preview { position: relative; height: 440px; }
+    .preview { position: relative; height: 460px; }
     .floating {
       position: absolute;
-      width: 270px;
+      width: 248px;
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.16);
       border-radius: 22px;
@@ -442,9 +442,49 @@
       box-shadow: var(--shadow1);
       will-change: transform;
     }
-    .floating:nth-child(1) { top: 14px; left: 0; animation: float 5s ease-in-out infinite; }
-    .floating:nth-child(2) { top: 160px; right: 0; width: 290px; animation: float 6s ease-in-out 1s infinite; }
-    .floating:nth-child(3) { bottom: 8px; left: 48px; width: 250px; animation: float2 5.5s ease-in-out 2s infinite; }
+    /* Left column: Bulk Campaigns (top) → Shared Inbox (below) */
+    .floating:nth-child(1) { top: 0;     left: 0; animation: float 5s ease-in-out infinite; }
+    .floating:nth-child(3) { top: 152px; left: 0; width: 224px; animation: float2 5.5s ease-in-out 2.4s infinite; }
+    /* Right column: LIMITED OFFER (top) → AI Assist (below) */
+    .floating:nth-child(2) { top: 300px; right: 0; width: 244px; animation: float 6s ease-in-out 1.2s infinite; }
+
+    /* Promo mini-card — top-right, no overlap */
+    .floating.promo-card {
+      top: 0; right: 0; width: 206px;
+      background: linear-gradient(135deg, #00a651 0%, #00829e 55%, #5b21e6 100%) !important;
+      border-color: rgba(255,255,255,0.28) !important;
+      box-shadow: 0 16px 48px rgba(0,166,81,0.35), 0 0 0 1px rgba(255,255,255,0.14) !important;
+      z-index: 3;
+      animation: float2 4.2s ease-in-out 0.6s infinite !important;
+    }
+    .promo-label {
+      font-size: 0.72rem; font-weight: 900; color: rgba(255,255,255,0.70);
+      text-transform: uppercase; letter-spacing: 0.10em; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .promo-sale-dot {
+      display: inline-block; width: 7px; height: 7px; border-radius: 50%;
+      background: #ff4444;
+      box-shadow: 0 0 0 0 rgba(255,68,68,0.7);
+      animation: pulse-ring 1.4s ease-out infinite;
+    }
+    .promo-line {
+      font-size: 0.88rem; font-weight: 800; color: #fff;
+      display: flex; align-items: center; gap: 7px; margin-bottom: 5px;
+    }
+    .promo-price-big {
+      font-family: var(--display);
+      font-size: 1.9rem; font-weight: 900; color: #fff;
+      line-height: 1; letter-spacing: -0.03em;
+      text-shadow: 0 0 24px rgba(255,255,255,0.45);
+      margin: 8px 0 4px;
+    }
+    .promo-price-big sup { font-size: 50%; vertical-align: super; margin-right: 2px; }
+    .promo-price-big sub { font-size: 45%; vertical-align: baseline; color: rgba(255,255,255,0.75); }
+    .promo-footer {
+      font-size: 0.76rem; font-weight: 700; color: rgba(255,255,255,0.72);
+      border-top: 1px solid rgba(255,255,255,0.18); padding-top: 8px; margin-top: 2px;
+    }
 
     .f-title { font-weight: 900; display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
     .tag { font-size: 0.8rem; font-weight: 900; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.80); }
@@ -525,23 +565,192 @@
     .card .mini-cta { margin-top: 16px; width: 100%; }
 
     /* WhatsApp items grid */
-    .wa-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+    .wa-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; }
     .wa-item {
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 16px; padding: 14px;
-      font-weight: 800; color: rgba(255,255,255,0.88);
-      display: flex; gap: 10px; align-items: flex-start;
-      transition: transform 200ms var(--ease), background 200ms var(--ease);
+      border-radius: 20px; padding: 18px 16px;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: transform 240ms var(--ease), background 240ms var(--ease), border-color 240ms var(--ease), box-shadow 240ms var(--ease);
+      position: relative; overflow: hidden;
     }
-    .wa-item:hover { transform: translateY(-4px); background: rgba(255,255,255,0.08); }
-    .wa-item i {
-      width: 26px; height: 26px; border-radius: 10px;
-      background: rgba(37,211,102,0.14);
-      border: 1px solid rgba(37,211,102,0.24);
+    .wa-item::before {
+      content: ""; position: absolute; top: -40px; right: -40px;
+      width: 120px; height: 120px; border-radius: 50%;
+      background: var(--item-glow, rgba(79,124,255,0.10));
+      pointer-events: none; transition: opacity 240ms var(--ease);
+      opacity: 0.6;
+    }
+    .wa-item:hover { transform: translateY(-7px); background: rgba(255,255,255,0.09); border-color: var(--item-accent, rgba(96,213,255,0.35)); box-shadow: 0 20px 60px rgba(0,0,0,0.18); }
+    .wa-item:hover::before { opacity: 1; }
+    .wa-icon-badge {
+      width: 50px; height: 50px; border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.45rem; flex-shrink: 0;
+      border: 1px solid; position: relative; z-index: 1;
+    }
+    .wa-item-body { position: relative; z-index: 1; }
+    .wa-item-title {
+      font-weight: 800; font-size: 0.92rem;
+      color: rgba(255,255,255,0.92); line-height: 1.35;
+      margin-bottom: 8px;
+    }
+    .wa-item-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 999px;
+      font-size: 0.75rem; font-weight: 800; border: 1px solid;
+    }
+
+    /* ===== PRICING SECTION ===== */
+    #pricing { position: relative; overflow: hidden; }
+    #pricing::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(900px 500px at 50% 50%, rgba(155,92,255,0.13) 0%, transparent 65%),
+        radial-gradient(600px 400px at 10% 80%, rgba(79,124,255,0.10) 0%, transparent 60%);
+    }
+
+    .pricing-wrap {
+      display: flex; flex-direction: column; align-items: center; gap: 48px;
+    }
+
+    .pricing-card {
+      position: relative;
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(155,92,255,0.40);
+      border-radius: 32px;
+      padding: 40px 44px;
+      max-width: 680px; width: 100%;
+      box-shadow: 0 0 0 1px rgba(155,92,255,0.12), 0 40px 100px rgba(155,92,255,0.18);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      animation: glow-border 3s ease infinite;
+      overflow: hidden;
+    }
+
+    /* animated shimmer sweep across card */
+    .pricing-card::before {
+      content: "";
+      position: absolute; top: 0; left: -100%;
+      width: 60%; height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.06), transparent);
+      animation: shimmer-bg 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .pricing-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg, rgba(79,124,255,0.25), rgba(155,92,255,0.30));
+      border: 1px solid rgba(155,92,255,0.45);
+      border-radius: 999px; padding: 8px 18px;
+      font-size: 0.85rem; font-weight: 900; color: rgba(255,255,255,0.92);
+      margin-bottom: 26px;
+      box-shadow: 0 0 20px rgba(155,92,255,0.20);
+    }
+
+    .pricing-header { text-align: center; margin-bottom: 32px; position: relative; }
+
+    .pricing-plan-name {
+      font-family: var(--display);
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--muted2); letter-spacing: 0.08em;
+      text-transform: uppercase; margin-bottom: 14px;
+    }
+
+    .price-glow-ring {
+      position: absolute;
+      width: 220px; height: 220px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(155,92,255,0.22) 0%, transparent 65%);
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      animation: hero-pulse 4s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    .price-only {
+      font-size: 1rem; font-weight: 800;
+      color: rgba(255,255,255,0.60); letter-spacing: 0.05em;
+      text-transform: uppercase; display: block;
+      margin-bottom: 4px;
+    }
+
+    .price-amount {
+      font-family: var(--display);
+      font-size: clamp(4.5rem, 10vw, 7rem);
+      font-weight: 900; line-height: 1;
+      letter-spacing: -0.04em;
+      background: linear-gradient(135deg, #60d5ff 0%, #9b5cff 45%, #ff6eb4 100%);
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-sweep 3s ease infinite;
+      display: inline-block;
+      position: relative; z-index: 1;
+      filter: drop-shadow(0 0 32px rgba(155,92,255,0.55));
+    }
+
+    .price-rupee {
+      font-size: 40%; vertical-align: super;
+      letter-spacing: 0; margin-right: 4px;
+    }
+
+    .price-period {
+      font-size: 1rem; font-weight: 700;
+      color: var(--muted2); display: block; margin-top: 6px;
+    }
+
+    .pricing-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(155,92,255,0.40), transparent);
+      margin: 28px 0;
+    }
+
+    .pricing-features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px 24px;
+      margin-bottom: 32px;
+    }
+
+    .pf-item {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 0.94rem;
+      color: rgba(255,255,255,0.88);
+    }
+
+    .pf-check {
+      width: 22px; height: 22px; border-radius: 8px; flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(37,211,102,0.25), rgba(96,213,255,0.20));
+      border: 1px solid rgba(37,211,102,0.35);
       display: grid; place-items: center;
-      color: #25d366; font-style: normal; font-weight: 900;
-      flex: 0 0 auto; margin-top: 1px; font-size: 0.85rem;
+      font-size: 0.78rem; color: #25d366;
+    }
+
+    .pricing-cta {
+      text-align: center; position: relative; z-index: 1;
+    }
+
+    .pricing-cta .btn {
+      font-size: 1.05rem; padding: 16px 40px;
+      box-shadow: 0 20px 60px rgba(155,92,255,0.35);
+    }
+    .pricing-cta .btn:hover {
+      box-shadow: 0 30px 90px rgba(155,92,255,0.55);
+    }
+
+    .pricing-note {
+      margin-top: 14px;
+      color: var(--muted2); font-size: 0.88rem; font-weight: 650;
+    }
+
+    @keyframes shimmer-card {
+      0% { left: -100%; }
+      100% { left: 200%; }
+    }
+
+    @media (max-width: 680px) {
+      .pricing-features { grid-template-columns: 1fr; }
+      .pricing-card { padding: 30px 22px; }
     }
 
     /* ===== PROCESS SECTION ===== */
@@ -896,7 +1105,7 @@
       .preview { display: none; }
       .grid, .grid.four { grid-template-columns: 1fr; }
       .grid.two { grid-template-columns: 1fr; }
-      .wa-grid { grid-template-columns: 1fr; }
+      .wa-grid { grid-template-columns: repeat(2, 1fr); }
       .stats { grid-template-columns: 1fr; }
       .cta-band { grid-template-columns: 1fr; }
       .foot-grid { grid-template-columns: 1fr 1fr; }
@@ -912,6 +1121,7 @@
       .foot-grid { grid-template-columns: 1fr; }
       .process-track { grid-template-columns: 1fr; }
       .about-stats-mini { grid-template-columns: 1fr 1fr; }
+      .wa-grid { grid-template-columns: 1fr; }
       h1 { font-size: 2rem; }
     }
 
@@ -920,6 +1130,168 @@
       html { scroll-behavior: auto; }
       .reveal { opacity: 1 !important; transform: none !important; }
     }
+
+    /* ============================================================
+       PROMO BANNER — single bar, big price pinned right
+       ============================================================ */
+    .promo-stream-bar {
+      position: relative;
+      width: 100%;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      z-index: 90;
+      overflow: hidden;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent, transparent 2px,
+          rgba(0,0,0,0.18) 2px, rgba(0,0,0,0.18) 3px
+        ),
+        #04020c;
+      border-top:    1px solid rgba(96,213,255,0.35);
+      border-bottom: 1px solid rgba(139,92,246,0.35);
+    }
+
+    /* Aurora glow */
+    .promo-stream-bar::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 120% at 15% 50%, rgba(96,213,255,0.12) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 120% at 85% 50%, rgba(139,92,246,0.14) 0%, transparent 70%);
+      animation: prb-aurora 7s ease-in-out infinite alternate;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Light beam sweep */
+    .promo-stream-bar::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        108deg,
+        transparent 38%,
+        rgba(255,255,255,0.03) 46%,
+        rgba(255,255,255,0.07) 50%,
+        rgba(255,255,255,0.03) 54%,
+        transparent 62%
+      );
+      animation: prb-beam 5s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes prb-aurora {
+      from { opacity: 0.6; transform: scaleX(1); }
+      to   { opacity: 1;   transform: scaleX(1.08); }
+    }
+    @keyframes prb-beam {
+      from { transform: translateX(-120%); }
+      to   { transform: translateX(220%); }
+    }
+
+    /* Scrolling text area */
+    .prb-scroll {
+      flex: 1;
+      overflow: hidden;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+      mask-image: linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+      -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 5%, #000 95%, transparent 100%);
+    }
+
+    .prb-track {
+      display: inline-flex;
+      align-items: center;
+      white-space: nowrap;
+      will-change: transform;
+      animation: prb-scroll-left 38s linear infinite;
+    }
+    .prb-track:hover { animation-play-state: paused; }
+
+    @keyframes prb-scroll-left {
+      from { transform: translateX(0%); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .prb-item {
+      display: inline-block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      padding: 0 22px;
+      color: rgba(210,235,255,0.92);
+      text-shadow: 0 0 10px rgba(96,213,255,0.5);
+    }
+    .prb-dot {
+      color: rgba(96,213,255,0.3);
+      font-size: 1rem;
+    }
+
+    /* Big price badge — pinned right */
+    .prb-price-badge {
+      flex-shrink: 0;
+      display: flex;
+      align-items: baseline;
+      gap: 2px;
+      padding: 0 20px 0 18px;
+      border-left: 1px solid rgba(139,92,246,0.35);
+      position: relative;
+      z-index: 1;
+      animation: prb-price-glow 2.8s ease-in-out infinite;
+    }
+    @keyframes prb-price-glow {
+      0%, 100% { filter: drop-shadow(0 0 6px rgba(139,92,246,0.55)); }
+      50%       { filter: drop-shadow(0 0 14px rgba(96,213,255,0.75)); }
+    }
+    .prb-cur {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #60d5ff;
+      align-self: flex-start;
+      margin-top: 6px;
+    }
+    .prb-num {
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1;
+      background: linear-gradient(135deg, #60d5ff 0%, #a78bfa 55%, #f472b6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .prb-per {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.38);
+      align-self: flex-end;
+      margin-bottom: 6px;
+      white-space: nowrap;
+    }
+
+    /* Close button */
+    .prb-close {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      margin: 0 10px 0 6px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+      color: rgba(255,255,255,0.4);
+      font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s, color 0.2s;
+      position: relative;
+    }
+    .prb-close:hover { background: rgba(255,60,60,0.3); color: #fff; }
   </style>
 </head>
 
@@ -1043,7 +1415,7 @@
           <input id="reg-pass" type="password" placeholder="Create a strong password" required>
         </div>
         <button class="btn primary" style="width:100%; margin-top:16px;" type="submit">✨ Create Account</button>
-        <p style="margin-top:10px; color:var(--muted2); font-size:0.85rem; font-weight:650; text-align:center;">By registering you agree to our <a href="#privacy" style="color:var(--accent);" onclick="closeModal('registerModal')">Privacy Policy</a></p>
+        <p style="margin-top:10px; color:var(--muted2); font-size:0.85rem; font-weight:650; text-align:center;">By registering you agree to our <a href="privacy.html" target="_blank" style="color:var(--accent);" onclick="closeModal('registerModal')">Privacy Policy</a></p>
       </form>
 
       <div class="modal-switch">
@@ -1106,7 +1478,7 @@
           </div>
           <div>
             <div class="brand-title">iAutomate</div>
-            <div class="brand-sub">AI Business Automation Service</div>
+            <div class="brand-sub">AI Business Automation Solutions</div>
           </div>
         </a>
 
@@ -1114,23 +1486,60 @@
         <nav aria-label="Primary">
           <a class="link" href="#services">Services</a>
           <a class="link" href="#whatsapp-suite">Bulk Messaging</a>
+          <a class="link" href="#pricing">Pricing</a>
           <a class="link" href="#process">Process</a>
           <a class="link" href="#cases">Success</a>
           <a class="link" href="#contact">Contact</a>
-          <a class="link" href="#privacy">Privacy Policy</a>
+          <a class="link" href="privacy.html" target="_blank">Privacy Policy</a>
           <a class="link" href="#about">About Us</a>
         </nav>
 
         <!-- Auth buttons -->
         <div class="nav-auth">
           <button class="btn-login" onclick="openModal('loginModal')">Login</button>
-          <button class="btn-register" onclick="openModal('registerModal')">Register</button>
+          <button class="btn-register" onclick="openModal('registerModal')">Sign Up</button>
         </div>
 
         <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">☰</button>
       </div>
     </div>
   </header>
+
+  <!-- ===== PROMO BANNER ===== -->
+  <div class="promo-stream-bar" id="promoBanner">
+
+    <!-- Single scrolling rail -->
+    <div class="prb-scroll">
+      <div class="prb-track">
+        <span class="prb-item">🌐 Start Your Website Today</span><span class="prb-dot">·</span>
+        <span class="prb-item">✨ FREE Website Design</span><span class="prb-dot">·</span>
+        <span class="prb-item">🚀 Go Live in One Day</span><span class="prb-dot">·</span>
+        <span class="prb-item">🛡️ Hosting Included</span><span class="prb-dot">·</span>
+        <span class="prb-item">🔧 Maintenance Included</span><span class="prb-dot">·</span>
+        <span class="prb-item">💎 Domain Excluded</span><span class="prb-dot">·</span>
+        <span class="prb-item">📞 24/7 Support</span><span class="prb-dot">·</span>
+        <span class="prb-item">⚡ Fast &amp; Secure Servers</span><span class="prb-dot">·</span>
+        <!-- duplicate for seamless loop -->
+        <span class="prb-item">🌐 Start Your Website Today</span><span class="prb-dot">·</span>
+        <span class="prb-item">✨ FREE Website Design</span><span class="prb-dot">·</span>
+        <span class="prb-item">🚀 Go Live in One Day</span><span class="prb-dot">·</span>
+        <span class="prb-item">🛡️ Hosting Included</span><span class="prb-dot">·</span>
+        <span class="prb-item">🔧 Maintenance Included</span><span class="prb-dot">·</span>
+        <span class="prb-item">💎 Domain Excluded</span><span class="prb-dot">·</span>
+        <span class="prb-item">📞 24/7 Support</span><span class="prb-dot">·</span>
+        <span class="prb-item">⚡ Fast &amp; Secure Servers</span><span class="prb-dot">·</span>
+      </div>
+    </div>
+
+    <!-- Big price pinned right -->
+    <div class="prb-price-badge">
+      <span class="prb-cur">₹</span>
+      <span class="prb-num">249</span>
+      <span class="prb-per">/mo</span>
+    </div>
+
+    <button class="prb-close" onclick="document.getElementById('promoBanner').style.display='none'" aria-label="Close banner">✕</button>
+  </div>
 
   <!-- ===== MOBILE DRAWER ===== -->
   <div class="backdrop" id="backdrop" aria-hidden="true"></div>
@@ -1165,15 +1574,16 @@
 
     <a href="#services">⚡ Services</a>
     <a href="#whatsapp-suite">💬 Bulk Messaging (WhatsApp API)</a>
+    <a href="#pricing">💰 Pricing</a>
     <a href="#process">🔄 Process</a>
     <a href="#cases">🏆 Success</a>
     <a href="#contact">📬 Contact</a>
-    <a href="#privacy">🔒 Privacy Policy</a>
+    <a href="privacy.html" target="_blank">🔒 Privacy Policy</a>
     <a href="#about">👥 About Us</a>
 
     <div class="drawer-auth" style="margin-top:8px;">
       <button class="btn-login" style="flex:1;" onclick="openModal('loginModal'); closeDrawer();">Login</button>
-      <button class="btn-register" style="flex:1;" onclick="openModal('registerModal'); closeDrawer();">Register</button>
+      <button class="btn-register" style="flex:1;" onclick="openModal('registerModal'); closeDrawer();">Sign Up</button>
     </div>
 
     <div style="margin-top:auto; color:rgba(255,255,255,0.52); font-weight:650; font-size:0.88rem; padding:10px 4px;">
@@ -1213,7 +1623,8 @@
         </div>
 
         <div class="preview" aria-hidden="true">
-          <div class="floating reveal">
+          <!-- Card 1: top-left -->
+          <div class="floating reveal" style="top:0;left:0;width:240px;animation:float 5s ease-in-out infinite;">
             <div class="f-title">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="#25d366" style="flex-shrink:0;"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.78L2 22l5.47-1.43a9.86 9.86 0 004.57 1.14h.01c5.46 0 9.91-4.45 9.91-9.91A9.93 9.93 0 0012.04 2zM8.53 7.33c.16 0 .33 0 .47.01.21 0 .44.05.65.47.24.48.8 1.96.87 2.11.07.14.12.31.01.5-.1.2-.15.31-.3.48-.14.16-.3.35-.43.48-.14.14-.29.29-.12.57.16.28.73 1.21 1.57 1.96 1.08.96 1.99 1.26 2.27 1.41.28.14.44.12.6-.07.17-.19.7-.82.89-1.1.19-.28.38-.23.64-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.32.07.12.07.68-.15 1.34-.22.66-1.3 1.26-1.78 1.34-.48.07-1.09.1-1.75-.11-.4-.13-.91-.3-1.56-.58-2.74-1.18-4.53-3.95-4.67-4.13-.14-.18-1.13-1.5-1.13-2.86 0-1.37.72-2.04.97-2.32.26-.28.56-.35.75-.35z"/></svg>
               Bulk Campaigns <span class="tag">Marketing</span>
@@ -1221,15 +1632,29 @@
             <div class="f-val">Broadcast</div>
             <div class="f-sub">Personalized templates + scheduling</div>
           </div>
-          <div class="floating reveal">
+          <!-- Card 2: bottom-right (AI Assist) -->
+          <div class="floating reveal" style="top:310px;right:0;left:auto;width:240px;animation:float 6s ease-in-out 1.2s infinite;">
             <div class="f-title">🧠 AI Assist <span class="tag">Quality</span></div>
             <div class="f-val">Faster Replies</div>
             <div class="f-sub">Improve SLA &amp; consistency</div>
           </div>
-          <div class="floating reveal">
+          <!-- Card 3: mid-left (Shared Inbox) -->
+          <div class="floating reveal" style="top:209px;left:0;right:auto;width:220px;animation:float2 5.5s ease-in-out 2.4s infinite;">
             <div class="f-title">👥 Shared Inbox <span class="tag">Support</span></div>
             <div class="f-val">Team-ready</div>
             <div class="f-sub">Auto allocation + quick replies</div>
+          </div>
+
+          <!-- Promo mini-card hovering over Bulk Campaigns -->
+          <div class="floating promo-card reveal">
+            <div class="promo-label">
+              <span class="promo-sale-dot"></span> Limited Offer
+            </div>
+            <div class="promo-line">🎁 FREE Website Design</div>
+            <div class="promo-line">🌐 Hosting + Maintenance</div>
+            <div class="promo-line">❌ Domain Excluded</div>
+            <div class="promo-price-big"><sup>₹</sup>249<sub>/mo</sub></div>
+            <div class="promo-footer">🚀 Start your website today!</div>
           </div>
         </div>
 
@@ -1413,33 +1838,313 @@
     </div>
   </section>
 
-  <!-- ===== TOP 20 AUTOMATIONS ===== -->
+  <!-- ===== PRICING ===== -->
+  <section id="pricing">
+    <div class="container">
+      <h2 class="section-title reveal">Simple, Honest Pricing</h2>
+      <p class="section-sub reveal">Everything your business needs to automate WhatsApp — no hidden fees, no contracts.</p>
+
+      <div class="pricing-wrap">
+        <div class="pricing-card reveal">
+
+          <!-- shimmer sweep handled by ::before -->
+
+          <!-- Badge -->
+          <div style="text-align:center;">
+            <span class="pricing-badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.78L2 22l5.47-1.43a9.86 9.86 0 004.57 1.14h.01c5.46 0 9.91-4.45 9.91-9.91A9.93 9.93 0 0012.04 2z"/></svg>
+              WhatsApp Business API — Starter Plan
+            </span>
+          </div>
+
+          <!-- Price -->
+          <div class="pricing-header">
+            <div class="price-glow-ring"></div>
+            <div class="pricing-plan-name">Monthly Subscription</div>
+            <span class="price-only">Only</span>
+            <span class="price-amount"><span class="price-rupee">₹</span><span id="priceCount">0</span></span>
+            <span class="price-period">per month &nbsp;·&nbsp; Cancel anytime</span>
+          </div>
+
+          <div class="pricing-divider"></div>
+
+          <!-- Features -->
+          <div class="pricing-features">
+            <div class="pf-item">
+              <div class="pf-check">✓</div>
+              Template Messages /month
+            </div>
+            <div class="pf-item">
+              <div class="pf-check">✓</div>
+              Unlimited Session Messages
+            </div>
+            <div class="pf-item">
+              <div class="pf-check">✓</div>
+              Official WhatsApp API
+            </div>
+            <div class="pf-item">
+              <div class="pf-check">✓</div>
+              Co-Existence Support
+            </div>
+            <div class="pf-item">
+              <div class="pf-check">✓</div>
+              No-code Chatbot Builder
+            </div>
+            <div class="pf-item">
+              <div class="pf-check">✓</div>
+              Broadcast Campaigns
+            </div>
+            <div class="pf-item">
+              <div class="pf-check">✓</div>
+              Campaign Segmentation
+            </div>
+            <div class="pf-item">
+              <div class="pf-check">✓</div>
+              Full API Access
+            </div>
+          </div>
+
+          <div class="pricing-divider"></div>
+
+          <!-- CTA -->
+          <div class="pricing-cta">
+            <a class="btn primary" href="#contact">🚀 Get Started at ₹599 / mo</a>
+            <p class="pricing-note">No setup fees · No credit card required · Go live in 48 hours</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TOP WHATSAPP AUTOMATIONS ===== -->
   <section id="automations">
     <div class="container">
-      <h2 class="section-title reveal">Top 20 WhatsApp Automations</h2>
-      <p class="section-sub reveal">Use these automation patterns to reduce response time, boost conversions, and improve customer experience.</p>
+      <h2 class="section-title reveal">Top WhatsApp Automations</h2>
+      <p class="section-sub reveal">Real-world automation bots built for Indian businesses — deploy in days, see results from day one.</p>
 
       <div class="wa-grid">
-        <div class="wa-item reveal"><i>1</i> Customer support chatbot (24/7 FAQs + ticketing)</div>
-        <div class="wa-item reveal"><i>2</i> Lead qualification bot (questions → score → route)</div>
-        <div class="wa-item reveal"><i>3</i> Appointment booking + calendar confirmations</div>
-        <div class="wa-item reveal"><i>4</i> Order confirmation + invoice messaging</div>
-        <div class="wa-item reveal"><i>5</i> Delivery tracking updates + status notifications</div>
-        <div class="wa-item reveal"><i>6</i> Payment reminders + collection nudges</div>
-        <div class="wa-item reveal"><i>7</i> Abandoned cart recovery sequence</div>
-        <div class="wa-item reveal"><i>8</i> Product catalog sharing + guided recommendations</div>
-        <div class="wa-item reveal"><i>9</i> Opt-in capture + consent logging</div>
-        <div class="wa-item reveal"><i>10</i> CRM sync (create/update lead/contact record)</div>
-        <div class="wa-item reveal"><i>11</i> Auto assignment to agents via rules (round-robin/skills)</div>
-        <div class="wa-item reveal"><i>12</i> Canned responses + AI-assisted drafting</div>
-        <div class="wa-item reveal"><i>13</i> Customer onboarding + step-by-step checklists</div>
-        <div class="wa-item reveal"><i>14</i> Feedback collection + NPS/CSAT</div>
-        <div class="wa-item reveal"><i>15</i> Surveys + segmented broadcasts</div>
-        <div class="wa-item reveal"><i>16</i> Event reminders + RSVP flows</div>
-        <div class="wa-item reveal"><i>17</i> Support ticket creation from chat + transcript attach</div>
-        <div class="wa-item reveal"><i>18</i> Multi-language chatbot (Hindi/English + more)</div>
-        <div class="wa-item reveal"><i>19</i> Missed call → instant WhatsApp reply + callback booking</div>
-        <div class="wa-item reveal"><i>20</i> After-sales engagement (warranty, upsell, renewals)</div>
+
+        <!-- 1 Real Estate -->
+        <div class="wa-item reveal" style="--item-accent:rgba(79,124,255,0.45);--item-glow:rgba(79,124,255,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(79,124,255,0.15);border-color:rgba(79,124,255,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4f7cff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">WhatsApp lead capture for real estate agents</div>
+            <span class="wa-item-tag" style="background:rgba(79,124,255,0.12);border-color:rgba(79,124,255,0.25);color:#7fa8ff;">🏠 Real Estate</span>
+          </div>
+        </div>
+
+        <!-- 2 Clinic -->
+        <div class="wa-item reveal" style="--item-accent:rgba(155,92,255,0.45);--item-glow:rgba(155,92,255,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(155,92,255,0.15);border-color:rgba(155,92,255,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9b5cff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M12 8v8M8 12h8"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Clinic appointment booking bot</div>
+            <span class="wa-item-tag" style="background:rgba(155,92,255,0.12);border-color:rgba(155,92,255,0.25);color:#c49eff;">🏥 Healthcare</span>
+          </div>
+        </div>
+
+        <!-- 3 Kirana -->
+        <div class="wa-item reveal" style="--item-accent:rgba(251,146,60,0.45);--item-glow:rgba(251,146,60,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(251,146,60,0.15);border-color:rgba(251,146,60,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Kirana store daily order collection</div>
+            <span class="wa-item-tag" style="background:rgba(251,146,60,0.12);border-color:rgba(251,146,60,0.25);color:#fdba74;">🛒 Retail</span>
+          </div>
+        </div>
+
+        <!-- 4 Coaching -->
+        <div class="wa-item reveal" style="--item-accent:rgba(251,191,36,0.45);--item-glow:rgba(251,191,36,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Coaching institute daily quiz bot</div>
+            <span class="wa-item-tag" style="background:rgba(251,191,36,0.12);border-color:rgba(251,191,36,0.25);color:#fde68a;">🎓 Education</span>
+          </div>
+        </div>
+
+        <!-- 5 Salary -->
+        <div class="wa-item reveal" style="--item-accent:rgba(37,211,102,0.45);--item-glow:rgba(37,211,102,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(37,211,102,0.15);border-color:rgba(37,211,102,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Salary slip dispatcher for SMEs</div>
+            <span class="wa-item-tag" style="background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.25);color:#6ee7a0;">💼 HR & Finance</span>
+          </div>
+        </div>
+
+        <!-- 6 EMI -->
+        <div class="wa-item reveal" style="--item-accent:rgba(37,211,102,0.45);--item-glow:rgba(37,211,102,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(37,211,102,0.15);border-color:rgba(37,211,102,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">EMI &amp; loan repayment reminder bot</div>
+            <span class="wa-item-tag" style="background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.25);color:#6ee7a0;">💳 Finance</span>
+          </div>
+        </div>
+
+        <!-- 7 Tiffin -->
+        <div class="wa-item reveal" style="--item-accent:rgba(251,146,60,0.45);--item-glow:rgba(251,146,60,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(251,146,60,0.15);border-color:rgba(251,146,60,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Tiffin / cloud kitchen subscription bot</div>
+            <span class="wa-item-tag" style="background:rgba(251,146,60,0.12);border-color:rgba(251,146,60,0.25);color:#fdba74;">🍱 Food</span>
+          </div>
+        </div>
+
+        <!-- 8 PG/Hostel -->
+        <div class="wa-item reveal" style="--item-accent:rgba(20,184,166,0.45);--item-glow:rgba(20,184,166,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(20,184,166,0.15);border-color:rgba(20,184,166,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/><rect x="10" y="6" width="4" height="4" rx="1"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">PG / hostel rent reminder &amp; receipt bot</div>
+            <span class="wa-item-tag" style="background:rgba(20,184,166,0.12);border-color:rgba(20,184,166,0.25);color:#5eead4;">🏢 Housing</span>
+          </div>
+        </div>
+
+        <!-- 9 Job Tracker -->
+        <div class="wa-item reveal" style="--item-accent:rgba(79,124,255,0.45);--item-glow:rgba(79,124,255,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(79,124,255,0.15);border-color:rgba(79,124,255,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4f7cff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Job application tracker for placement cells</div>
+            <span class="wa-item-tag" style="background:rgba(79,124,255,0.12);border-color:rgba(79,124,255,0.25);color:#7fa8ff;">🔍 Placement</span>
+          </div>
+        </div>
+
+        <!-- 10 Delivery -->
+        <div class="wa-item reveal" style="--item-accent:rgba(96,213,255,0.45);--item-glow:rgba(96,213,255,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(96,213,255,0.15);border-color:rgba(96,213,255,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#60d5ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 5v3h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Delivery status bot for local courier firms</div>
+            <span class="wa-item-tag" style="background:rgba(96,213,255,0.12);border-color:rgba(96,213,255,0.25);color:#93e5ff;">📦 Logistics</span>
+          </div>
+        </div>
+
+        <!-- 11 Doctor -->
+        <div class="wa-item reveal" style="--item-accent:rgba(155,92,255,0.45);--item-glow:rgba(155,92,255,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(155,92,255,0.15);border-color:rgba(155,92,255,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9b5cff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Doctor prescription follow-up bot</div>
+            <span class="wa-item-tag" style="background:rgba(155,92,255,0.12);border-color:rgba(155,92,255,0.25);color:#c49eff;">💊 Healthcare</span>
+          </div>
+        </div>
+
+        <!-- 12 Society -->
+        <div class="wa-item reveal" style="--item-accent:rgba(20,184,166,0.45);--item-glow:rgba(20,184,166,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(20,184,166,0.15);border-color:rgba(20,184,166,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#14b8a6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Society maintenance collection bot</div>
+            <span class="wa-item-tag" style="background:rgba(20,184,166,0.12);border-color:rgba(20,184,166,0.25);color:#5eead4;">🏘️ Society</span>
+          </div>
+        </div>
+
+        <!-- 13 Vernacular -->
+        <div class="wa-item reveal" style="--item-accent:rgba(96,213,255,0.45);--item-glow:rgba(96,213,255,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(96,213,255,0.15);border-color:rgba(96,213,255,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#60d5ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Vernacular customer support bot for D2C brands</div>
+            <span class="wa-item-tag" style="background:rgba(96,213,255,0.12);border-color:rgba(96,213,255,0.25);color:#93e5ff;">🌐 D2C</span>
+          </div>
+        </div>
+
+        <!-- 14 Event/Wedding -->
+        <div class="wa-item reveal" style="--item-accent:rgba(244,114,182,0.45);--item-glow:rgba(244,114,182,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(244,114,182,0.15);border-color:rgba(244,114,182,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Event / wedding RSVP &amp; guest info bot</div>
+            <span class="wa-item-tag" style="background:rgba(244,114,182,0.12);border-color:rgba(244,114,182,0.25);color:#f9a8d4;">🎊 Events</span>
+          </div>
+        </div>
+
+        <!-- 15 Field Sales -->
+        <div class="wa-item reveal" style="--item-accent:rgba(79,124,255,0.45);--item-glow:rgba(79,124,255,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(79,124,255,0.15);border-color:rgba(79,124,255,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4f7cff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Field sales rep daily report collector</div>
+            <span class="wa-item-tag" style="background:rgba(79,124,255,0.12);border-color:rgba(79,124,255,0.25);color:#7fa8ff;">📊 Sales</span>
+          </div>
+        </div>
+
+        <!-- 16 School Fee -->
+        <div class="wa-item reveal" style="--item-accent:rgba(251,191,36,0.45);--item-glow:rgba(251,191,36,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(251,191,36,0.15);border-color:rgba(251,191,36,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">School fee reminder &amp; receipt bot</div>
+            <span class="wa-item-tag" style="background:rgba(251,191,36,0.12);border-color:rgba(251,191,36,0.25);color:#fde68a;">🎓 Education</span>
+          </div>
+        </div>
+
+        <!-- 17 Wholesale -->
+        <div class="wa-item reveal" style="--item-accent:rgba(251,146,60,0.45);--item-glow:rgba(251,146,60,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(251,146,60,0.15);border-color:rgba(251,146,60,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.09 9.73a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .84h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Wholesale price list broadcast bot</div>
+            <span class="wa-item-tag" style="background:rgba(251,146,60,0.12);border-color:rgba(251,146,60,0.25);color:#fdba74;">📢 Wholesale</span>
+          </div>
+        </div>
+
+        <!-- 18 Property Site Visit -->
+        <div class="wa-item reveal" style="--item-accent:rgba(79,124,255,0.45);--item-glow:rgba(79,124,255,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(79,124,255,0.15);border-color:rgba(79,124,255,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#4f7cff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Property site-visit scheduler for builders</div>
+            <span class="wa-item-tag" style="background:rgba(79,124,255,0.12);border-color:rgba(79,124,255,0.25);color:#7fa8ff;">🏗️ Real Estate</span>
+          </div>
+        </div>
+
+        <!-- 19 Insurance -->
+        <div class="wa-item reveal" style="--item-accent:rgba(37,211,102,0.45);--item-glow:rgba(37,211,102,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(37,211,102,0.15);border-color:rgba(37,211,102,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#25d366" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Insurance policy renewal nudge bot</div>
+            <span class="wa-item-tag" style="background:rgba(37,211,102,0.12);border-color:rgba(37,211,102,0.25);color:#6ee7a0;">🛡️ Insurance</span>
+          </div>
+        </div>
+
+        <!-- 20 Blood Test / Lab -->
+        <div class="wa-item reveal" style="--item-accent:rgba(155,92,255,0.45);--item-glow:rgba(155,92,255,0.14);">
+          <div class="wa-icon-badge" style="background:rgba(155,92,255,0.15);border-color:rgba(155,92,255,0.30);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#9b5cff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v11m0 0a5 5 0 0010 0m-10 0H5m4 0h10M5 3v14a2 2 0 002 2h10a2 2 0 002-2V9"/></svg>
+          </div>
+          <div class="wa-item-body">
+            <div class="wa-item-title">Blood test / lab report delivery bot</div>
+            <span class="wa-item-tag" style="background:rgba(155,92,255,0.12);border-color:rgba(155,92,255,0.25);color:#c49eff;">🩺 Diagnostics</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -1567,16 +2272,16 @@
             <!-- Background circle -->
             <circle cx="130" cy="130" r="122" fill="url(#abg)"/>
 
-            <!-- "iAutomate Services" arc text at top -->
-            <path id="topArc" d="M 38,130 A 92,92 0 0,1 222,130" fill="none"/>
-            <text font-family="Space Grotesk, sans-serif" font-size="17" font-weight="700" fill="#1a0050" letter-spacing="1.5">
-              <textPath href="#topArc" startOffset="12%">iAutomate Services</textPath>
+            <!-- Top arc text -->
+            <path id="topArc" d="M 30,130 A 100,100 0 0,1 230,130" fill="none"/>
+            <text font-family="Space Grotesk, sans-serif" font-size="15" font-weight="700" fill="#1a0050" letter-spacing="1.2">
+              <textPath href="#topArc" startOffset="6%">iAutomate - AI Business</textPath>
             </text>
 
-            <!-- "AUTOMATION SOLUTIONS" arc text at bottom -->
-            <path id="btmArc" d="M 34,140 A 96,96 0 0,0 226,140" fill="none"/>
-            <text font-family="Space Grotesk, sans-serif" font-size="13" font-weight="700" fill="#4f7cff" letter-spacing="2.8">
-              <textPath href="#btmArc" startOffset="8%">AUTOMATION SOLUTIONS</textPath>
+            <!-- Bottom arc text -->
+            <path id="btmArc" d="M 30,138 A 100,100 0 0,0 230,138" fill="none"/>
+            <text font-family="Space Grotesk, sans-serif" font-size="13.5" font-weight="700" fill="#4f7cff" letter-spacing="2.2">
+              <textPath href="#btmArc" startOffset="5%">Automation Solutions</textPath>
             </text>
 
             <!-- Spoke lines -->
@@ -1839,14 +2544,14 @@
             </svg>
             <h4 style="margin:0;">iAutomate</h4>
           </div>
-          <p style="color:rgba(255,255,255,0.60); font-weight:650; font-size:0.9rem;">AI Business Automation Service.<br>Automating IT. Empowering Businesses.</p>
+          <p style="color:rgba(255,255,255,0.60); font-weight:650; font-size:0.9rem;">AI Business Automation Solutions.<br>Automating IT. Empowering Businesses.</p>
         </div>
         <div class="foot">
           <h4>Quick Links</h4>
           <div><a href="#services">Services</a></div>
           <div><a href="#whatsapp-suite">Bulk Messaging</a></div>
           <div><a href="#process">Process</a></div>
-          <div><a href="#automations">Top 20 Automations</a></div>
+          <div><a href="#automations">Top Automations</a></div>
           <div><a href="#cases">Success</a></div>
           <div><a href="#contact">Contact</a></div>
         </div>
@@ -1862,7 +2567,7 @@
         <div class="foot">
           <h4>Company</h4>
           <div><a href="#about">About Us</a></div>
-          <div><a href="#privacy">Privacy Policy</a></div>
+          <div><a href="privacy.html" target="_blank">Privacy Policy</a></div>
           <div><a href="#">Terms of Service</a></div>
           <div><a href="#">Cookie Policy</a></div>
         </div>
@@ -1877,6 +2582,7 @@
        iAutomate — All Scripts
     ========================================= */
 
+    // ===== TICKER CLOSE =====
     // ===== WHATSAPP =====
     function openWhatsApp() {
       const phone = '919888790890';
@@ -2000,6 +2706,25 @@
         }
       }, { threshold: 0.4 });
       so.observe(statsEl);
+    }
+
+    // ===== PRICE COUNTER (₹599) =====
+    const priceEl = document.getElementById('priceCount');
+    if (priceEl) {
+      const po = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          const dur = 1600, t0 = performance.now();
+          (function step(now) {
+            const p = Math.min((now - t0) / dur, 1);
+            const e = 1 - Math.pow(1 - p, 3);
+            priceEl.textContent = Math.floor(e * 599);
+            if (p < 1) requestAnimationFrame(step);
+            else priceEl.textContent = '599';
+          })(t0);
+          po.disconnect();
+        }
+      }, { threshold: 0.5 });
+      po.observe(priceEl);
     }
 
     // ===== PROCESS CONNECTOR REVEAL =====

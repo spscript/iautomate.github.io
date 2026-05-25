@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>Privacy Policy — iAutomate AI Business Automation Solutions</title>
+  <meta name="description" content="iAutomate's Privacy Policy — how we collect, use, and protect your personal information." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg: #0b1020;
+      --bg2: #0f1938;
+      --card: rgba(255,255,255,0.06);
+      --stroke: rgba(255,255,255,0.12);
+      --text: rgba(255,255,255,0.94);
+      --muted: rgba(255,255,255,0.72);
+      --muted2: rgba(255,255,255,0.55);
+      --primary: #4f7cff;
+      --secondary: #9b5cff;
+      --accent: #60d5ff;
+      --grad: linear-gradient(135deg, #4f7cff 0%, #9b5cff 100%);
+      --grad-wide: linear-gradient(90deg, #4f7cff, #9b5cff, #60d5ff, #9b5cff, #4f7cff);
+      --max: 900px;
+      --px: clamp(18px, 4vw, 40px);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --ui: "Plus Jakarta Sans", system-ui, sans-serif;
+      --display: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--ui);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Subtle grid overlay */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; pointer-events: none;
+      background:
+        linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 64px 64px;
+      opacity: 0.04; z-index: 0;
+    }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); position: relative; z-index: 1; }
+
+    /* ===== KEYFRAMES ===== */
+    @keyframes gradient-sweep {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+    @keyframes fade-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes orbit-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes orbit-reverse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(11,16,32,0.70);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .nav-wrap {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 14px 0; gap: 16px;
+    }
+
+    .brand { display: flex; gap: 12px; align-items: center; text-decoration: none; color: var(--text); }
+    .brand-title { font-family: var(--display); font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; }
+    .brand-sub { font-size: 0.70rem; font-weight: 600; color: rgba(255,255,255,0.50); margin-top: 2px; }
+
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 9px 18px; border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.16);
+      background: rgba(255,255,255,0.06);
+      color: var(--muted); text-decoration: none;
+      font-weight: 800; font-size: 0.88rem;
+      transition: background 200ms var(--ease), color 200ms var(--ease), transform 200ms var(--ease);
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.11); color: var(--text); transform: translateX(-3px); }
+
+    /* ===== HERO BANNER ===== */
+    .pp-hero {
+      padding: 72px 0 56px;
+      text-align: center;
+      background:
+        radial-gradient(800px 400px at 50% 0%, rgba(79,124,255,0.22) 0%, transparent 65%),
+        radial-gradient(600px 300px at 80% 80%, rgba(155,92,255,0.18) 0%, transparent 60%);
+      position: relative; overflow: hidden;
+    }
+
+    .pp-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 7px 16px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.06);
+      font-size: 0.84rem; font-weight: 800;
+      color: rgba(255,255,255,0.82);
+      margin-bottom: 22px;
+      animation: fade-up 0.5s var(--ease) both;
+    }
+
+    .pp-hero h1 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 900; letter-spacing: -0.04em;
+      line-height: 1.1; margin-bottom: 16px;
+      background: var(--grad-wide);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-sweep 5s ease infinite, fade-up 0.6s var(--ease) 0.1s both;
+    }
+
+    .pp-hero p {
+      color: var(--muted2); max-width: 52ch; margin: 0 auto;
+      font-weight: 650; font-size: 1.02rem;
+      animation: fade-up 0.6s var(--ease) 0.2s both;
+    }
+
+    .pp-meta {
+      display: inline-flex; align-items: center; gap: 20px;
+      margin-top: 28px; flex-wrap: wrap; justify-content: center;
+      animation: fade-up 0.6s var(--ease) 0.3s both;
+    }
+    .pp-meta span {
+      color: var(--muted2); font-size: 0.88rem; font-weight: 650;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ===== TOC ===== */
+    .toc-wrap {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 20px;
+      padding: 24px 28px;
+      margin: 48px 0 8px;
+    }
+    .toc-title {
+      font-family: var(--display);
+      font-size: 0.92rem; font-weight: 800;
+      color: rgba(255,255,255,0.60);
+      text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 14px;
+    }
+    .toc-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .toc-list li { display: flex; align-items: center; gap: 10px; }
+    .toc-list a {
+      color: var(--accent); text-decoration: none; font-weight: 700; font-size: 0.92rem;
+      transition: color 180ms;
+    }
+    .toc-list a:hover { color: #fff; }
+    .toc-num {
+      width: 22px; height: 22px; border-radius: 7px; flex-shrink: 0;
+      background: rgba(96,213,255,0.14); border: 1px solid rgba(96,213,255,0.22);
+      display: grid; place-items: center;
+      font-size: 0.74rem; font-weight: 900; color: var(--accent);
+    }
+
+    /* ===== POLICY CONTENT ===== */
+    .pp-content { padding: 16px 0 80px; }
+
+    .pp-section {
+      margin-bottom: 48px;
+      animation: fade-up 0.5s var(--ease) both;
+      scroll-margin-top: 90px;
+    }
+
+    .pp-section-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 20px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+    }
+
+    .pp-icon {
+      width: 46px; height: 46px; border-radius: 14px; flex-shrink: 0;
+      display: grid; place-items: center; font-size: 1.4rem;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .pp-section h2 {
+      font-family: var(--display);
+      font-size: 1.25rem; font-weight: 800;
+      letter-spacing: -0.02em;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .pp-section p {
+      color: var(--muted); font-weight: 650; margin-bottom: 14px;
+      font-size: 0.97rem;
+    }
+    .pp-section p:last-child { margin-bottom: 0; }
+
+    .pp-list {
+      list-style: none; margin: 12px 0 16px; display: flex; flex-direction: column; gap: 10px;
+    }
+    .pp-list li {
+      display: flex; gap: 12px; align-items: flex-start;
+      color: var(--muted); font-weight: 650; font-size: 0.97rem;
+    }
+    .pp-list li::before {
+      content: ""; flex-shrink: 0;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      margin-top: 9px;
+    }
+
+    .pp-highlight {
+      background: rgba(79,124,255,0.10);
+      border: 1px solid rgba(79,124,255,0.22);
+      border-left: 3px solid var(--primary);
+      border-radius: 12px; padding: 16px 18px;
+      margin: 16px 0;
+      color: var(--muted); font-weight: 650; font-size: 0.95rem;
+    }
+
+    .pp-highlight strong { color: rgba(255,255,255,0.90); }
+
+    .pp-table {
+      width: 100%; border-collapse: collapse; margin: 16px 0;
+      font-size: 0.92rem;
+    }
+    .pp-table th {
+      background: rgba(255,255,255,0.07); padding: 12px 16px;
+      text-align: left; font-weight: 800;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.85);
+    }
+    .pp-table td {
+      padding: 11px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: var(--muted); font-weight: 650; vertical-align: top;
+    }
+    .pp-table tr:last-child td { border-bottom: none; }
+    .pp-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+    /* ===== CONTACT CTA ===== */
+    .pp-cta {
+      background: linear-gradient(135deg, rgba(79,124,255,0.18) 0%, rgba(155,92,255,0.20) 100%);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 24px; padding: 36px;
+      text-align: center; margin: 48px 0;
+    }
+    .pp-cta h3 {
+      font-family: var(--display); font-size: 1.4rem;
+      font-weight: 900; letter-spacing: -0.02em; margin-bottom: 10px;
+    }
+    .pp-cta p { color: var(--muted2); font-weight: 650; margin-bottom: 22px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 28px; border-radius: 14px;
+      font-weight: 900; font-size: 0.97rem; text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: var(--grad); color: #fff;
+      box-shadow: 0 16px 48px rgba(155,92,255,0.25);
+      transition: transform 200ms var(--ease), box-shadow 200ms var(--ease);
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 24px 70px rgba(155,92,255,0.40); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 32px 0 20px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.50);
+      text-align: center; font-size: 0.90rem; font-weight: 650;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 600px) {
+      .pp-meta { gap: 12px; }
+      .pp-cta { padding: 24px 18px; }
+      .pp-table { font-size: 0.84rem; }
+      .pp-table th, .pp-table td { padding: 9px 10px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="container">
+      <div class="nav-wrap">
+        <a class="brand" href="index.html">
+          <svg width="38" height="38" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="plg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#4f7cff"/><stop offset="100%" stop-color="#9b5cff"/>
+              </linearGradient>
+              <radialGradient id="pcg" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#60d5ff"/><stop offset="100%" stop-color="#9b5cff"/>
+              </radialGradient>
+            </defs>
+            <circle cx="21" cy="21" r="20" fill="#f0ebff" stroke="url(#plg)" stroke-width="1.8"/>
+            <circle cx="21" cy="21" r="13" fill="none" stroke="url(#plg)" stroke-width="0.9" opacity="0.45"/>
+            <circle cx="21" cy="21" r="8" fill="none" stroke="url(#plg)" stroke-width="1.1" opacity="0.65"/>
+            <circle cx="21" cy="21" r="5" fill="url(#pcg)"/>
+            <g style="transform-origin:21px 21px;animation:orbit-slow 9s linear infinite;">
+              <circle cx="21" cy="4" r="2.2" fill="#8b5cf6"/>
+              <circle cx="38" cy="12" r="2.2" fill="#7c3aed"/>
+              <circle cx="38" cy="30" r="2.2" fill="#8b5cf6"/>
+              <circle cx="21" cy="38" r="2.2" fill="#7c3aed"/>
+              <circle cx="4" cy="30" r="2.2" fill="#8b5cf6"/>
+              <circle cx="4" cy="12" r="2.2" fill="#7c3aed"/>
+            </g>
+          </svg>
+          <div>
+            <div class="brand-title">iAutomate</div>
+            <div class="brand-sub">AI Business Automation Solutions</div>
+          </div>
+        </a>
+
+        <a class="back-btn" href="index.html">← Back to Home</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <div class="pp-hero">
+    <div class="container">
+      <div class="pp-eyebrow">🔒 Legal Document</div>
+      <h1>Privacy Policy</h1>
+      <p>We believe privacy is a right, not a feature. Here's exactly how iAutomate handles your data — transparently and responsibly.</p>
+      <div class="pp-meta">
+        <span>📅 Last updated: May 25, 2026</span>
+        <span>📍 Applicable to: iautomate.in &amp; all iAutomate services</span>
+        <span>✉️ <a href="mailto:hello@iautomate.in" style="color:var(--accent);text-decoration:none;">hello@iautomate.in</a></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <div class="pp-content">
+    <div class="container">
+
+      <!-- Table of Contents -->
+      <div class="toc-wrap">
+        <div class="toc-title">Contents</div>
+        <ol class="toc-list">
+          <li><span class="toc-num">1</span><a href="#s1">Information We Collect</a></li>
+          <li><span class="toc-num">2</span><a href="#s2">How We Use Your Information</a></li>
+          <li><span class="toc-num">3</span><a href="#s3">WhatsApp &amp; Third-Party Platforms</a></li>
+          <li><span class="toc-num">4</span><a href="#s4">Data Storage &amp; Security</a></li>
+          <li><span class="toc-num">5</span><a href="#s5">Cookies &amp; Tracking</a></li>
+          <li><span class="toc-num">6</span><a href="#s6">Data Sharing &amp; Disclosure</a></li>
+          <li><span class="toc-num">7</span><a href="#s7">Your Rights</a></li>
+          <li><span class="toc-num">8</span><a href="#s8">Data Retention</a></li>
+          <li><span class="toc-num">9</span><a href="#s9">Children's Privacy</a></li>
+          <li><span class="toc-num">10</span><a href="#s10">Changes to This Policy</a></li>
+          <li><span class="toc-num">11</span><a href="#s11">Contact Us</a></li>
+        </ol>
+      </div>
+
+      <!-- Introduction -->
+      <div class="pp-highlight" style="margin-top:32px;">
+        <strong>Summary:</strong> iAutomate collects only what's necessary to deliver our automation services. We do not sell your data. We use industry-standard security. You can request deletion of your data at any time by emailing <a href="mailto:hello@iautomate.in" style="color:var(--accent);">hello@iautomate.in</a>.
+      </div>
+
+      <!-- Section 1 -->
+      <div class="pp-section" id="s1">
+        <div class="pp-section-header">
+          <div class="pp-icon">📋</div>
+          <h2>1. Information We Collect</h2>
+        </div>
+
+        <p>When you interact with iAutomate — whether through our website, contact forms, demos, or services — we may collect the following categories of information:</p>
+
+        <table class="pp-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Examples</th>
+              <th>When Collected</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:rgba(255,255,255,0.88);">Identity Data</strong></td>
+              <td>Full name, company name, job title</td>
+              <td>Contact form, demo request, account registration</td>
+            </tr>
+            <tr>
+              <td><strong style="color:rgba(255,255,255,0.88);">Contact Data</strong></td>
+              <td>Email address, phone number, WhatsApp number</td>
+              <td>Contact form, sales enquiries, support tickets</td>
+            </tr>
+            <tr>
+              <td><strong style="color:rgba(255,255,255,0.88);">Business Data</strong></td>
+              <td>Industry, automation requirements, integration needs</td>
+              <td>Demo calls, onboarding, project scoping</td>
+            </tr>
+            <tr>
+              <td><strong style="color:rgba(255,255,255,0.88);">Usage Data</strong></td>
+              <td>Pages visited, clicks, time on site, browser/OS type</td>
+              <td>Automatically via cookies and analytics</td>
+            </tr>
+            <tr>
+              <td><strong style="color:rgba(255,255,255,0.88);">Communication Data</strong></td>
+              <td>Emails, WhatsApp messages, support chats</td>
+              <td>When you contact us directly</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <p>We do <strong style="color:rgba(255,255,255,0.88);">not</strong> collect sensitive personal data such as financial account numbers, government IDs, health information, or biometric data unless explicitly required and consented to for a specific service.</p>
+      </div>
+
+      <!-- Section 2 -->
+      <div class="pp-section" id="s2">
+        <div class="pp-section-header">
+          <div class="pp-icon">🎯</div>
+          <h2>2. How We Use Your Information</h2>
+        </div>
+        <p>Your information is used solely to provide and improve our services. Specifically, we use it to:</p>
+        <ul class="pp-list">
+          <li>Respond to demo requests, enquiries, and support tickets</li>
+          <li>Deliver, configure, and maintain automation solutions you have engaged us for</li>
+          <li>Send service updates, invoices, and account notifications</li>
+          <li>Send relevant marketing communications — you may opt out at any time</li>
+          <li>Analyse website usage to improve our platform and content</li>
+          <li>Comply with applicable legal obligations in India and other jurisdictions we operate in</li>
+          <li>Prevent fraud, abuse, and unauthorised access to our systems</li>
+        </ul>
+        <div class="pp-highlight">
+          <strong>Legal basis:</strong> We process your data under legitimate interest (to provide services you have requested), contractual necessity (when you become a client), consent (for marketing), and legal obligation (for compliance purposes).
+        </div>
+      </div>
+
+      <!-- Section 3 -->
+      <div class="pp-section" id="s3">
+        <div class="pp-section-header">
+          <div class="pp-icon">💬</div>
+          <h2>3. WhatsApp &amp; Third-Party Platforms</h2>
+        </div>
+        <p>iAutomate builds automation solutions using the WhatsApp Business API (provided by Meta Platforms, Inc.) and other third-party platforms. When we set up or manage these integrations on your behalf:</p>
+        <ul class="pp-list">
+          <li>We access only the data required to configure and operate the agreed automation workflows</li>
+          <li>End-user data (your customers' names, phone numbers, and message content) is processed according to the privacy policy of the respective platform (e.g., Meta's Privacy Policy for WhatsApp)</li>
+          <li>iAutomate acts as a <strong style="color:rgba(255,255,255,0.88);">data processor</strong> on your behalf — you remain the data controller for your customers' data</li>
+          <li>We enter into Data Processing Agreements (DPAs) with clients where required by law</li>
+        </ul>
+        <p>Other third-party platforms we may integrate with include: Microsoft 365, ServiceNow, Zoho CRM, Salesforce, Google Workspace, and payment gateways. Each operates under its own privacy policy.</p>
+      </div>
+
+      <!-- Section 4 -->
+      <div class="pp-section" id="s4">
+        <div class="pp-section-header">
+          <div class="pp-icon">🔒</div>
+          <h2>4. Data Storage &amp; Security</h2>
+        </div>
+        <p>We take data security seriously and implement multiple layers of protection:</p>
+        <ul class="pp-list">
+          <li><strong style="color:rgba(255,255,255,0.88);">Encryption in transit:</strong> All data transmitted between your browser and our servers is encrypted using TLS 1.2 or higher</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Encryption at rest:</strong> Stored data is encrypted using AES-256</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Access controls:</strong> Role-based access — only authorised team members can access client data on a need-to-know basis</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Infrastructure:</strong> Our systems are hosted on ISO 27001 certified cloud infrastructure</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Audits:</strong> Regular internal security reviews and vulnerability assessments</li>
+        </ul>
+        <p>Data is primarily stored on servers located in India. Where data is transferred internationally (e.g., for cloud services), we ensure appropriate safeguards are in place.</p>
+        <div class="pp-highlight">
+          <strong>Incident response:</strong> In the event of a data breach that affects your rights, we will notify you within 72 hours of becoming aware of it, in line with applicable regulations.
+        </div>
+      </div>
+
+      <!-- Section 5 -->
+      <div class="pp-section" id="s5">
+        <div class="pp-section-header">
+          <div class="pp-icon">🍪</div>
+          <h2>5. Cookies &amp; Tracking</h2>
+        </div>
+        <p>Our website uses cookies and similar tracking technologies. Here's what we use and why:</p>
+        <table class="pp-table">
+          <thead>
+            <tr><th>Cookie Type</th><th>Purpose</th><th>Can Opt Out?</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong style="color:rgba(255,255,255,0.88);">Essential</strong></td>
+              <td>Session management, security, basic site function</td>
+              <td>No — required for the site to work</td>
+            </tr>
+            <tr>
+              <td><strong style="color:rgba(255,255,255,0.88);">Analytics</strong></td>
+              <td>Understanding page views, traffic sources (e.g., Google Analytics)</td>
+              <td>Yes — via browser settings or cookie banner</td>
+            </tr>
+            <tr>
+              <td><strong style="color:rgba(255,255,255,0.88);">Marketing</strong></td>
+              <td>Retargeting ads, campaign attribution</td>
+              <td>Yes — via cookie preferences</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>You can control cookie preferences through your browser settings. Disabling non-essential cookies will not affect your ability to use the site's core features.</p>
+      </div>
+
+      <!-- Section 6 -->
+      <div class="pp-section" id="s6">
+        <div class="pp-section-header">
+          <div class="pp-icon">🔗</div>
+          <h2>6. Data Sharing &amp; Disclosure</h2>
+        </div>
+        <p><strong style="color:rgba(255,255,255,0.88);">We do not sell, rent, or trade your personal data.</strong> We may share it only in these limited circumstances:</p>
+        <ul class="pp-list">
+          <li><strong style="color:rgba(255,255,255,0.88);">Service providers:</strong> Trusted sub-processors (cloud hosts, email services, analytics tools) who are contractually bound to protect your data</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Legal obligations:</strong> When required by law, court order, or government authority in India or applicable jurisdictions</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Business transfers:</strong> In the event of a merger or acquisition, with prior notice to affected users</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">With your consent:</strong> For any other purpose, only after we've informed you and received explicit consent</li>
+        </ul>
+      </div>
+
+      <!-- Section 7 -->
+      <div class="pp-section" id="s7">
+        <div class="pp-section-header">
+          <div class="pp-icon">⚖️</div>
+          <h2>7. Your Rights</h2>
+        </div>
+        <p>Under applicable data protection laws (including India's Digital Personal Data Protection Act, 2023), you have the following rights:</p>
+        <ul class="pp-list">
+          <li><strong style="color:rgba(255,255,255,0.88);">Access:</strong> Request a copy of the personal data we hold about you</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Correction:</strong> Ask us to correct inaccurate or incomplete data</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Erasure:</strong> Request deletion of your personal data ("right to be forgotten")</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Portability:</strong> Receive your data in a structured, machine-readable format</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Objection:</strong> Object to processing for direct marketing purposes at any time</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Withdraw consent:</strong> Where processing is based on consent, withdraw it without affecting prior lawful processing</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Nominate:</strong> Nominate another person to exercise rights on your behalf in case of death or incapacity</li>
+        </ul>
+        <p>To exercise any of these rights, email us at <a href="mailto:hello@iautomate.in" style="color:var(--accent);">hello@iautomate.in</a>. We will respond within <strong style="color:rgba(255,255,255,0.88);">30 days</strong>. We may need to verify your identity before fulfilling the request.</p>
+      </div>
+
+      <!-- Section 8 -->
+      <div class="pp-section" id="s8">
+        <div class="pp-section-header">
+          <div class="pp-icon">🗓️</div>
+          <h2>8. Data Retention</h2>
+        </div>
+        <p>We retain personal data only as long as necessary for the purpose it was collected, or as required by law:</p>
+        <ul class="pp-list">
+          <li><strong style="color:rgba(255,255,255,0.88);">Active client data:</strong> Retained for the duration of the contract plus 3 years after termination</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Prospect / enquiry data:</strong> Retained for 2 years from last interaction</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Financial records:</strong> Retained for 7 years as required by Indian tax law</li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Website analytics data:</strong> Aggregated and anonymised after 26 months</li>
+        </ul>
+        <p>Once the retention period expires, data is securely deleted or anonymised so it can no longer be linked to an individual.</p>
+      </div>
+
+      <!-- Section 9 -->
+      <div class="pp-section" id="s9">
+        <div class="pp-section-header">
+          <div class="pp-icon">👶</div>
+          <h2>9. Children's Privacy</h2>
+        </div>
+        <p>iAutomate's services are designed for businesses and are not directed at individuals under the age of 18. We do not knowingly collect personal data from children. If you believe a minor has provided us with personal information, please contact us immediately at <a href="mailto:hello@iautomate.in" style="color:var(--accent);">hello@iautomate.in</a> and we will delete it promptly.</p>
+      </div>
+
+      <!-- Section 10 -->
+      <div class="pp-section" id="s10">
+        <div class="pp-section-header">
+          <div class="pp-icon">📝</div>
+          <h2>10. Changes to This Policy</h2>
+        </div>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices, technology, or applicable law. When we make material changes, we will:</p>
+        <ul class="pp-list">
+          <li>Update the "Last updated" date at the top of this page</li>
+          <li>Send an email notification to active clients and registered users</li>
+          <li>Display a notice on our website for at least 30 days</li>
+        </ul>
+        <p>Continued use of iAutomate's services after changes take effect constitutes your acceptance of the revised policy.</p>
+      </div>
+
+      <!-- Section 11 -->
+      <div class="pp-section" id="s11">
+        <div class="pp-section-header">
+          <div class="pp-icon">📬</div>
+          <h2>11. Contact Us</h2>
+        </div>
+        <p>If you have any questions, concerns, or requests regarding this Privacy Policy or how we handle your data, please reach out:</p>
+        <ul class="pp-list">
+          <li><strong style="color:rgba(255,255,255,0.88);">Email:</strong> <a href="mailto:hello@iautomate.in" style="color:var(--accent);">hello@iautomate.in</a></li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Phone:</strong> <a href="tel:+919888790890" style="color:var(--accent);">+91 9888-790-890</a></li>
+          <li><strong style="color:rgba(255,255,255,0.88);">Website:</strong> <a href="https://iautomate.in" target="_blank" style="color:var(--accent);">iautomate.in</a></li>
+          <li><strong style="color:rgba(255,255,255,0.88);">WhatsApp:</strong> Message us at +91 9888-790-890</li>
+        </ul>
+        <p>We aim to resolve all privacy-related concerns promptly and fairly. If you are not satisfied with our response, you may escalate the matter to the relevant data protection authority.</p>
+      </div>
+
+      <!-- CTA -->
+      <div class="pp-cta">
+        <h3>Questions? We're here to help.</h3>
+        <p>Our team responds to all privacy enquiries within 48 hours.</p>
+        <a class="btn" href="mailto:hello@iautomate.in">✉️ Email Privacy Team</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <p>© 2026 iAutomate Services &nbsp;·&nbsp; AI Business Automation Solutions</p>
+      <p style="margin-top:8px;">
+        <a href="index.html">Home</a> &nbsp;·&nbsp;
+        <a href="index.html#contact">Contact</a> &nbsp;·&nbsp;
+        <a href="index.html#about">About Us</a> &nbsp;·&nbsp;
+        <a href="mailto:hello@iautomate.in">hello@iautomate.in</a>
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
