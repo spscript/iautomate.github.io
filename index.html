@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>iAutomate — AI Business Automation Services</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ===== RESET & VARIABLES ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg: #0b1020;
+      --bg2: #0f1938;
+      --card: rgba(255,255,255,0.06);
+      --card2: rgba(255,255,255,0.09);
+      --stroke: rgba(255,255,255,0.12);
+      --stroke2: rgba(255,255,255,0.20);
+      --text: rgba(255,255,255,0.94);
+      --muted: rgba(255,255,255,0.72);
+      --muted2: rgba(255,255,255,0.58);
+      --primary: #4f7cff;
+      --secondary: #9b5cff;
+      --accent: #60d5ff;
+      --success: #25d366;
+      --grad: linear-gradient(135deg, #4f7cff 0%, #9b5cff 100%);
+      --grad-wide: linear-gradient(90deg, #4f7cff, #9b5cff, #60d5ff, #9b5cff, #4f7cff);
+      --hero: radial-gradient(1100px 520px at 18% 12%, rgba(79,124,255,.40) 0%, transparent 60%),
+              radial-gradient(900px 460px at 82% 20%, rgba(155,92,255,.42) 0%, transparent 62%),
+              linear-gradient(135deg, #0b1020 0%, #0f1938 55%, #0b1020 100%);
+      --max: 1220px;
+      --px: clamp(18px, 3vw, 34px);
+      --r-lg: 22px;
+      --r-md: 16px;
+      --r-sm: 12px;
+      --shadow1: 0 12px 44px rgba(0,0,0,0.28);
+      --shadow2: 0 28px 90px rgba(0,0,0,0.38);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --ui: "Plus Jakarta Sans", system-ui, sans-serif;
+      --display: "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--ui);
+      background: var(--bg);
+      color: var(--text);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(to right, rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 64px 64px;
+      opacity: 0.04;
+      z-index: 0;
+    }
+
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); position: relative; z-index: 1; }
+
+    /* ===== KEYFRAME ANIMATIONS ===== */
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-14px); }
+    }
+    @keyframes float2 {
+      0%, 100% { transform: translateY(0px) rotate(-1deg); }
+      50% { transform: translateY(-10px) rotate(1deg); }
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(1); opacity: 0.7; }
+      100% { transform: scale(2.4); opacity: 0; }
+    }
+    @keyframes gradient-sweep {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+    @keyframes orbit-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes orbit-reverse {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+    @keyframes glow-border {
+      0%, 100% { box-shadow: 0 0 0 rgba(79,124,255,0); border-color: rgba(255,255,255,0.12); }
+      50% { box-shadow: 0 0 28px rgba(155,92,255,0.22); border-color: rgba(155,92,255,0.5); }
+    }
+    @keyframes hero-pulse {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.04); }
+    }
+    @keyframes slide-down {
+      from { opacity: 0; transform: translateY(-24px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: scale(0.92) translateY(-20px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    @keyframes draw-connector {
+      from { width: 0; opacity: 0; }
+      to { width: 100%; opacity: 1; }
+    }
+    @keyframes count-pop {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    @keyframes shimmer-bg {
+      0% { background-position: -100% 0; }
+      100% { background-position: 200% 0; }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    /* ===== SCROLL PROGRESS BAR ===== */
+    #progress-bar {
+      position: fixed; top: 0; left: 0; height: 3px; width: 0%;
+      background: var(--grad-wide);
+      background-size: 300% auto;
+      z-index: 9999;
+      transition: width 0.08s linear;
+      animation: gradient-sweep 3s ease infinite;
+    }
+
+    /* ===== PARTICLE CANVAS ===== */
+    #particles {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      z-index: 0; pointer-events: none;
+      opacity: 0.6;
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: sticky; top: 3px; z-index: 1000;
+      background: rgba(11,16,32,0.62);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      animation: slide-down 0.5s var(--ease) both;
+    }
+
+    .nav-wrap {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding: 12px 0; gap: 12px;
+    }
+
+    /* ===== BRAND LOGO ===== */
+    .brand { display: flex; gap: 12px; align-items: center; text-decoration: none; color: var(--text); }
+
+    .brand-badge {
+      width: 42px; height: 42px; flex: 0 0 42px;
+      position: relative; overflow: visible;
+    }
+
+    .brand-badge svg { width: 42px; height: 42px; }
+
+    .brand-title {
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .brand-sub {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.56);
+      margin-top: 2px;
+      line-height: 1.2;
+      max-width: 200px;
+    }
+
+    /* ===== NAV LINKS ===== */
+    nav { display: flex; align-items: center; gap: 2px; flex-wrap: nowrap; }
+
+    .link {
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.87rem;
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: background 200ms var(--ease), color 200ms var(--ease);
+      white-space: nowrap;
+    }
+    .link:hover { background: rgba(255,255,255,0.07); color: var(--text); }
+    .link:focus-visible { outline: 2px solid rgba(96,213,255,0.45); outline-offset: 3px; }
+
+    .nav-auth { display: flex; align-items: center; gap: 8px; margin-left: 8px; flex-shrink: 0; }
+
+    .btn-login {
+      padding: 8px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.20);
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+      font-weight: 800;
+      font-size: 0.87rem;
+      cursor: pointer;
+      transition: background 200ms var(--ease), transform 200ms var(--ease);
+      white-space: nowrap;
+    }
+    .btn-login:hover { background: rgba(255,255,255,0.12); transform: translateY(-1px); }
+
+    .btn-register {
+      padding: 8px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.22);
+      background: var(--grad);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.87rem;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(155,92,255,0.22);
+      transition: transform 200ms var(--ease), box-shadow 200ms var(--ease);
+      white-space: nowrap;
+    }
+    .btn-register:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(155,92,255,0.35); }
+
+    .menu-btn {
+      display: none;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    /* ===== MOBILE DRAWER ===== */
+    .backdrop {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.55);
+      opacity: 0; pointer-events: none;
+      transition: opacity 220ms var(--ease);
+      z-index: 999;
+    }
+    .drawer {
+      position: fixed; top: 0; right: 0; height: 100vh;
+      width: min(380px, 92vw);
+      background: rgba(11,16,32,0.92);
+      border-left: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      transform: translateX(105%);
+      transition: transform 260ms var(--ease);
+      z-index: 1000;
+      padding: 18px;
+      display: flex; flex-direction: column; gap: 8px;
+      overflow-y: auto;
+    }
+    .backdrop.open { opacity: 1; pointer-events: auto; }
+    .drawer.open { transform: translateX(0); }
+    .drawer-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .drawer-close { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); color: var(--text); padding: 10px 12px; border-radius: 12px; cursor: pointer; }
+    .drawer a {
+      color: var(--text); text-decoration: none; font-weight: 800;
+      padding: 12px 14px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10); border-radius: 14px;
+      transition: background 180ms var(--ease), transform 180ms var(--ease);
+      display: block;
+    }
+    .drawer a:hover { background: rgba(255,255,255,0.10); transform: translateY(-1px); }
+    .drawer-auth { display: flex; gap: 8px; margin-top: 8px; }
+    .drawer-auth button { flex: 1; }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 88px 0; }
+
+    .section-title {
+      text-align: center;
+      font-family: var(--display);
+      font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+      letter-spacing: -0.03em;
+      font-weight: 900;
+      margin-bottom: 12px;
+      background: var(--grad-wide);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-sweep 5s ease infinite;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--muted2);
+      max-width: 68ch;
+      margin: 0 auto 44px;
+      font-weight: 650;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: var(--hero);
+      padding: 108px 0 96px;
+      position: relative;
+      overflow: hidden;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(700px 360px at 50% 0%, rgba(96,213,255,0.16) 0%, transparent 60%),
+        radial-gradient(600px 400px at 20% 85%, rgba(79,124,255,0.14) 0%, transparent 55%);
+      animation: hero-pulse 8s ease-in-out infinite;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+      position: relative; z-index: 1;
+    }
+
+    .kicker { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.06);
+      font-weight: 800; color: rgba(255,255,255,0.90);
+      font-size: 0.88rem;
+      animation: glow-border 4s ease infinite;
+    }
+    .dot {
+      width: 8px; height: 8px; border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(96,213,255,0.18);
+      animation: pulse-ring 1.8s ease-out infinite;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(2.3rem, 4.2vw, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 18px;
+    }
+
+    .typewriter-wrap {
+      display: block;
+      background: var(--grad-wide);
+      background-size: 300% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-sweep 4s ease infinite;
+      min-height: 1.15em;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 3px; height: 0.85em;
+      background: var(--accent);
+      margin-left: 3px;
+      vertical-align: middle;
+      animation: blink 0.8s step-end infinite;
+    }
+
+    .hero p { color: var(--muted); font-size: 1.1rem; font-weight: 650; max-width: 58ch; margin-bottom: 24px; }
+
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 28px; }
+    .btn {
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.16);
+      padding: 13px 20px;
+      font-weight: 900;
+      cursor: pointer;
+      transition: transform 220ms var(--ease), box-shadow 220ms var(--ease), background 220ms var(--ease);
+      text-decoration: none;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      user-select: none; font-size: 0.97rem;
+    }
+    .btn.primary {
+      background: var(--grad);
+      color: #fff;
+      border-color: rgba(255,255,255,0.22);
+      box-shadow: 0 18px 55px rgba(79,124,255,0.20);
+    }
+    .btn.primary:hover { transform: translateY(-3px); box-shadow: 0 30px 80px rgba(155,92,255,0.30); }
+    .btn.ghost { background: rgba(255,255,255,0.06); color: var(--text); }
+    .btn.ghost:hover { transform: translateY(-2px); background: rgba(255,255,255,0.10); box-shadow: 0 18px 60px rgba(0,0,0,0.18); }
+    .btn:focus-visible { outline: 3px solid rgba(96,213,255,0.45); outline-offset: 3px; }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .stat {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px;
+      padding: 16px 14px;
+      box-shadow: 0 18px 70px rgba(0,0,0,0.18);
+      animation: glow-border 5s ease infinite;
+      transition: transform 220ms var(--ease);
+    }
+    .stat:hover { transform: translateY(-4px); }
+    .stat b {
+      font-family: var(--display);
+      font-size: 1.5rem; display: block;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat span { color: var(--muted2); font-weight: 650; font-size: 0.92rem; }
+
+    /* Hero preview area */
+    .preview { position: relative; height: 440px; }
+    .floating {
+      position: absolute;
+      width: 270px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 22px;
+      padding: 18px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      box-shadow: var(--shadow1);
+      will-change: transform;
+    }
+    .floating:nth-child(1) { top: 14px; left: 0; animation: float 5s ease-in-out infinite; }
+    .floating:nth-child(2) { top: 160px; right: 0; width: 290px; animation: float 6s ease-in-out 1s infinite; }
+    .floating:nth-child(3) { bottom: 8px; left: 48px; width: 250px; animation: float2 5.5s ease-in-out 2s infinite; }
+
+    .f-title { font-weight: 900; display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .tag { font-size: 0.8rem; font-weight: 900; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); color: rgba(255,255,255,0.80); }
+    .f-val { font-family: var(--display); font-size: 1.7rem; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight: 900; }
+    .f-sub { color: var(--muted2); font-weight: 700; font-size: 0.9rem; }
+
+    /* Hero logo display */
+    .hero-logo-display {
+      position: absolute; top: -30px; right: -30px;
+      width: 180px; height: 180px; opacity: 0.12;
+      z-index: -1;
+      animation: orbit-slow 20s linear infinite;
+    }
+
+    /* ===== CARDS ===== */
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 18px; }
+    .grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    .grid.four { grid-template-columns: repeat(4, minmax(0,1fr)); }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-lg);
+      padding: 22px;
+      box-shadow: 0 18px 70px rgba(0,0,0,0.16);
+      transition: transform 260ms var(--ease), background 260ms var(--ease), border-color 260ms var(--ease), box-shadow 260ms var(--ease);
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -50% -40% auto auto;
+      width: 240px; height: 240px;
+      background: radial-gradient(circle, rgba(79,124,255,0.20) 0%, transparent 65%);
+      opacity: 0.5;
+      transition: opacity 260ms var(--ease);
+      pointer-events: none;
+    }
+    .card:hover { transform: translateY(-10px); background: var(--card2); border-color: rgba(155,92,255,0.35); box-shadow: 0 30px 80px rgba(155,92,255,0.12); }
+    .card:hover::before { opacity: 1; }
+
+    /* Staggered animation delays */
+    .grid .card:nth-child(1) { animation-delay: 0ms; }
+    .grid .card:nth-child(2) { animation-delay: 80ms; }
+    .grid .card:nth-child(3) { animation-delay: 160ms; }
+    .grid .card:nth-child(4) { animation-delay: 240ms; }
+    .grid .card:nth-child(5) { animation-delay: 320ms; }
+    .grid .card:nth-child(6) { animation-delay: 400ms; }
+
+    .icon {
+      width: 52px; height: 52px; border-radius: 16px;
+      display: grid; place-items: center;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 14px; font-size: 1.55rem;
+      transition: transform 220ms var(--ease);
+    }
+    .card:hover .icon { transform: scale(1.12) rotate(-3deg); }
+
+    .card h3 { font-family: var(--display); letter-spacing: -0.01em; font-size: 1.15rem; margin-bottom: 10px; }
+    .card p { color: var(--muted2); font-weight: 650; }
+
+    .list { list-style: none; margin-top: 14px; }
+    .list li {
+      position: relative; padding-left: 26px;
+      padding-top: 6px; padding-bottom: 6px;
+      color: var(--muted); font-weight: 650;
+    }
+    .list li::before {
+      content: "✓"; position: absolute; left: 0; top: 7px;
+      width: 18px; height: 18px; border-radius: 6px;
+      display: grid; place-items: center;
+      background: rgba(96,213,255,0.16);
+      border: 1px solid rgba(96,213,255,0.24);
+      color: var(--accent); font-weight: 900; font-size: 0.82rem;
+    }
+
+    .card .mini-cta { margin-top: 16px; width: 100%; }
+
+    /* WhatsApp items grid */
+    .wa-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+    .wa-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px; padding: 14px;
+      font-weight: 800; color: rgba(255,255,255,0.88);
+      display: flex; gap: 10px; align-items: flex-start;
+      transition: transform 200ms var(--ease), background 200ms var(--ease);
+    }
+    .wa-item:hover { transform: translateY(-4px); background: rgba(255,255,255,0.08); }
+    .wa-item i {
+      width: 26px; height: 26px; border-radius: 10px;
+      background: rgba(37,211,102,0.14);
+      border: 1px solid rgba(37,211,102,0.24);
+      display: grid; place-items: center;
+      color: #25d366; font-style: normal; font-weight: 900;
+      flex: 0 0 auto; margin-top: 1px; font-size: 0.85rem;
+    }
+
+    /* ===== PROCESS SECTION ===== */
+    #process { background: rgba(255,255,255,0.015); }
+
+    .process-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      padding: 20px 0 40px;
+    }
+
+    .process-track::before {
+      content: "";
+      position: absolute;
+      top: 54px;
+      left: calc(12.5% + 30px);
+      width: calc(75% - 60px);
+      height: 2px;
+      background: linear-gradient(to right, var(--primary), var(--secondary), var(--accent));
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 600ms var(--ease), width 800ms var(--ease);
+    }
+    .process-track.in::before { opacity: 1; }
+
+    .process-step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+      padding: 0 12px;
+    }
+
+    .step-circle {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--grad);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+      font-family: var(--display);
+      font-size: 1.3rem; font-weight: 900; color: #fff;
+      border: 3px solid rgba(255,255,255,0.18);
+      box-shadow: 0 0 0 6px rgba(155,92,255,0.15), 0 20px 40px rgba(79,124,255,0.25);
+      position: relative; z-index: 2;
+      transition: transform 300ms var(--ease), box-shadow 300ms var(--ease);
+    }
+    .process-step:hover .step-circle {
+      transform: scale(1.12);
+      box-shadow: 0 0 0 10px rgba(155,92,255,0.20), 0 28px 60px rgba(79,124,255,0.35);
+    }
+
+    .step-emoji { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+    .process-step h3 { font-family: var(--display); font-size: 1.1rem; margin-bottom: 8px; letter-spacing: -0.01em; }
+    .process-step p { color: var(--muted2); font-weight: 650; font-size: 0.92rem; }
+
+    /* ===== ABOUT SECTION ===== */
+    #about { position: relative; overflow: hidden; }
+    #about::before {
+      content: "";
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(900px 600px at 80% 50%, rgba(155,92,255,0.12) 0%, transparent 65%);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .about-logo-wrap {
+      display: flex; justify-content: center; align-items: center;
+    }
+
+    .about-logo-svg {
+      width: 260px; height: 260px;
+      filter: drop-shadow(0 20px 60px rgba(155,92,255,0.35));
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .about-content h2 {
+      font-family: var(--display);
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      letter-spacing: -0.03em;
+      font-weight: 900;
+      margin-bottom: 18px;
+      line-height: 1.1;
+    }
+
+    .about-content h2 span {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .about-content p { color: var(--muted); font-weight: 650; margin-bottom: 14px; }
+
+    .about-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 24px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.05);
+      font-weight: 800; font-size: 0.88rem;
+      color: rgba(255,255,255,0.88);
+      transition: background 200ms var(--ease), transform 200ms var(--ease);
+    }
+    .chip:hover { background: rgba(155,92,255,0.15); transform: translateY(-2px); }
+
+    .about-stats-mini {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px;
+    }
+    .about-stat-mini {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px; padding: 14px;
+      text-align: center;
+    }
+    .about-stat-mini b {
+      font-family: var(--display); font-size: 1.4rem; display: block;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .about-stat-mini span { color: var(--muted2); font-size: 0.82rem; font-weight: 650; }
+
+    /* ===== PRIVACY SECTION ===== */
+    #privacy { background: rgba(255,255,255,0.015); }
+
+    .privacy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .privacy-card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--r-md);
+      padding: 20px 22px;
+      transition: transform 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .privacy-card:hover { transform: translateY(-4px); border-color: rgba(155,92,255,0.30); }
+    .privacy-card h4 { font-family: var(--display); font-size: 1rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .privacy-card p { color: var(--muted2); font-weight: 650; font-size: 0.92rem; }
+
+    /* ===== FAQ ===== */
+    .faq { max-width: 880px; margin: 0 auto; }
+    .faq-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 18px; margin-bottom: 12px; overflow: hidden;
+      transition: border-color 220ms var(--ease);
+    }
+    .faq-item:hover { border-color: rgba(155,92,255,0.28); }
+    .faq-q {
+      width: 100%; text-align: left; padding: 18px 20px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: transparent; border: none; color: var(--text);
+      font-weight: 900; cursor: pointer; font-size: 1rem; font-family: var(--ui);
+    }
+    .faq-a { padding: 0 20px 18px; color: var(--muted); font-weight: 650; display: none; }
+    .faq-item.open .faq-a { display: block; }
+    .chev { transition: transform 220ms var(--ease); font-size: 1.1rem; }
+    .faq-item.open .chev { transform: rotate(180deg); }
+
+    /* ===== CTA BAND ===== */
+    .cta-band {
+      background: linear-gradient(135deg, rgba(79,124,255,0.18) 0%, rgba(155,92,255,0.20) 100%);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 28px; padding: 36px;
+      display: grid; grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px; align-items: center;
+      box-shadow: var(--shadow2);
+      position: relative; overflow: hidden;
+    }
+    .cta-band::before {
+      content: "";
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(600px 300px at 70% 50%, rgba(155,92,255,0.16) 0%, transparent 65%);
+    }
+    .cta-band h3 { font-family: var(--display); font-size: 1.65rem; letter-spacing: -0.02em; position: relative; z-index: 1; }
+    .cta-band p { color: var(--muted); font-weight: 650; position: relative; z-index: 1; margin-top: 6px; }
+    .cta-band .btn { width: 100%; justify-content: center; position: relative; z-index: 1; }
+
+    /* ===== CONTACT FORM ===== */
+    form {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px; padding: 24px;
+      box-shadow: 0 18px 90px rgba(0,0,0,0.20);
+    }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    label { font-weight: 900; display: block; margin-bottom: 8px; color: rgba(255,255,255,0.88); }
+    input, select, textarea {
+      width: 100%; padding: 12px 14px;
+      border-radius: 14px; border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(11,16,32,0.60); color: var(--text);
+      font-family: var(--ui); font-size: 0.97rem;
+      transition: box-shadow 200ms var(--ease), border-color 200ms var(--ease);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: rgba(96,213,255,0.45);
+      box-shadow: 0 0 0 4px rgba(96,213,255,0.14);
+    }
+    textarea { resize: vertical; min-height: 140px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 48px 0 20px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      color: rgba(255,255,255,0.60);
+      background: rgba(255,255,255,0.02);
+    }
+    .foot-grid {
+      display: grid; grid-template-columns: repeat(4, minmax(0,1fr));
+      gap: 16px; padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.10);
+      margin-bottom: 16px;
+    }
+    .foot h4 { font-family: var(--display); color: rgba(255,255,255,0.88); margin-bottom: 12px; }
+    .foot a { color: rgba(255,255,255,0.64); text-decoration: none; display: inline-block; margin-bottom: 8px; font-weight: 650; transition: color 180ms var(--ease); }
+    .foot a:hover { color: var(--accent); }
+    .copy { text-align: center; font-weight: 650; font-size: 0.92rem; }
+
+    .foot-brand { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .foot-logo { width: 36px; height: 36px; }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .wa-float-wrap {
+      position: fixed; right: 24px; bottom: 24px;
+      z-index: 998;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .wa-float {
+      width: 60px; height: 60px; border-radius: 20px;
+      background: var(--success);
+      border: 2px solid rgba(255,255,255,0.22);
+      box-shadow: 0 22px 60px rgba(37,211,102,0.40);
+      color: #fff; display: grid; place-items: center;
+      cursor: pointer; position: relative;
+      transition: transform 200ms var(--ease), box-shadow 200ms var(--ease);
+      z-index: 2;
+    }
+    .wa-float:hover { transform: translateY(-4px) scale(1.06); box-shadow: 0 32px 80px rgba(37,211,102,0.55); }
+    .wa-float svg { width: 30px; height: 30px; }
+
+    .wa-pulse-ring {
+      position: absolute; inset: 0;
+      border-radius: 20px;
+      border: 2px solid rgba(37,211,102,0.7);
+      animation: pulse-ring 2s ease-out infinite;
+    }
+    .wa-pulse-ring:nth-child(2) { animation-delay: 0.6s; }
+    .wa-pulse-ring:nth-child(3) { animation-delay: 1.2s; }
+
+    /* ===== MODALS ===== */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.65);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: none; place-items: center;
+      z-index: 2000; padding: 20px;
+    }
+    .modal-overlay.open { display: grid; }
+
+    .modal {
+      background: rgba(11,16,40,0.97);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 28px;
+      padding: 36px;
+      width: 100%; max-width: 460px;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.60);
+      position: relative;
+      animation: modal-in 0.35s var(--ease) both;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-close {
+      position: absolute; top: 18px; right: 18px;
+      width: 34px; height: 34px; border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      color: var(--muted); cursor: pointer; font-size: 1rem;
+      display: grid; place-items: center;
+      transition: background 180ms, color 180ms;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.14); color: var(--text); }
+
+    .modal-logo {
+      width: 54px; height: 54px; margin: 0 auto 20px;
+      display: block;
+    }
+
+    .modal h2 {
+      font-family: var(--display);
+      font-size: 1.7rem; font-weight: 900;
+      letter-spacing: -0.03em;
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .modal p.modal-sub {
+      text-align: center; color: var(--muted2);
+      font-weight: 650; margin-bottom: 26px;
+    }
+
+    .modal-field { margin-bottom: 14px; }
+    .modal-field label { font-size: 0.9rem; }
+
+    .modal-divider {
+      display: flex; align-items: center; gap: 12px;
+      margin: 20px 0; color: var(--muted2); font-size: 0.88rem; font-weight: 650;
+    }
+    .modal-divider::before, .modal-divider::after {
+      content: ""; flex: 1; height: 1px; background: rgba(255,255,255,0.12);
+    }
+
+    .modal-switch {
+      text-align: center; margin-top: 18px;
+      color: var(--muted2); font-size: 0.92rem; font-weight: 650;
+    }
+    .modal-switch a { color: var(--accent); text-decoration: none; font-weight: 800; }
+    .modal-switch a:hover { text-decoration: underline; }
+
+    .grad-text {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* ===== REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 600ms var(--ease), transform 600ms var(--ease); }
+    .reveal.in { opacity: 1; transform: translateY(0); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1100px) {
+      nav { display: none; }
+      .menu-btn { display: inline-flex; }
+      .nav-auth { display: none; }
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid { grid-template-columns: 1fr; }
+      .preview { display: none; }
+      .grid, .grid.four { grid-template-columns: 1fr; }
+      .grid.two { grid-template-columns: 1fr; }
+      .wa-grid { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: 1fr; }
+      .cta-band { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .about-grid { grid-template-columns: 1fr; }
+      .privacy-grid { grid-template-columns: 1fr; }
+      .process-track { grid-template-columns: 1fr 1fr; }
+      .process-track::before { display: none; }
+      .about-stats-mini { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (max-width: 540px) {
+      .foot-grid { grid-template-columns: 1fr; }
+      .process-track { grid-template-columns: 1fr; }
+      .about-stats-mini { grid-template-columns: 1fr 1fr; }
+      h1 { font-size: 2rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+      html { scroll-behavior: auto; }
+      .reveal { opacity: 1 !important; transform: none !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Scroll progress -->
+  <div id="progress-bar" aria-hidden="true"></div>
+
+  <!-- Particle canvas -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+  <!-- WhatsApp floating button -->
+  <div class="wa-float-wrap">
+    <div class="wa-pulse-ring"></div>
+    <div class="wa-pulse-ring"></div>
+    <button class="wa-float" onclick="openWhatsApp()" aria-label="Chat with iAutomate on WhatsApp">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="white">
+        <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.78L2 22l5.47-1.43a9.86 9.86 0 004.57 1.14h.01c5.46 0 9.91-4.45 9.91-9.91A9.93 9.93 0 0012.04 2zM8.53 7.33c.16 0 .33 0 .47.01.21 0 .44.05.65.47.24.48.8 1.96.87 2.11.07.14.12.31.01.5-.1.2-.15.31-.3.48-.14.16-.3.35-.43.48-.14.14-.29.29-.12.57.16.28.73 1.21 1.57 1.96 1.08.96 1.99 1.26 2.27 1.41.28.14.44.12.6-.07.17-.19.7-.82.89-1.1.19-.28.38-.23.64-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.32.07.12.07.68-.15 1.34-.22.66-1.3 1.26-1.78 1.34-.48.07-1.09.1-1.75-.11-.4-.13-.91-.3-1.56-.58-2.74-1.18-4.53-3.95-4.67-4.13-.14-.18-1.13-1.5-1.13-2.86 0-1.37.72-2.04.97-2.32.26-.28.56-.35.75-.35z"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- ===== LOGIN MODAL ===== -->
+  <div class="modal-overlay" id="loginModal" role="dialog" aria-modal="true" aria-label="Login">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('loginModal')" aria-label="Close">✕</button>
+
+      <svg class="modal-logo" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="mlg1" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#4f7cff"/><stop offset="100%" stop-color="#9b5cff"/>
+          </linearGradient>
+          <radialGradient id="mrcg1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#60d5ff"/><stop offset="100%" stop-color="#9b5cff"/>
+          </radialGradient>
+        </defs>
+        <circle cx="27" cy="27" r="26" fill="#f4f0ff" stroke="url(#mlg1)" stroke-width="2"/>
+        <circle cx="27" cy="27" r="16" fill="none" stroke="url(#mlg1)" stroke-width="1.2" opacity="0.5"/>
+        <circle cx="27" cy="27" r="10" fill="none" stroke="url(#mlg1)" stroke-width="1.2" opacity="0.7"/>
+        <circle cx="27" cy="27" r="5.5" fill="url(#mrcg1)"/>
+        <circle cx="27" cy="3.5" r="2.5" fill="#8b5cf6"/><circle cx="44" cy="11.5" r="2.5" fill="#7c3aed"/>
+        <circle cx="50.5" cy="27" r="2.5" fill="#8b5cf6"/><circle cx="44" cy="42.5" r="2.5" fill="#7c3aed"/>
+        <circle cx="27" cy="50.5" r="2.5" fill="#8b5cf6"/><circle cx="10" cy="42.5" r="2.5" fill="#7c3aed"/>
+        <circle cx="3.5" cy="27" r="2.5" fill="#8b5cf6"/><circle cx="10" cy="11.5" r="2.5" fill="#7c3aed"/>
+        <line x1="27" y1="6" x2="27" y2="11" stroke="#9b5cff" stroke-width="1" opacity="0.4"/>
+        <line x1="42" y1="13" x2="38" y2="16" stroke="#9b5cff" stroke-width="1" opacity="0.4"/>
+      </svg>
+
+      <h2><span class="grad-text">Welcome Back</span></h2>
+      <p class="modal-sub">Sign in to your iAutomate account</p>
+
+      <form onsubmit="handleLogin(event)">
+        <div class="modal-field">
+          <label for="login-email">Email Address</label>
+          <input id="login-email" type="email" placeholder="you@company.com" required>
+        </div>
+        <div class="modal-field">
+          <label for="login-pass">Password</label>
+          <input id="login-pass" type="password" placeholder="••••••••" required>
+        </div>
+        <div style="text-align:right; margin: -4px 0 16px;">
+          <a href="#" style="color:var(--accent); font-size:0.88rem; font-weight:700; text-decoration:none;">Forgot password?</a>
+        </div>
+        <button class="btn primary" style="width:100%;" type="submit">Sign In</button>
+      </form>
+
+      <div class="modal-switch">
+        Don't have an account? <a href="#" onclick="switchModal('loginModal','registerModal')">Register free</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== REGISTER MODAL ===== -->
+  <div class="modal-overlay" id="registerModal" role="dialog" aria-modal="true" aria-label="Register">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal('registerModal')" aria-label="Close">✕</button>
+
+      <svg class="modal-logo" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="mlg2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#4f7cff"/><stop offset="100%" stop-color="#9b5cff"/>
+          </linearGradient>
+          <radialGradient id="mrcg2" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#60d5ff"/><stop offset="100%" stop-color="#9b5cff"/>
+          </radialGradient>
+        </defs>
+        <circle cx="27" cy="27" r="26" fill="#f4f0ff" stroke="url(#mlg2)" stroke-width="2"/>
+        <circle cx="27" cy="27" r="16" fill="none" stroke="url(#mlg2)" stroke-width="1.2" opacity="0.5"/>
+        <circle cx="27" cy="27" r="10" fill="none" stroke="url(#mlg2)" stroke-width="1.2" opacity="0.7"/>
+        <circle cx="27" cy="27" r="5.5" fill="url(#mrcg2)"/>
+        <circle cx="27" cy="3.5" r="2.5" fill="#8b5cf6"/><circle cx="44" cy="11.5" r="2.5" fill="#7c3aed"/>
+        <circle cx="50.5" cy="27" r="2.5" fill="#8b5cf6"/><circle cx="44" cy="42.5" r="2.5" fill="#7c3aed"/>
+        <circle cx="27" cy="50.5" r="2.5" fill="#8b5cf6"/><circle cx="10" cy="42.5" r="2.5" fill="#7c3aed"/>
+        <circle cx="3.5" cy="27" r="2.5" fill="#8b5cf6"/><circle cx="10" cy="11.5" r="2.5" fill="#7c3aed"/>
+      </svg>
+
+      <h2><span class="grad-text">Get Started Free</span></h2>
+      <p class="modal-sub">Create your iAutomate account today</p>
+
+      <form onsubmit="handleRegister(event)">
+        <div class="form-grid" style="gap:12px;">
+          <div class="modal-field">
+            <label for="reg-name">Full Name</label>
+            <input id="reg-name" type="text" placeholder="John Doe" required>
+          </div>
+          <div class="modal-field">
+            <label for="reg-email">Email</label>
+            <input id="reg-email" type="email" placeholder="you@company.com" required>
+          </div>
+          <div class="modal-field">
+            <label for="reg-phone">Phone</label>
+            <input id="reg-phone" type="tel" placeholder="+91 98888 00000" required>
+          </div>
+          <div class="modal-field">
+            <label for="reg-company">Company</label>
+            <input id="reg-company" type="text" placeholder="Your Company" required>
+          </div>
+        </div>
+        <div class="modal-field" style="margin-top:12px;">
+          <label for="reg-pass">Password</label>
+          <input id="reg-pass" type="password" placeholder="Create a strong password" required>
+        </div>
+        <button class="btn primary" style="width:100%; margin-top:16px;" type="submit">✨ Create Account</button>
+        <p style="margin-top:10px; color:var(--muted2); font-size:0.85rem; font-weight:650; text-align:center;">By registering you agree to our <a href="#privacy" style="color:var(--accent);" onclick="closeModal('registerModal')">Privacy Policy</a></p>
+      </form>
+
+      <div class="modal-switch">
+        Already have an account? <a href="#" onclick="switchModal('registerModal','loginModal')">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header>
+    <div class="container">
+      <div class="nav-wrap">
+
+        <!-- Brand -->
+        <a class="brand" href="#top" aria-label="iAutomate Services">
+          <div class="brand-badge">
+            <svg viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="blg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#4f7cff"/>
+                  <stop offset="100%" stop-color="#9b5cff"/>
+                </linearGradient>
+                <radialGradient id="bcg" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#60d5ff"/>
+                  <stop offset="60%" stop-color="#9b5cff"/>
+                  <stop offset="100%" stop-color="#4f7cff"/>
+                </radialGradient>
+              </defs>
+              <!-- Background circle -->
+              <circle cx="21" cy="21" r="20" fill="#f0ebff" stroke="url(#blg)" stroke-width="1.8"/>
+              <!-- Spoke lines -->
+              <line x1="21" y1="5" x2="21" y2="12" stroke="#9b5cff" stroke-width="0.9" opacity="0.45"/>
+              <line x1="33" y1="9" x2="28" y2="14" stroke="#9b5cff" stroke-width="0.9" opacity="0.45"/>
+              <line x1="37" y1="21" x2="30" y2="21" stroke="#9b5cff" stroke-width="0.9" opacity="0.45"/>
+              <line x1="33" y1="33" x2="28" y2="28" stroke="#9b5cff" stroke-width="0.9" opacity="0.45"/>
+              <line x1="21" y1="37" x2="21" y2="30" stroke="#9b5cff" stroke-width="0.9" opacity="0.45"/>
+              <line x1="9" y1="33" x2="14" y2="28" stroke="#9b5cff" stroke-width="0.9" opacity="0.45"/>
+              <line x1="5" y1="21" x2="12" y2="21" stroke="#9b5cff" stroke-width="0.9" opacity="0.45"/>
+              <line x1="9" y1="9" x2="14" y2="14" stroke="#9b5cff" stroke-width="0.9" opacity="0.45"/>
+              <!-- Orbit rings -->
+              <circle cx="21" cy="21" r="13" fill="none" stroke="url(#blg)" stroke-width="0.9" opacity="0.45"/>
+              <circle cx="21" cy="21" r="8" fill="none" stroke="url(#blg)" stroke-width="1.1" opacity="0.65"/>
+              <!-- Central orb -->
+              <circle cx="21" cy="21" r="5" fill="url(#bcg)"/>
+              <!-- Rotating dots group -->
+              <g style="transform-origin:21px 21px; animation:orbit-slow 9s linear infinite;">
+                <circle cx="21" cy="4" r="2.2" fill="#8b5cf6"/>
+                <circle cx="38" cy="12" r="2.2" fill="#7c3aed"/>
+                <circle cx="38" cy="30" r="2.2" fill="#8b5cf6"/>
+                <circle cx="21" cy="38" r="2.2" fill="#7c3aed"/>
+                <circle cx="4" cy="30" r="2.2" fill="#8b5cf6"/>
+                <circle cx="4" cy="12" r="2.2" fill="#7c3aed"/>
+              </g>
+              <!-- Static extra dots -->
+              <g style="transform-origin:21px 21px; animation:orbit-reverse 13s linear infinite;">
+                <circle cx="36" cy="21" r="1.6" fill="#60d5ff" opacity="0.8"/>
+                <circle cx="6" cy="21" r="1.6" fill="#60d5ff" opacity="0.8"/>
+              </g>
+            </svg>
+          </div>
+          <div>
+            <div class="brand-title">iAutomate</div>
+            <div class="brand-sub">AI Business Automation Service</div>
+          </div>
+        </a>
+
+        <!-- Desktop nav -->
+        <nav aria-label="Primary">
+          <a class="link" href="#services">Services</a>
+          <a class="link" href="#whatsapp-suite">Bulk Messaging</a>
+          <a class="link" href="#process">Process</a>
+          <a class="link" href="#cases">Success</a>
+          <a class="link" href="#contact">Contact</a>
+          <a class="link" href="#privacy">Privacy Policy</a>
+          <a class="link" href="#about">About Us</a>
+        </nav>
+
+        <!-- Auth buttons -->
+        <div class="nav-auth">
+          <button class="btn-login" onclick="openModal('loginModal')">Login</button>
+          <button class="btn-register" onclick="openModal('registerModal')">Register</button>
+        </div>
+
+        <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MOBILE DRAWER ===== -->
+  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
+  <aside class="drawer" id="drawer" aria-label="Mobile navigation" aria-hidden="true">
+    <div class="drawer-head">
+      <div style="display:flex; align-items:center; gap:10px;">
+        <svg width="34" height="34" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="dlg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#4f7cff"/><stop offset="100%" stop-color="#9b5cff"/>
+            </linearGradient>
+            <radialGradient id="dcg" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#60d5ff"/><stop offset="100%" stop-color="#9b5cff"/>
+            </radialGradient>
+          </defs>
+          <circle cx="21" cy="21" r="20" fill="#f0ebff" stroke="url(#dlg)" stroke-width="1.8"/>
+          <circle cx="21" cy="21" r="13" fill="none" stroke="url(#dlg)" stroke-width="0.9" opacity="0.45"/>
+          <circle cx="21" cy="21" r="8" fill="none" stroke="url(#dlg)" stroke-width="1.1" opacity="0.65"/>
+          <circle cx="21" cy="21" r="5" fill="url(#dcg)"/>
+          <circle cx="21" cy="4" r="2" fill="#8b5cf6"/>
+          <circle cx="38" cy="21" r="2" fill="#7c3aed"/>
+          <circle cx="21" cy="38" r="2" fill="#8b5cf6"/>
+          <circle cx="4" cy="21" r="2" fill="#7c3aed"/>
+        </svg>
+        <div>
+          <div class="brand-title" style="font-size:1rem;">iAutomate</div>
+          <div class="brand-sub">Navigation</div>
+        </div>
+      </div>
+      <button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button>
+    </div>
+
+    <a href="#services">⚡ Services</a>
+    <a href="#whatsapp-suite">💬 Bulk Messaging (WhatsApp API)</a>
+    <a href="#process">🔄 Process</a>
+    <a href="#cases">🏆 Success</a>
+    <a href="#contact">📬 Contact</a>
+    <a href="#privacy">🔒 Privacy Policy</a>
+    <a href="#about">👥 About Us</a>
+
+    <div class="drawer-auth" style="margin-top:8px;">
+      <button class="btn-login" style="flex:1;" onclick="openModal('loginModal'); closeDrawer();">Login</button>
+      <button class="btn-register" style="flex:1;" onclick="openModal('registerModal'); closeDrawer();">Register</button>
+    </div>
+
+    <div style="margin-top:auto; color:rgba(255,255,255,0.52); font-weight:650; font-size:0.88rem; padding:10px 4px;">
+      Tap the WhatsApp button for instant support.
+    </div>
+  </aside>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="hero-grid">
+
+        <div>
+          <div class="kicker reveal">
+            <span class="pill"><span class="dot"></span> Official WhatsApp Business API</span>
+            <span class="pill">⚡ Deploy in weeks</span>
+            <span class="pill">🔒 Enterprise-ready</span>
+          </div>
+
+          <h1 class="reveal">
+            <span class="typewriter-wrap" id="typewriter">Automate WhatsApp, Calls &amp; IT Ops</span><span class="cursor" aria-hidden="true"></span><br>
+            and scale without hiring.
+          </h1>
+
+          <p class="reveal">iAutomate helps businesses reduce manual work, improve response times, and run operations 24/7 using intelligent automation — across WhatsApp, calling, ServiceNow, Microsoft 365 and more.</p>
+
+          <div class="btn-row reveal">
+            <a class="btn primary" href="#contact">🎯 Book a Free Demo</a>
+            <a class="btn ghost" href="#automations">📌 Top WhatsApp Automations</a>
+          </div>
+
+          <div class="stats reveal" id="stats-section">
+            <div class="stat"><b id="stat1">0+</b><span>Automations deployed</span></div>
+            <div class="stat"><b id="stat2">0+</b><span>Enterprise clients</span></div>
+            <div class="stat"><b id="stat3">0%</b><span>Uptime SLA</span></div>
+          </div>
+        </div>
+
+        <div class="preview" aria-hidden="true">
+          <div class="floating reveal">
+            <div class="f-title">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#25d366" style="flex-shrink:0;"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.78L2 22l5.47-1.43a9.86 9.86 0 004.57 1.14h.01c5.46 0 9.91-4.45 9.91-9.91A9.93 9.93 0 0012.04 2zM8.53 7.33c.16 0 .33 0 .47.01.21 0 .44.05.65.47.24.48.8 1.96.87 2.11.07.14.12.31.01.5-.1.2-.15.31-.3.48-.14.16-.3.35-.43.48-.14.14-.29.29-.12.57.16.28.73 1.21 1.57 1.96 1.08.96 1.99 1.26 2.27 1.41.28.14.44.12.6-.07.17-.19.7-.82.89-1.1.19-.28.38-.23.64-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.32.07.12.07.68-.15 1.34-.22.66-1.3 1.26-1.78 1.34-.48.07-1.09.1-1.75-.11-.4-.13-.91-.3-1.56-.58-2.74-1.18-4.53-3.95-4.67-4.13-.14-.18-1.13-1.5-1.13-2.86 0-1.37.72-2.04.97-2.32.26-.28.56-.35.75-.35z"/></svg>
+              Bulk Campaigns <span class="tag">Marketing</span>
+            </div>
+            <div class="f-val">Broadcast</div>
+            <div class="f-sub">Personalized templates + scheduling</div>
+          </div>
+          <div class="floating reveal">
+            <div class="f-title">🧠 AI Assist <span class="tag">Quality</span></div>
+            <div class="f-val">Faster Replies</div>
+            <div class="f-sub">Improve SLA &amp; consistency</div>
+          </div>
+          <div class="floating reveal">
+            <div class="f-title">👥 Shared Inbox <span class="tag">Support</span></div>
+            <div class="f-val">Team-ready</div>
+            <div class="f-sub">Auto allocation + quick replies</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title reveal">iAutomate Core Services</h2>
+      <p class="section-sub reveal">Complete automation solutions for every business need — from WhatsApp chatbots to enterprise IT workflows.</p>
+
+      <div class="grid">
+        <div class="card reveal">
+          <div class="icon">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.78L2 22l5.47-1.43a9.86 9.86 0 004.57 1.14h.01c5.46 0 9.91-4.45 9.91-9.91A9.93 9.93 0 0012.04 2zM8.53 7.33c.16 0 .33 0 .47.01.21 0 .44.05.65.47.24.48.8 1.96.87 2.11.07.14.12.31.01.5-.1.2-.15.31-.3.48-.14.16-.3.35-.43.48-.14.14-.29.29-.12.57.16.28.73 1.21 1.57 1.96 1.08.96 1.99 1.26 2.27 1.41.28.14.44.12.6-.07.17-.19.7-.82.89-1.1.19-.28.38-.23.64-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.32.07.12.07.68-.15 1.34-.22.66-1.3 1.26-1.78 1.34-.48.07-1.09.1-1.75-.11-.4-.13-.91-.3-1.56-.58-2.74-1.18-4.53-3.95-4.67-4.13-.14-.18-1.13-1.5-1.13-2.86 0-1.37.72-2.04.97-2.32.26-.28.56-.35.75-.35z"/></svg>
+          </div>
+          <h3>WhatsApp Chatbot</h3>
+          <p>Smart AI-powered chatbots for instant customer support and lead capture.</p>
+          <ul class="list">
+            <li>Automated customer support</li>
+            <li>Instant replies &amp; lead capture</li>
+            <li>Appointment booking</li>
+            <li>CRM integration</li>
+          </ul>
+          <button class="btn primary mini-cta" data-action="whatsapp">Chat on WhatsApp</button>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">☎️</div>
+          <h3>Calling Bot Automation</h3>
+          <p>Automate inbound/outbound calling with AI voice agents, reminders and routing.</p>
+          <ul class="list">
+            <li>Inbound &amp; outbound automation</li>
+            <li>AI-powered conversations</li>
+            <li>Reminders &amp; alerts</li>
+            <li>Reduced support load</li>
+          </ul>
+          <a class="btn primary mini-cta" href="#contact">Discuss Voice Automation</a>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">⚙️</div>
+          <h3>IT Service Automation</h3>
+          <p>Automate repetitive IT tasks: onboarding, access control, incidents, monitoring, and more.</p>
+          <ul class="list">
+            <li>User account management</li>
+            <li>Incident handling</li>
+            <li>Access control</li>
+            <li>Health monitoring</li>
+          </ul>
+          <a class="btn primary mini-cta" href="#contact">Automate IT Operations</a>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">🔄</div>
+          <h3>ServiceNow Automation</h3>
+          <p>Maximize ServiceNow with automated workflows, integrations, and SLA optimization.</p>
+          <ul class="list">
+            <li>Workflow automation</li>
+            <li>Incident management</li>
+            <li>Custom integrations</li>
+            <li>SLA optimization</li>
+          </ul>
+          <a class="btn primary mini-cta" href="#contact">Optimize ServiceNow</a>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">☁️</div>
+          <h3>Microsoft 365 Automation</h3>
+          <p>Automate Microsoft 365 lifecycle management: users, email, Teams, SharePoint &amp; compliance.</p>
+          <ul class="list">
+            <li>User management</li>
+            <li>Email automation</li>
+            <li>Teams &amp; SharePoint</li>
+            <li>Compliance tasks</li>
+          </ul>
+          <a class="btn primary mini-cta" href="#contact">Automate Microsoft 365</a>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">💻</div>
+          <h3>PowerShell Automation</h3>
+          <p>Enterprise-grade scripting to automate admin work, servers, deployments, and reporting.</p>
+          <ul class="list">
+            <li>Admin automation</li>
+            <li>Server management</li>
+            <li>Error reduction</li>
+            <li>Scalable solutions</li>
+          </ul>
+          <a class="btn primary mini-cta" href="#contact">Build Scripts &amp; Runbooks</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BULK MESSAGING (WhatsApp API) ===== -->
+  <section id="whatsapp-suite" style="background:rgba(255,255,255,0.015);">
+    <div class="container">
+      <h2 class="section-title reveal">Bulk Messaging &amp; WhatsApp API Suite</h2>
+      <p class="section-sub reveal">Run broadcasts, automate follow-ups, manage support, and collaborate as a team — powered by the official WhatsApp Business API.</p>
+
+      <div class="grid two">
+        <div class="card reveal">
+          <div class="icon">✅</div>
+          <h3>Official WhatsApp API Workflows</h3>
+          <p>Run WhatsApp marketing campaigns and manage customer support at scale, with chatbots and AI assist for reply quality.</p>
+          <ul class="list">
+            <li>Automate customer interaction with a chatbot builder</li>
+            <li>AI assist to improve quality &amp; SLA of replies</li>
+            <li>Shared team inbox for collaboration</li>
+          </ul>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">🎉</div>
+          <h3>Coexistence: App + Cloud API (Dual Access)</h3>
+          <p>Use the WhatsApp Business app alongside API automation for flexible operations.</p>
+          <ul class="list">
+            <li>Retain the mobile app while sending bulk messages via API</li>
+            <li>Sync contacts and chat history across interfaces</li>
+            <li>Switch between manual and automated messaging</li>
+          </ul>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">📣</div>
+          <h3>Bulk Messaging &amp; Broadcast Campaigns</h3>
+          <p>Send campaigns at scale — personalize templates using merge tags and schedule messages for later.</p>
+          <ul class="list">
+            <li>Unlimited broadcasts (by audience rules)</li>
+            <li>Personalized templates with dynamic fields</li>
+            <li>Campaign scheduling and delivery tracking</li>
+          </ul>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">🧩</div>
+          <h3>Drip Campaigns &amp; Sales Sequences</h3>
+          <p>No-code workflow builder to automate follow-ups, reminders, and long-running sequences.</p>
+          <ul class="list">
+            <li>Multi-step journeys running for days/months</li>
+            <li>Personalize based on customer journey stage</li>
+            <li>Recurring scheduled reminders</li>
+          </ul>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">👥</div>
+          <h3>Shared Inbox + Auto Allocation</h3>
+          <p>Centralize conversations so no message is missed. Route to the right agent and reply faster.</p>
+          <ul class="list">
+            <li>Rule-based assignment to relevant agents</li>
+            <li>Linked lead/contact view in the same dashboard</li>
+            <li>Canned responses (quick replies)</li>
+          </ul>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">🤖</div>
+          <h3>Chatbots + AI Bots</h3>
+          <p>Build bots to handle common queries, qualify leads, and hand off to agents when needed.</p>
+          <ul class="list">
+            <li>FAQ automation &amp; intent routing</li>
+            <li>Lead capture, forms, and appointment booking</li>
+            <li>Human handoff for complex cases</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top:28px;" class="cta-band reveal">
+        <div>
+          <h3>Want a WhatsApp system that converts leads and closes sales?</h3>
+          <p>We can implement the full suite: support inbox, chatbots, broadcasts, drip sequences, and integrations.</p>
+        </div>
+        <div>
+          <a class="btn primary" href="#contact">✨ Schedule a Demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TOP 20 AUTOMATIONS ===== -->
+  <section id="automations">
+    <div class="container">
+      <h2 class="section-title reveal">Top 20 WhatsApp Automations</h2>
+      <p class="section-sub reveal">Use these automation patterns to reduce response time, boost conversions, and improve customer experience.</p>
+
+      <div class="wa-grid">
+        <div class="wa-item reveal"><i>1</i> Customer support chatbot (24/7 FAQs + ticketing)</div>
+        <div class="wa-item reveal"><i>2</i> Lead qualification bot (questions → score → route)</div>
+        <div class="wa-item reveal"><i>3</i> Appointment booking + calendar confirmations</div>
+        <div class="wa-item reveal"><i>4</i> Order confirmation + invoice messaging</div>
+        <div class="wa-item reveal"><i>5</i> Delivery tracking updates + status notifications</div>
+        <div class="wa-item reveal"><i>6</i> Payment reminders + collection nudges</div>
+        <div class="wa-item reveal"><i>7</i> Abandoned cart recovery sequence</div>
+        <div class="wa-item reveal"><i>8</i> Product catalog sharing + guided recommendations</div>
+        <div class="wa-item reveal"><i>9</i> Opt-in capture + consent logging</div>
+        <div class="wa-item reveal"><i>10</i> CRM sync (create/update lead/contact record)</div>
+        <div class="wa-item reveal"><i>11</i> Auto assignment to agents via rules (round-robin/skills)</div>
+        <div class="wa-item reveal"><i>12</i> Canned responses + AI-assisted drafting</div>
+        <div class="wa-item reveal"><i>13</i> Customer onboarding + step-by-step checklists</div>
+        <div class="wa-item reveal"><i>14</i> Feedback collection + NPS/CSAT</div>
+        <div class="wa-item reveal"><i>15</i> Surveys + segmented broadcasts</div>
+        <div class="wa-item reveal"><i>16</i> Event reminders + RSVP flows</div>
+        <div class="wa-item reveal"><i>17</i> Support ticket creation from chat + transcript attach</div>
+        <div class="wa-item reveal"><i>18</i> Multi-language chatbot (Hindi/English + more)</div>
+        <div class="wa-item reveal"><i>19</i> Missed call → instant WhatsApp reply + callback booking</div>
+        <div class="wa-item reveal"><i>20</i> After-sales engagement (warranty, upsell, renewals)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROCESS ===== -->
+  <section id="process">
+    <div class="container">
+      <h2 class="section-title reveal">How It Works</h2>
+      <p class="section-sub reveal">From first call to full deployment — a clear, proven path to automation success.</p>
+
+      <div class="process-track" id="processTrack">
+        <div class="process-step reveal">
+          <span class="step-emoji">🔍</span>
+          <div class="step-circle">01</div>
+          <h3>Discover</h3>
+          <p>Free consultation &amp; requirement mapping for your business goals and pain points.</p>
+        </div>
+
+        <div class="process-step reveal">
+          <span class="step-emoji">🎨</span>
+          <div class="step-circle">02</div>
+          <h3>Design</h3>
+          <p>Automation blueprint, workflow architecture, and technology selection tailored to you.</p>
+        </div>
+
+        <div class="process-step reveal">
+          <span class="step-emoji">🔧</span>
+          <div class="step-circle">03</div>
+          <h3>Build &amp; Test</h3>
+          <p>Development + rigorous QA with your team — fast iterations, no surprises at launch.</p>
+        </div>
+
+        <div class="process-step reveal">
+          <span class="step-emoji">🚀</span>
+          <div class="step-circle">04</div>
+          <h3>Deploy &amp; Scale</h3>
+          <p>Go live in weeks. Ongoing optimization, monitoring, and scaling as your business grows.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:28px;" class="cta-band reveal">
+        <div>
+          <h3>Ready to start your automation journey?</h3>
+          <p>Book a free discovery call — no commitment, just clarity on what's possible for your business.</p>
+        </div>
+        <div>
+          <a class="btn primary" href="#contact">🎯 Book Free Consultation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SUCCESS / CASES ===== -->
+  <section id="cases" style="background:rgba(255,255,255,0.015);">
+    <div class="container">
+      <h2 class="section-title reveal">Success Stories</h2>
+      <p class="section-sub reveal">Proven results from businesses like yours — faster response, lower costs, better outcomes.</p>
+
+      <div class="grid">
+        <div class="card reveal">
+          <div class="icon">🛍️</div>
+          <h3>E-Commerce Automation</h3>
+          <p><b style="color:rgba(96,213,255,0.92)">Challenge:</b> Manual order processing created bottlenecks and delayed deliveries.</p>
+          <p style="margin-top:10px;"><b style="color:rgba(96,213,255,0.92)">Solution:</b> WhatsApp chatbot + automation for confirmations, tracking &amp; updates.</p>
+          <ul class="list">
+            <li>70% faster response time</li>
+            <li>Customer satisfaction ↑ 45%</li>
+            <li>Costs ↓ 35% (operations)</li>
+          </ul>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">📞</div>
+          <h3>Support Center Calling Bots</h3>
+          <p><b style="color:rgba(96,213,255,0.92)">Challenge:</b> High call volume caused long wait times.</p>
+          <p style="margin-top:10px;"><b style="color:rgba(96,213,255,0.92)">Solution:</b> AI calling bot + automated ticketing workflow.</p>
+          <ul class="list">
+            <li>60% call volume reduction</li>
+            <li>3,000+ calls/month handled</li>
+            <li>Annual savings: $150K</li>
+          </ul>
+        </div>
+
+        <div class="card reveal">
+          <div class="icon">🏢</div>
+          <h3>Enterprise IT Onboarding</h3>
+          <p><b style="color:rgba(96,213,255,0.92)">Challenge:</b> Onboarding took 3–5 days and consumed 40+ hours weekly.</p>
+          <p style="margin-top:10px;"><b style="color:rgba(96,213,255,0.92)">Solution:</b> Automated provisioning, deployment, and documentation.</p>
+          <ul class="list">
+            <li>Onboarding: 3 days → 4 hours</li>
+            <li>Errors reduced: 100%</li>
+            <li>Annual savings: $200K</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT US ===== -->
+  <section id="about">
+    <div class="container">
+      <div class="about-grid">
+
+        <!-- Logo display -->
+        <div class="about-logo-wrap reveal">
+          <svg class="about-logo-svg" viewBox="0 0 260 260" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="alg" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#4f7cff"/>
+                <stop offset="100%" stop-color="#9b5cff"/>
+              </linearGradient>
+              <radialGradient id="acg" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#60d5ff" stop-opacity="1"/>
+                <stop offset="40%" stop-color="#9b5cff" stop-opacity="1"/>
+                <stop offset="100%" stop-color="#4f7cff" stop-opacity="1"/>
+              </radialGradient>
+              <radialGradient id="abg" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#f8f4ff"/>
+                <stop offset="100%" stop-color="#ede5ff"/>
+              </radialGradient>
+            </defs>
+
+            <!-- Outer border ring -->
+            <circle cx="130" cy="130" r="126" fill="none" stroke="url(#alg)" stroke-width="3" opacity="0.6"/>
+            <!-- Background circle -->
+            <circle cx="130" cy="130" r="122" fill="url(#abg)"/>
+
+            <!-- "iAutomate Services" arc text at top -->
+            <path id="topArc" d="M 38,130 A 92,92 0 0,1 222,130" fill="none"/>
+            <text font-family="Space Grotesk, sans-serif" font-size="17" font-weight="700" fill="#1a0050" letter-spacing="1.5">
+              <textPath href="#topArc" startOffset="12%">iAutomate Services</textPath>
+            </text>
+
+            <!-- "AUTOMATION SOLUTIONS" arc text at bottom -->
+            <path id="btmArc" d="M 34,140 A 96,96 0 0,0 226,140" fill="none"/>
+            <text font-family="Space Grotesk, sans-serif" font-size="13" font-weight="700" fill="#4f7cff" letter-spacing="2.8">
+              <textPath href="#btmArc" startOffset="8%">AUTOMATION SOLUTIONS</textPath>
+            </text>
+
+            <!-- Spoke lines -->
+            <line x1="130" y1="32" x2="130" y2="70" stroke="#9b5cff" stroke-width="1.5" opacity="0.35"/>
+            <line x1="195" y1="52" x2="172" y2="78" stroke="#9b5cff" stroke-width="1.5" opacity="0.35"/>
+            <line x1="228" y1="130" x2="192" y2="130" stroke="#9b5cff" stroke-width="1.5" opacity="0.35"/>
+            <line x1="195" y1="208" x2="172" y2="182" stroke="#9b5cff" stroke-width="1.5" opacity="0.35"/>
+            <line x1="130" y1="228" x2="130" y2="192" stroke="#9b5cff" stroke-width="1.5" opacity="0.35"/>
+            <line x1="65" y1="208" x2="88" y2="182" stroke="#9b5cff" stroke-width="1.5" opacity="0.35"/>
+            <line x1="32" y1="130" x2="68" y2="130" stroke="#9b5cff" stroke-width="1.5" opacity="0.35"/>
+            <line x1="65" y1="52" x2="88" y2="78" stroke="#9b5cff" stroke-width="1.5" opacity="0.35"/>
+
+            <!-- Orbit rings -->
+            <circle cx="130" cy="130" r="78" fill="none" stroke="url(#alg)" stroke-width="1.5" opacity="0.35"/>
+            <circle cx="130" cy="130" r="55" fill="none" stroke="url(#alg)" stroke-width="1.5" opacity="0.5"/>
+            <circle cx="130" cy="130" r="34" fill="none" stroke="url(#alg)" stroke-width="2" opacity="0.65"/>
+
+            <!-- Central orb -->
+            <circle cx="130" cy="130" r="22" fill="url(#acg)"/>
+            <circle cx="130" cy="130" r="13" fill="white" opacity="0.2"/>
+            <circle cx="130" cy="130" r="6" fill="white" opacity="0.5"/>
+
+            <!-- Outer orbit nodes (rotating) -->
+            <g style="transform-origin:130px 130px; animation:orbit-slow 12s linear infinite;">
+              <circle cx="130" cy="30" r="9" fill="#8b5cf6"/>
+              <circle cx="224" cy="78" r="9" fill="#7c3aed"/>
+              <circle cx="224" cy="182" r="9" fill="#8b5cf6"/>
+              <circle cx="130" cy="230" r="9" fill="#7c3aed"/>
+              <circle cx="36" cy="182" r="9" fill="#8b5cf6"/>
+              <circle cx="36" cy="78" r="9" fill="#7c3aed"/>
+            </g>
+
+            <!-- Inner orbit nodes (counter-rotating) -->
+            <g style="transform-origin:130px 130px; animation:orbit-reverse 8s linear infinite;">
+              <circle cx="130" cy="53" r="6" fill="#60d5ff" opacity="0.9"/>
+              <circle cx="207" cy="130" r="6" fill="#60d5ff" opacity="0.9"/>
+              <circle cx="130" cy="207" r="6" fill="#60d5ff" opacity="0.9"/>
+              <circle cx="53" cy="130" r="6" fill="#60d5ff" opacity="0.9"/>
+            </g>
+
+            <!-- Checkbox widgets (left & right) -->
+            <rect x="18" y="118" width="22" height="22" rx="5" fill="none" stroke="#9b5cff" stroke-width="2" opacity="0.7"/>
+            <rect x="220" y="118" width="22" height="22" rx="5" fill="none" stroke="#9b5cff" stroke-width="2" opacity="0.7"/>
+
+            <!-- Decorative accent curve -->
+            <path d="M 155,145 Q 175,120 190,140" fill="none" stroke="#ff6eb4" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+          </svg>
+        </div>
+
+        <!-- About content -->
+        <div class="about-content reveal">
+          <h2>Powering Businesses with <span>Intelligent Automation</span></h2>
+          <p>iAutomate is on a mission to help every business run smarter through intelligent, scalable automation. We combine deep expertise in WhatsApp Business API, AI, and enterprise IT to deliver solutions that actually work.</p>
+          <p>Founded by automation engineers with 10+ years of experience across leading enterprises, we've helped 50+ clients across e-commerce, healthcare, finance, and IT services achieve measurable ROI — often within weeks of deployment.</p>
+
+          <div class="about-chips">
+            <span class="chip">💬 WhatsApp Business API</span>
+            <span class="chip">🤖 AI &amp; Machine Learning</span>
+            <span class="chip">☁️ Microsoft 365</span>
+            <span class="chip">🔄 ServiceNow</span>
+            <span class="chip">💻 PowerShell &amp; IT Automation</span>
+            <span class="chip">📞 Voice AI &amp; Calling Bots</span>
+          </div>
+
+          <div class="about-stats-mini">
+            <div class="about-stat-mini"><b>10+</b><span>Years experience</span></div>
+            <div class="about-stat-mini"><b>20+</b><span>Engineers</span></div>
+            <div class="about-stat-mini"><b>5+</b><span>Countries served</span></div>
+          </div>
+
+          <div style="margin-top:24px;">
+            <a class="btn primary" href="#contact">Partner with us →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq" style="background:rgba(255,255,255,0.015);">
+    <div class="container">
+      <h2 class="section-title reveal">FAQ</h2>
+      <p class="section-sub reveal">Common questions about WhatsApp automation, deployments, and integrations.</p>
+
+      <div class="faq">
+        <div class="faq-item reveal">
+          <button class="faq-q" type="button">
+            Do you help set up WhatsApp Business API and templates?
+            <span class="chev">⌄</span>
+          </button>
+          <div class="faq-a">Yes. We support WhatsApp API onboarding, template planning (marketing/utility/auth flows), and automation rollout across support, sales, and operations.</div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q" type="button">
+            Can we use the WhatsApp Business App and automation together?
+            <span class="chev">⌄</span>
+          </button>
+          <div class="faq-a">Yes — you can keep the mobile app for manual chats and add API automation for campaigns, workflows, and integrations (dual-mode operations).</div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q" type="button">
+            Do you integrate with ServiceNow and Microsoft 365?
+            <span class="chev">⌄</span>
+          </button>
+          <div class="faq-a">Yes. We build automations for ServiceNow workflows (incidents, services, SLAs) and Microsoft 365 (user lifecycle, Teams/SharePoint, compliance tasks).</div>
+        </div>
+
+        <div class="faq-item reveal">
+          <button class="faq-q" type="button">
+            How fast can we go live?
+            <span class="chev">⌄</span>
+          </button>
+          <div class="faq-a">Most MVP deployments go live in 2–4 weeks. We start with your highest-ROI automation flow and expand iteratively from there.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:28px;" class="cta-band reveal">
+        <div>
+          <h3>Ready to automate your WhatsApp &amp; ops workflows?</h3>
+          <p>Book a free demo and we'll propose a practical automation roadmap for your business.</p>
+        </div>
+        <div>
+          <a class="btn primary" href="#contact">🎯 Book a Free Demo</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title reveal">Talk to Sales</h2>
+      <p class="section-sub reveal">Tell us what you want to automate — we'll reply with next steps and a proposal.</p>
+
+      <div class="grid two">
+        <div class="card reveal">
+          <div class="icon">📌</div>
+          <h3>What you get in the demo</h3>
+          <ul class="list">
+            <li>Automation roadmap (WhatsApp + IT + integrations)</li>
+            <li>Top workflows for your industry</li>
+            <li>Implementation timeline &amp; cost estimate</li>
+            <li>Security and compliance considerations</li>
+          </ul>
+          <button class="btn primary mini-cta" data-action="whatsapp">Chat on WhatsApp</button>
+        </div>
+
+        <div class="reveal">
+          <form id="leadForm">
+            <div class="form-grid">
+              <div>
+                <label for="name">Your Name</label>
+                <input id="name" name="name" type="text" placeholder="John Doe" required>
+              </div>
+              <div>
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@company.com" required>
+              </div>
+              <div>
+                <label for="phone">Phone</label>
+                <input id="phone" name="phone" type="tel" placeholder="+91 98888 00000" required>
+              </div>
+              <div>
+                <label for="company">Company</label>
+                <input id="company" name="company" type="text" placeholder="Your Company" required>
+              </div>
+              <div style="grid-column:1/-1;">
+                <label for="interest">Interested in</label>
+                <select id="interest" name="interest" required>
+                  <option value="">-- Select --</option>
+                  <option>WhatsApp Automation Suite</option>
+                  <option>WhatsApp Chatbot / AI Bot</option>
+                  <option>Broadcast &amp; Drip Campaigns</option>
+                  <option>Shared Team Inbox</option>
+                  <option>AI Calling Bots</option>
+                  <option>ServiceNow Automation</option>
+                  <option>Microsoft 365 Automation</option>
+                  <option>PowerShell / IT Automation</option>
+                </select>
+              </div>
+              <div style="grid-column:1/-1;">
+                <label for="msg">Your requirement</label>
+                <textarea id="msg" name="msg" placeholder="Describe your automation needs..." required></textarea>
+              </div>
+            </div>
+            <button class="btn primary" style="width:100%; margin-top:14px;" type="submit">✨ Request Demo</button>
+            <p style="margin-top:10px; color:rgba(255,255,255,0.50); font-weight:650; font-size:0.88rem;">By submitting, you agree to be contacted about your request.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRIVACY POLICY ===== -->
+  <section id="privacy" style="background:rgba(255,255,255,0.015);">
+    <div class="container">
+      <h2 class="section-title reveal">Privacy Policy</h2>
+      <p class="section-sub reveal">Your privacy matters to us. Here's how iAutomate collects, uses, and protects your information.</p>
+
+      <div class="privacy-grid">
+        <div class="privacy-card reveal">
+          <h4>📋 Data We Collect</h4>
+          <p>We collect information you provide directly: name, email address, phone number, company name, and your automation requirements. We also collect usage data such as pages visited and features used on our platform.</p>
+        </div>
+
+        <div class="privacy-card reveal">
+          <h4>🎯 How We Use Your Data</h4>
+          <p>Your data is used to deliver our automation services, respond to inquiries, send relevant product updates and offers, improve our platform, and ensure compliance with applicable laws and regulations.</p>
+        </div>
+
+        <div class="privacy-card reveal">
+          <h4>🔒 Data Storage &amp; Security</h4>
+          <p>All data is stored on secure, encrypted servers. We implement industry-standard security measures including TLS encryption, access controls, and regular security audits to protect your information.</p>
+        </div>
+
+        <div class="privacy-card reveal">
+          <h4>🔗 Third-Party Services</h4>
+          <p>We integrate with the WhatsApp Business API (Meta), payment processors, and CRM platforms. Each third party operates under their own privacy policy and data processing agreements with iAutomate.</p>
+        </div>
+
+        <div class="privacy-card reveal">
+          <h4>⚖️ Your Rights</h4>
+          <p>You have the right to access, correct, export, or delete your personal data at any time. To exercise these rights or withdraw consent, contact us and we'll respond within 30 days.</p>
+        </div>
+
+        <div class="privacy-card reveal">
+          <h4>📬 Contact &amp; Updates</h4>
+          <p>For privacy questions, contact us at <a href="mailto:hello@iautomate.in" style="color:var(--accent);">hello@iautomate.in</a>. This policy was last updated May 2026. We'll notify users of material changes via email.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="foot-grid">
+        <div class="foot">
+          <div class="foot-brand">
+            <svg class="foot-logo" viewBox="0 0 42 42" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="flg" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#4f7cff"/><stop offset="100%" stop-color="#9b5cff"/>
+                </linearGradient>
+                <radialGradient id="fcg" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#60d5ff"/><stop offset="100%" stop-color="#9b5cff"/>
+                </radialGradient>
+              </defs>
+              <circle cx="21" cy="21" r="20" fill="#f0ebff" stroke="url(#flg)" stroke-width="1.5"/>
+              <circle cx="21" cy="21" r="13" fill="none" stroke="url(#flg)" stroke-width="0.9" opacity="0.4"/>
+              <circle cx="21" cy="21" r="8" fill="none" stroke="url(#flg)" stroke-width="1" opacity="0.6"/>
+              <circle cx="21" cy="21" r="5" fill="url(#fcg)"/>
+              <circle cx="21" cy="4" r="2" fill="#8b5cf6"/>
+              <circle cx="38" cy="21" r="2" fill="#7c3aed"/>
+              <circle cx="21" cy="38" r="2" fill="#8b5cf6"/>
+              <circle cx="4" cy="21" r="2" fill="#7c3aed"/>
+            </svg>
+            <h4 style="margin:0;">iAutomate</h4>
+          </div>
+          <p style="color:rgba(255,255,255,0.60); font-weight:650; font-size:0.9rem;">AI Business Automation Service.<br>Automating IT. Empowering Businesses.</p>
+        </div>
+        <div class="foot">
+          <h4>Quick Links</h4>
+          <div><a href="#services">Services</a></div>
+          <div><a href="#whatsapp-suite">Bulk Messaging</a></div>
+          <div><a href="#process">Process</a></div>
+          <div><a href="#automations">Top 20 Automations</a></div>
+          <div><a href="#cases">Success</a></div>
+          <div><a href="#contact">Contact</a></div>
+        </div>
+        <div class="foot">
+          <h4>Get in Touch</h4>
+          <div><a href="mailto:hello@iautomate.in">hello@iautomate.in</a></div>
+          <div><a href="tel:+919888790890">+91 9888-790-890</a></div>
+          <div><a href="https://iautomate.in/" target="_blank" rel="noopener">iautomate.in</a></div>
+          <div style="margin-top:8px;">
+            <button class="btn-login" onclick="openModal('loginModal')" style="font-size:0.82rem; padding:6px 12px;">Login</button>
+          </div>
+        </div>
+        <div class="foot">
+          <h4>Company</h4>
+          <div><a href="#about">About Us</a></div>
+          <div><a href="#privacy">Privacy Policy</a></div>
+          <div><a href="#">Terms of Service</a></div>
+          <div><a href="#">Cookie Policy</a></div>
+        </div>
+      </div>
+
+      <div class="copy">© 2026 iAutomate Services — AI Business Automation · All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>
+    /* =========================================
+       iAutomate — All Scripts
+    ========================================= */
+
+    // ===== WHATSAPP =====
+    function openWhatsApp() {
+      const phone = '919888790890';
+      const msg = encodeURIComponent("Hello! I'd like to know more about iAutomate's WhatsApp and automation services.");
+      window.open('https://wa.me/' + phone + '?text=' + msg, '_blank');
+    }
+    document.querySelectorAll('[data-action="whatsapp"]').forEach(btn => btn.addEventListener('click', openWhatsApp));
+
+    // ===== SCROLL PROGRESS =====
+    const progressBar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const pct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+      progressBar.style.width = Math.min(pct, 100) + '%';
+    }, { passive: true });
+
+    // ===== PARTICLE CANVAS =====
+    (function () {
+      const canvas = document.getElementById('particles');
+      const ctx = canvas.getContext('2d');
+      let pts = [], raf;
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function Pt() {
+        this.reset = function () {
+          this.x = Math.random() * canvas.width;
+          this.y = Math.random() * canvas.height;
+          this.r = Math.random() * 1.8 + 0.4;
+          this.vx = (Math.random() - 0.5) * 0.45;
+          this.vy = (Math.random() - 0.5) * 0.45;
+          this.a = Math.random() * 0.45 + 0.1;
+          this.col = Math.random() > 0.55 ? '79,124,255' : '155,92,255';
+        };
+        this.reset();
+      }
+
+      function init() { pts = Array.from({ length: 70 }, () => new Pt()); }
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pts.forEach(p => {
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > canvas.width || p.y < 0 || p.y > canvas.height) p.reset();
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(' + p.col + ',' + p.a + ')';
+          ctx.fill();
+        });
+        // connections
+        for (let i = 0; i < pts.length; i++) {
+          for (let j = i + 1; j < pts.length; j++) {
+            const dx = pts[i].x - pts[j].x, dy = pts[i].y - pts[j].y;
+            const d = Math.sqrt(dx * dx + dy * dy);
+            if (d < 110) {
+              ctx.beginPath();
+              ctx.moveTo(pts[i].x, pts[i].y);
+              ctx.lineTo(pts[j].x, pts[j].y);
+              ctx.strokeStyle = 'rgba(79,124,255,' + ((1 - d / 110) * 0.12) + ')';
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+            }
+          }
+        }
+        raf = requestAnimationFrame(draw);
+      }
+
+      resize(); init(); draw();
+      window.addEventListener('resize', () => { cancelAnimationFrame(raf); resize(); init(); draw(); }, { passive: true });
+    })();
+
+    // ===== TYPEWRITER =====
+    (function () {
+      const el = document.getElementById('typewriter');
+      if (!el) return;
+      const phrases = [
+        'Automate WhatsApp, Calls & IT Ops',
+        'Build Chatbots that Convert Leads',
+        'Run Operations 24/7 with AI',
+        'Scale Without Hiring — Automate Smart',
+        'Deliver Instant Replies on WhatsApp'
+      ];
+      let pi = 0, ci = 0, del = false;
+
+      function tick() {
+        const cur = phrases[pi];
+        if (!del) {
+          el.textContent = cur.slice(0, ++ci);
+          if (ci === cur.length) { del = true; setTimeout(tick, 2200); return; }
+        } else {
+          el.textContent = cur.slice(0, --ci);
+          if (ci === 0) { del = false; pi = (pi + 1) % phrases.length; }
+        }
+        setTimeout(tick, del ? 35 : 75);
+      }
+      tick();
+    })();
+
+    // ===== COUNTER ANIMATION =====
+    function animCount(el, target, dec, suffix) {
+      const dur = 2200, t0 = performance.now();
+      (function step(now) {
+        const p = Math.min((now - t0) / dur, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.textContent = (dec ? (e * target).toFixed(dec) : Math.floor(e * target)) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+        else { el.textContent = target + suffix; el.style.animation = 'count-pop 0.3s ease'; }
+      })(t0);
+    }
+
+    const statsEl = document.getElementById('stats-section');
+    if (statsEl) {
+      const so = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          animCount(document.getElementById('stat1'), 500, 0, '+');
+          animCount(document.getElementById('stat2'), 50, 0, '+');
+          animCount(document.getElementById('stat3'), 99.9, 1, '%');
+          so.disconnect();
+        }
+      }, { threshold: 0.4 });
+      so.observe(statsEl);
+    }
+
+    // ===== PROCESS CONNECTOR REVEAL =====
+    const processTrack = document.getElementById('processTrack');
+    if (processTrack) {
+      const po = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+          processTrack.classList.add('in');
+          po.disconnect();
+        }
+      }, { threshold: 0.3 });
+      po.observe(processTrack);
+    }
+
+    // ===== REVEAL ON SCROLL =====
+    const revealObs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
+      });
+    }, { threshold: 0.10, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+    // ===== DRAWER =====
+    const menuBtn = document.getElementById('menuBtn');
+    const drawer = document.getElementById('drawer');
+    const backdrop = document.getElementById('backdrop');
+    const closeBtn = document.getElementById('drawerClose');
+
+    function openDrawer() {
+      drawer.classList.add('open'); backdrop.classList.add('open');
+      drawer.setAttribute('aria-hidden', 'false'); backdrop.setAttribute('aria-hidden', 'false');
+      menuBtn?.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+      drawer.querySelector('a')?.focus();
+    }
+    function closeDrawer() {
+      drawer.classList.remove('open'); backdrop.classList.remove('open');
+      drawer.setAttribute('aria-hidden', 'true'); backdrop.setAttribute('aria-hidden', 'true');
+      menuBtn?.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      menuBtn?.focus();
+    }
+    menuBtn?.addEventListener('click', () => drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+    closeBtn?.addEventListener('click', closeDrawer);
+    backdrop?.addEventListener('click', closeDrawer);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { if (drawer.classList.contains('open')) closeDrawer(); } });
+    drawer.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', closeDrawer));
+
+    // ===== SMOOTH SCROLL =====
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const href = a.getAttribute('href');
+        if (!href || href === '#') return;
+        const target = document.querySelector(href);
+        if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+      });
+    });
+
+    // ===== MODALS =====
+    function openModal(id) {
+      const m = document.getElementById(id);
+      if (!m) return;
+      m.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      m.querySelector('input, button')?.focus();
+    }
+    function closeModal(id) {
+      const m = document.getElementById(id);
+      if (!m) return;
+      m.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function switchModal(from, to) { closeModal(from); setTimeout(() => openModal(to), 120); }
+
+    // Close modal on overlay click
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(overlay.id); });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => closeModal(m.id));
+      }
+    });
+
+    // ===== FAQ =====
+    document.querySelectorAll('.faq-item .faq-q').forEach(btn => {
+      btn.addEventListener('click', () => btn.closest('.faq-item').classList.toggle('open'));
+    });
+
+    // ===== FORM SUBMIT =====
+    document.getElementById('leadForm')?.addEventListener('submit', e => {
+      e.preventDefault();
+      const btn = e.target.querySelector('[type="submit"]');
+      btn.textContent = '✅ Submitted! We will contact you soon.';
+      btn.disabled = true;
+      setTimeout(() => { btn.textContent = '✨ Request Demo'; btn.disabled = false; e.target.reset(); }, 4000);
+    });
+    function handleLogin(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('[type="submit"]');
+      btn.textContent = '✅ Signing in...';
+      setTimeout(() => { btn.textContent = 'Sign In'; closeModal('loginModal'); }, 1500);
+    }
+    function handleRegister(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('[type="submit"]');
+      btn.textContent = '✅ Account created!';
+      setTimeout(() => { btn.textContent = '✨ Create Account'; closeModal('registerModal'); }, 1800);
+    }
+  </script>
+</body>
+</html>
