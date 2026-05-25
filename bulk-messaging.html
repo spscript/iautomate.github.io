@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iAutomate Bulk Messaging — WhatsApp Marketing Platform</title>
+  <meta name="description" content="Send bulk WhatsApp messages, run chatbots, manage team inbox, and track campaigns. India's smartest WhatsApp marketing platform by iAutomate.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Sora:wght@700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #04080f;
+      --surface:  #080e1a;
+      --card:     rgba(255,255,255,0.05);
+      --border:   rgba(255,255,255,0.10);
+      --primary:  #25D366;
+      --wa:       #25D366;
+      --wa-dark:  #128C7E;
+      --wa-light: #00c853;
+      --accent:   #60d5ff;
+      --grad:     linear-gradient(135deg,#4f7cff,#9b5cff,#f472b6);
+      --grad-wa:  linear-gradient(135deg,#00c853,#128C7E,#075E54);
+      --grad-wa2: linear-gradient(135deg,#25D366,#128C7E);
+      --muted:    rgba(255,255,255,0.55);
+      --muted2:   rgba(255,255,255,0.35);
+      --display:  'Sora', sans-serif;
+      --body:     'Inter', sans-serif;
+      --shadow:   0 8px 40px rgba(0,0,0,0.45);
+      --radius:   20px;
+      --ease:     cubic-bezier(0.22,1,0.36,1);
+    }
+    *,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--body); background: var(--bg); color: #fff; line-height: 1.6; overflow-x: hidden; }
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; }
+
+    /* ── PROGRESS BAR ── */
+    #pb { position: fixed; top: 0; left: 0; height: 3px; width: 0; background: var(--grad-wa); z-index: 9999; transition: width 0.1s; }
+
+    /* ── NAV ── */
+    .nav {
+      position: sticky; top: 0; z-index: 900;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 5%; height: 64px;
+      background: rgba(4,8,15,0.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-size: 1.15rem; font-weight: 800; }
+    .logo-badge {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--grad-wa); display: grid; place-items: center;
+      font-size: 1.1rem; font-weight: 900; color: #fff;
+      box-shadow: 0 0 12px rgba(37,211,102,0.4);
+    }
+    .nav-brand-sub { font-size: 0.62rem; color: var(--muted); font-weight: 500; line-height: 1.2; font-family: var(--body); }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a { padding: 6px 14px; border-radius: 99px; font-size: 0.84rem; font-weight: 600; color: var(--muted); transition: color 0.2s, background 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color: #fff; background: rgba(255,255,255,0.08); }
+    .nav-links a.active { color: #4ade80; }
+    .nav-auth { display: flex; gap: 8px; }
+    .btn-login { padding: 7px 18px; border-radius: 99px; border: 1px solid var(--border); background: transparent; color: rgba(255,255,255,0.8); font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .btn-login:hover { background: rgba(255,255,255,0.08); }
+    .btn-signup { padding: 7px 20px; border-radius: 99px; border: none; background: var(--grad-wa2); color: #fff; font-size: 0.84rem; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+    .btn-signup:hover { opacity: 0.85; }
+    .menu-btn { display: none; background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer; }
+
+    /* Mobile drawer */
+    .drawer { display: none; position: fixed; inset: 0; z-index: 800; }
+    .drawer-bg { position: absolute; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); }
+    .drawer-panel { position: absolute; top: 0; right: 0; width: min(320px,90vw); height: 100%; background: #0b1120; padding: 80px 28px 40px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; border-left: 1px solid var(--border); }
+    .drawer-panel a { display: block; padding: 12px 16px; border-radius: 12px; font-weight: 600; color: var(--muted); transition: all 0.2s; }
+    .drawer-panel a:hover { color: #fff; background: rgba(255,255,255,0.07); }
+    .drawer-panel .btn-signup { display: block; text-align: center; margin-top: 12px; }
+    .drawer.open { display: block; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden; text-align: center;
+      padding: 120px 5% 100px;
+      background:
+        radial-gradient(ellipse 90% 70% at 50% -10%, rgba(37,211,102,0.18) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 90% 80%, rgba(18,140,126,0.12) 0%, transparent 55%),
+        var(--bg);
+    }
+    canvas#heroCanvas { position: absolute; inset: 0; pointer-events: none; }
+    .hero-inner { position: relative; z-index: 2; max-width: 920px; margin: 0 auto; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 16px; border-radius: 99px;
+      border: 1px solid rgba(37,211,102,0.4);
+      background: rgba(37,211,102,0.08);
+      font-size: 0.8rem; font-weight: 700; color: #4ade80; margin-bottom: 24px;
+      animation: fadeUp 0.6s var(--ease) both;
+    }
+    .wa-dot { width: 8px; height: 8px; border-radius: 50%; background: #25D366; animation: pulse-dot 1.5s ease-in-out infinite; }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1);} 50%{opacity:0.5;transform:scale(1.4);} }
+    .hero h1 {
+      font-family: var(--display); font-size: clamp(2.6rem,5.5vw,4.6rem);
+      font-weight: 900; line-height: 1.05; letter-spacing: -0.04em;
+      margin-bottom: 20px; animation: fadeUp 0.6s 0.1s var(--ease) both;
+    }
+    .grad-wa { background: var(--grad-wa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero-sub {
+      font-size: clamp(1rem,2vw,1.2rem); color: var(--muted);
+      max-width: 58ch; margin: 0 auto 40px;
+      animation: fadeUp 0.6s 0.2s var(--ease) both;
+    }
+    .hero-ctas { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.6s 0.3s var(--ease) both; margin-bottom: 64px; }
+    .btn-primary { padding: 14px 32px; border-radius: 99px; border: none; background: var(--grad-wa2); color: #fff; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: opacity 0.2s, transform 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+    .btn-outline { padding: 14px 32px; border-radius: 99px; border: 1px solid rgba(37,211,102,0.35); background: transparent; color: rgba(255,255,255,0.85); font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; }
+    .btn-outline:hover { background: rgba(37,211,102,0.07); border-color: rgba(37,211,102,0.6); }
+
+    /* Hero stats */
+    .hero-stats { display: flex; justify-content: center; gap: 0; flex-wrap: wrap; animation: fadeUp 0.6s 0.4s var(--ease) both; }
+    .stat-item { padding: 20px 36px; text-align: center; border-right: 1px solid rgba(255,255,255,0.08); }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-family: var(--display); font-size: 2.2rem; font-weight: 900; background: var(--grad-wa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .stat-label { font-size: 0.78rem; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+    /* ── SECTION BASE ── */
+    section { padding: 96px 5%; }
+    .section-label { display: inline-block; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #25D366; margin-bottom: 12px; }
+    .section-title { font-family: var(--display); font-size: clamp(1.9rem,3.5vw,3rem); font-weight: 900; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 16px; }
+    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 54ch; }
+    .section-head { text-align: center; margin-bottom: 64px; }
+    .section-head .section-sub { margin: 0 auto; }
+
+    /* ── CLIENTS / TRUST BAR ── */
+    .trust-bar { padding: 32px 5%; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .trust-inner { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; justify-content: center; }
+    .trust-label { font-size: 0.8rem; color: var(--muted2); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+    .trust-logos { display: flex; gap: 40px; flex-wrap: wrap; align-items: center; justify-content: center; }
+    .trust-logo { font-size: 0.9rem; font-weight: 700; color: var(--muted2); letter-spacing: 0.04em; padding: 6px 18px; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; transition: color 0.2s, border-color 0.2s; }
+    .trust-logo:hover { color: #fff; border-color: rgba(37,211,102,0.3); }
+
+    /* ── PRODUCTS ── */
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .product-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 32px; position: relative; overflow: hidden;
+      transition: transform 0.3s var(--ease), border-color 0.3s, box-shadow 0.3s;
+      cursor: default;
+    }
+    .product-card::before { content:''; position:absolute; inset:0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(37,211,102,0.08) 0%, transparent 70%); opacity:0; transition: opacity 0.3s; }
+    .product-card:hover { transform: translateY(-6px); border-color: rgba(37,211,102,0.3); box-shadow: 0 20px 60px rgba(37,211,102,0.1); }
+    .product-card:hover::before { opacity: 1; }
+    .product-icon { width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; font-size: 1.5rem; margin-bottom: 20px; background: linear-gradient(135deg, rgba(37,211,102,0.2), rgba(18,140,126,0.1)); border: 1px solid rgba(37,211,102,0.2); }
+    .product-card h3 { font-family: var(--display); font-size: 1.15rem; font-weight: 800; margin-bottom: 10px; }
+    .product-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.65; margin-bottom: 20px; }
+    .product-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-size: 0.72rem; font-weight: 600; padding: 4px 10px; border-radius: 99px; background: rgba(37,211,102,0.1); border: 1px solid rgba(37,211,102,0.2); color: #4ade80; }
+    .product-arrow { position: absolute; top: 28px; right: 28px; font-size: 1.1rem; color: var(--muted2); transition: color 0.2s, transform 0.2s; }
+    .product-card:hover .product-arrow { color: #25D366; transform: translateX(4px); }
+
+    /* ── FEATURES ── */
+    .features-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .feature-list { display: flex; flex-direction: column; gap: 4px; }
+    .feature-item {
+      display: flex; gap: 16px; padding: 20px; border-radius: 14px;
+      cursor: pointer; transition: background 0.2s;
+      border: 1px solid transparent;
+    }
+    .feature-item:hover, .feature-item.active { background: rgba(37,211,102,0.07); border-color: rgba(37,211,102,0.2); }
+    .feature-icon { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; font-size: 1.2rem; flex-shrink: 0; background: rgba(37,211,102,0.12); }
+    .feature-item h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+    .feature-item p { font-size: 0.84rem; color: var(--muted); }
+
+    /* Phone mockup */
+    .phone-mockup {
+      width: 280px; margin: 0 auto; position: relative;
+      background: #111; border-radius: 36px; padding: 12px;
+      border: 2px solid rgba(255,255,255,0.12);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04), inset 0 0 0 1px rgba(255,255,255,0.06);
+    }
+    .phone-screen { background: #ECE5DD; border-radius: 28px; overflow: hidden; }
+    .phone-notch { height: 28px; background: #111; margin: -12px -12px 0; border-radius: 36px 36px 0 0; display: flex; align-items: center; justify-content: center; }
+    .phone-notch-inner { width: 70px; height: 6px; background: #222; border-radius: 3px; margin-top: 8px; }
+    .wa-chat-header { background: #075E54; padding: 12px 16px; display: flex; align-items: center; gap: 10px; }
+    .wa-avatar { width: 36px; height: 36px; border-radius: 50%; background: #25D366; display: grid; place-items: center; font-weight: 800; font-size: 0.9rem; }
+    .wa-chat-name { font-size: 0.88rem; font-weight: 700; color: #fff; }
+    .wa-chat-status { font-size: 0.7rem; color: rgba(255,255,255,0.7); }
+    .wa-messages { padding: 12px; display: flex; flex-direction: column; gap: 8px; background: #ECE5DD; }
+    .wa-msg { max-width: 78%; padding: 8px 12px; border-radius: 12px; font-size: 0.78rem; color: #111; line-height: 1.45; position: relative; }
+    .wa-msg.in { background: #fff; border-radius: 2px 12px 12px 12px; align-self: flex-start; }
+    .wa-msg.out { background: #DCF8C6; border-radius: 12px 2px 12px 12px; align-self: flex-end; }
+    .wa-msg-time { font-size: 0.62rem; color: #888; margin-top: 3px; text-align: right; }
+    .wa-typing { display: flex; gap: 4px; padding: 10px 14px; background: #fff; border-radius: 12px; align-self: flex-start; }
+    .wa-typing span { width: 6px; height: 6px; border-radius: 50%; background: #999; animation: typing 1.2s ease-in-out infinite; }
+    .wa-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .wa-typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing { 0%,80%,100%{transform:scale(1);opacity:0.4;} 40%{transform:scale(1.2);opacity:1;} }
+    .wa-input-bar { background: #F0F0F0; padding: 8px 12px; display: flex; gap: 8px; align-items: center; }
+    .wa-input { flex: 1; background: #fff; border-radius: 20px; padding: 6px 12px; font-size: 0.78rem; color: #555; }
+    .wa-send { width: 30px; height: 30px; border-radius: 50%; background: #25D366; display: grid; place-items: center; font-size: 0.8rem; }
+
+    /* ── INDUSTRY TABS ── */
+    .industry-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px; }
+    .ind-tab { padding: 10px 22px; border-radius: 99px; border: 1px solid var(--border); background: transparent; color: var(--muted); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.25s; }
+    .ind-tab:hover { border-color: rgba(37,211,102,0.35); color: #fff; }
+    .ind-tab.active { background: rgba(37,211,102,0.12); border-color: rgba(37,211,102,0.5); color: #25D366; }
+    .ind-content { display: none; animation: fadeIn 0.4s var(--ease) both; }
+    .ind-content.active { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .ind-left h3 { font-family: var(--display); font-size: 1.8rem; font-weight: 900; margin-bottom: 12px; line-height: 1.2; }
+    .ind-left p { color: var(--muted); margin-bottom: 28px; }
+    .ind-points { display: flex; flex-direction: column; gap: 14px; }
+    .ind-point { display: flex; gap: 12px; align-items: flex-start; }
+    .ind-point-icon { width: 28px; height: 28px; border-radius: 8px; background: rgba(37,211,102,0.15); display: grid; place-items: center; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
+    .ind-point-text h5 { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; }
+    .ind-point-text p { font-size: 0.82rem; color: var(--muted); }
+    .ind-visual { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+    .ind-metric { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .ind-metric:last-child { border-bottom: none; }
+    .ind-metric-label { font-size: 0.84rem; color: var(--muted); }
+    .ind-metric-val { font-weight: 800; font-size: 1.05rem; color: #25D366; }
+    .ind-bar-wrap { flex: 1; margin: 0 16px; height: 4px; background: rgba(255,255,255,0.08); border-radius: 2px; }
+    .ind-bar { height: 100%; border-radius: 2px; background: var(--grad-wa2); transition: width 1s var(--ease); }
+
+    /* ── HOW IT WORKS ── */
+    .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; position: relative; }
+    .steps-grid::before { content:''; position:absolute; top:36px; left:10%; right:10%; height:2px; background: linear-gradient(90deg, #25D366, #128C7E, #25D366); z-index:0; border-radius:1px; }
+    .step-card { text-align: center; padding: 32px 24px; position: relative; z-index: 1; }
+    .step-num { width: 72px; height: 72px; border-radius: 50%; background: var(--grad-wa2); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 1.5rem; font-weight: 900; margin: 0 auto 20px; box-shadow: 0 0 0 8px rgba(37,211,102,0.08), 0 0 24px rgba(37,211,102,0.25); }
+    .step-card h4 { font-family: var(--display); font-size: 1.05rem; font-weight: 800; margin-bottom: 8px; }
+    .step-card p { font-size: 0.85rem; color: var(--muted); }
+
+    /* ── PRICING ── */
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; max-width: 1100px; margin: 0 auto; }
+    .price-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 36px 28px; position: relative; overflow: hidden;
+      transition: transform 0.3s var(--ease), box-shadow 0.3s;
+    }
+    .price-card:hover { transform: translateY(-6px); box-shadow: 0 24px 64px rgba(37,211,102,0.1); }
+    .price-card.popular {
+      border-color: rgba(37,211,102,0.5);
+      background: linear-gradient(160deg, rgba(37,211,102,0.08) 0%, rgba(18,140,126,0.05) 100%);
+    }
+    .price-card.popular::before { content:'Most Popular'; position:absolute; top:16px; right:-28px; background: var(--grad-wa2); font-size:0.7rem; font-weight:700; padding:4px 40px; transform:rotate(45deg); letter-spacing:0.05em; }
+    .price-tier { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #25D366; margin-bottom: 8px; }
+    .price-amount { font-family: var(--display); font-size: 2.8rem; font-weight: 900; line-height: 1; margin-bottom: 6px; }
+    .price-amount sup { font-size: 1.2rem; vertical-align: super; }
+    .price-amount sub { font-size: 0.9rem; font-weight: 500; color: var(--muted); }
+    .price-desc { font-size: 0.82rem; color: var(--muted); margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
+    .price-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 32px; }
+    .pf { display: flex; gap: 10px; align-items: flex-start; font-size: 0.85rem; }
+    .pf-check { color: #25D366; font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+    .pf-x { color: var(--muted2); font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+    .pf-text { color: var(--muted); }
+    .pf-text.has { color: rgba(255,255,255,0.88); }
+    .price-cta { width: 100%; padding: 13px; border-radius: 99px; border: none; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
+    .price-cta.primary { background: var(--grad-wa2); color: #fff; }
+    .price-cta.outline { background: transparent; border: 1px solid rgba(37,211,102,0.35); color: rgba(255,255,255,0.85); }
+    .price-cta:hover { opacity: 0.85; transform: translateY(-1px); }
+    .messages-badge { font-size: 0.72rem; background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.2); color: #4ade80; padding: 3px 8px; border-radius: 6px; display: inline-block; margin-bottom: 16px; }
+
+    /* ── TESTIMONIALS ── */
+    .testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .testi-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; }
+    .testi-stars { color: #FFB800; font-size: 0.9rem; margin-bottom: 16px; letter-spacing: 2px; }
+    .testi-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
+    .testi-author { display: flex; gap: 12px; align-items: center; }
+    .testi-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--grad-wa2); display: grid; place-items: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0; }
+    .testi-name { font-weight: 700; font-size: 0.88rem; }
+    .testi-role { font-size: 0.76rem; color: var(--muted); }
+
+    /* ── FAQ ── */
+    .faq-list { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item { background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; }
+    .faq-q { width: 100%; background: none; border: none; color: #fff; text-align: left; padding: 22px 24px; font-size: 0.95rem; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 16px; transition: color 0.2s; }
+    .faq-q:hover { color: #25D366; }
+    .faq-chevron { font-size: 1.1rem; transition: transform 0.3s; flex-shrink: 0; color: var(--muted2); }
+    .faq-item.open .faq-chevron { transform: rotate(180deg); color: #25D366; }
+    .faq-item.open .faq-q { color: #25D366; }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease); }
+    .faq-a-inner { padding: 0 24px 22px; color: var(--muted); font-size: 0.9rem; line-height: 1.7; }
+    .faq-item.open .faq-a { max-height: 400px; }
+
+    /* ── CTA BAND ── */
+    .cta-band {
+      margin: 0 5% 80px; border-radius: var(--radius);
+      background: linear-gradient(135deg, #075E54 0%, #128C7E 40%, #25D366 100%);
+      padding: 72px 8%; text-align: center; position: relative; overflow: hidden;
+    }
+    .cta-band::before { content:''; position:absolute; inset:0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='12'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
+    .cta-band h2 { font-family: var(--display); font-size: clamp(1.8rem, 3.5vw, 3rem); font-weight: 900; margin-bottom: 16px; position: relative; }
+    .cta-band p { color: rgba(255,255,255,0.85); font-size: 1.05rem; margin-bottom: 36px; max-width: 50ch; margin-left: auto; margin-right: auto; position: relative; }
+    .cta-band .btn-white { position: relative; padding: 15px 36px; border-radius: 99px; border: none; background: #fff; color: #075E54; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+    .cta-band .btn-white:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(0,0,0,0.2); }
+
+    /* ── CONTACT ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+    .contact-info h3 { font-family: var(--display); font-size: 1.6rem; font-weight: 900; margin-bottom: 14px; }
+    .contact-info p { color: var(--muted); margin-bottom: 32px; }
+    .contact-links { display: flex; flex-direction: column; gap: 14px; }
+    .clink { display: flex; gap: 14px; align-items: center; }
+    .clink-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(37,211,102,0.12); border: 1px solid rgba(37,211,102,0.2); display: grid; place-items: center; font-size: 1.1rem; flex-shrink: 0; }
+    .clink-text h5 { font-weight: 700; font-size: 0.88rem; margin-bottom: 2px; }
+    .clink-text a, .clink-text span { font-size: 0.84rem; color: var(--muted); }
+    .clink-text a:hover { color: #25D366; }
+    .form-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+    .form-group input, .form-group select, .form-group textarea {
+      padding: 11px 16px; border-radius: 10px; border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04); color: #fff; font-size: 0.88rem;
+      font-family: var(--body); transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: rgba(37,211,102,0.5); }
+    .form-group select option { background: #0b1120; }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-submit { width: 100%; padding: 14px; border-radius: 99px; border: none; background: var(--grad-wa2); color: #fff; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: opacity 0.2s, transform 0.2s; }
+    .form-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--border); padding: 64px 5% 32px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+    .footer-brand p { color: var(--muted); font-size: 0.85rem; line-height: 1.7; margin-top: 12px; max-width: 28ch; }
+    .footer-col h6 { font-weight: 700; font-size: 0.82rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted2); margin-bottom: 16px; }
+    .footer-col a { display: block; font-size: 0.84rem; color: var(--muted); padding: 4px 0; transition: color 0.2s; }
+    .footer-col a:hover { color: #25D366; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding-top: 24px; border-top: 1px solid var(--border); }
+    .footer-bottom p { font-size: 0.8rem; color: var(--muted2); }
+    .footer-socials { display: flex; gap: 12px; }
+    .social-btn { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border); background: var(--card); display: grid; place-items: center; font-size: 0.9rem; transition: all 0.2s; }
+    .social-btn:hover { border-color: rgba(37,211,102,0.4); background: rgba(37,211,102,0.08); }
+
+    /* ── WA FLOAT ── */
+    .wa-float { position: fixed; bottom: 28px; right: 28px; z-index: 800; }
+    .wa-float-btn {
+      width: 58px; height: 58px; border-radius: 50%; border: none; cursor: pointer;
+      background: #25D366; display: grid; place-items: center;
+      box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+      transition: transform 0.2s; position: relative;
+    }
+    .wa-float-btn:hover { transform: scale(1.1); }
+    .wa-float-btn svg { width: 30px; height: 30px; }
+    .wa-pulse { position: absolute; inset: -4px; border-radius: 50%; background: rgba(37,211,102,0.35); animation: wa-pulse 2s ease-out infinite; }
+    @keyframes wa-pulse { 0%{transform:scale(1);opacity:0.7;} 100%{transform:scale(1.8);opacity:0;} }
+
+    /* ── INTEGRATIONS ── */
+    .int-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; }
+    .int-card { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 16px; text-align: center; transition: all 0.25s; }
+    .int-card:hover { border-color: rgba(37,211,102,0.3); transform: translateY(-3px); }
+    .int-card .int-icon { font-size: 2rem; margin-bottom: 10px; }
+    .int-card p { font-size: 0.78rem; color: var(--muted); font-weight: 600; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(24px);} to{opacity:1;transform:translateY(0);} }
+    @keyframes fadeIn { from{opacity:0;} to{opacity:1;} }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s var(--ease), transform 0.65s var(--ease); }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── MARQUEE LOGOS ── */
+    .marquee-wrap { overflow: hidden; padding: 8px 0; mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%); }
+    .marquee-track { display: inline-flex; gap: 20px; animation: marquee 30s linear infinite; }
+    @keyframes marquee { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+    .marquee-item { padding: 8px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; font-size: 0.82rem; font-weight: 600; color: var(--muted); white-space: nowrap; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .features-layout { grid-template-columns: 1fr; }
+      .phone-mockup-wrap { display: none; }
+      .ind-content.active { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 700px) {
+      .nav-links, .nav-auth { display: none; }
+      .menu-btn { display: block; }
+      .hero h1 { font-size: 2.2rem; }
+      .stat-item { padding: 14px 20px; }
+      .stat-num { font-size: 1.7rem; }
+      .steps-grid::before { display: none; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 500px) {
+      .hero-stats { flex-direction: column; gap: 0; }
+      .stat-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="pb"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-brand">
+    <div class="logo-badge">iA</div>
+    <div>
+      <div>iAutomate</div>
+      <div class="nav-brand-sub">WhatsApp Marketing Platform</div>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a href="index.html">Automation</a>
+    <a href="web-design.html">Web Design</a>
+    <a href="bulk-messaging.html" class="active">Bulk Messaging</a>
+    <a href="#products">Products</a>
+    <a href="#industry">Industry</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-auth">
+    <button class="btn-login" onclick="document.getElementById('loginModal').style.display='flex'">Login</button>
+    <button class="btn-signup" onclick="openWhatsApp()">Get Started Free</button>
+  </div>
+  <button class="menu-btn" onclick="document.querySelector('.drawer').classList.toggle('open')" aria-label="Menu">☰</button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="drawer">
+  <div class="drawer-bg" onclick="this.parentElement.classList.remove('open')"></div>
+  <div class="drawer-panel">
+    <a href="index.html" onclick="this.closest('.drawer').classList.remove('open')">🤖 Automation</a>
+    <a href="web-design.html" onclick="this.closest('.drawer').classList.remove('open')">🌐 Web Design</a>
+    <a href="bulk-messaging.html" onclick="this.closest('.drawer').classList.remove('open')">💬 Bulk Messaging</a>
+    <a href="#products" onclick="this.closest('.drawer').classList.remove('open')">📦 Products</a>
+    <a href="#industry" onclick="this.closest('.drawer').classList.remove('open')">🏭 Industry</a>
+    <a href="#pricing" onclick="this.closest('.drawer').classList.remove('open')">💰 Pricing</a>
+    <a href="#contact" onclick="this.closest('.drawer').classList.remove('open')">📞 Contact</a>
+    <a class="btn-signup" href="#" onclick="openWhatsApp();return false;">Get Started Free →</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="heroCanvas"></canvas>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">
+      <div class="wa-dot"></div>
+      WhatsApp Business API — Officially Supported
+    </div>
+    <h1>
+      Send Smarter.<br>
+      <span class="grad-wa">Engage Millions</span><br>
+      on WhatsApp.
+    </h1>
+    <p class="hero-sub">
+      India's most powerful WhatsApp marketing platform. Broadcast campaigns, automate conversations, manage team inbox — all in one dashboard. No technical skills needed.
+    </p>
+    <div class="hero-ctas">
+      <button class="btn-primary" onclick="openWhatsApp()">
+        <svg width="18" height="18" fill="#fff" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Start Free Trial
+      </button>
+      <button class="btn-outline" onclick="document.getElementById('demo-section').scrollIntoView({behavior:'smooth'})">Watch Demo →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num" data-target="50">0</div>
+        <div class="stat-label">Million+ Messages Sent</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" data-target="98">0</div>
+        <div class="stat-label">% Delivery Rate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" data-target="45">0</div>
+        <div class="stat-label">% Average Open Rate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num" data-target="5000">0</div>
+        <div class="stat-label">+ Happy Businesses</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <div class="trust-label">Trusted by businesses in</div>
+    <div class="trust-logos">
+      <div class="trust-logo">E-Commerce</div>
+      <div class="trust-logo">Healthcare</div>
+      <div class="trust-logo">Education</div>
+      <div class="trust-logo">Real Estate</div>
+      <div class="trust-logo">Finance</div>
+      <div class="trust-logo">Restaurants</div>
+      <div class="trust-logo">Logistics</div>
+    </div>
+  </div>
+</div>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap" style="padding: 20px 0; background: rgba(255,255,255,0.02);">
+  <div class="marquee-track">
+    <div class="marquee-item">📢 Broadcast Campaigns</div>
+    <div class="marquee-item">🤖 Smart Chatbots</div>
+    <div class="marquee-item">📥 Team Shared Inbox</div>
+    <div class="marquee-item">📊 Real-Time Analytics</div>
+    <div class="marquee-item">🔗 WhatsApp API Integration</div>
+    <div class="marquee-item">🎯 Audience Segmentation</div>
+    <div class="marquee-item">📎 Rich Media Messages</div>
+    <div class="marquee-item">⏰ Campaign Scheduling</div>
+    <div class="marquee-item">🔄 Drip Campaigns</div>
+    <div class="marquee-item">📱 Click-to-WhatsApp Ads</div>
+    <div class="marquee-item">🧩 CRM Integration</div>
+    <div class="marquee-item">🔔 Instant Notifications</div>
+    <!-- duplicate for loop -->
+    <div class="marquee-item">📢 Broadcast Campaigns</div>
+    <div class="marquee-item">🤖 Smart Chatbots</div>
+    <div class="marquee-item">📥 Team Shared Inbox</div>
+    <div class="marquee-item">📊 Real-Time Analytics</div>
+    <div class="marquee-item">🔗 WhatsApp API Integration</div>
+    <div class="marquee-item">🎯 Audience Segmentation</div>
+    <div class="marquee-item">📎 Rich Media Messages</div>
+    <div class="marquee-item">⏰ Campaign Scheduling</div>
+    <div class="marquee-item">🔄 Drip Campaigns</div>
+    <div class="marquee-item">📱 Click-to-WhatsApp Ads</div>
+    <div class="marquee-item">🧩 CRM Integration</div>
+    <div class="marquee-item">🔔 Instant Notifications</div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="section-head reveal">
+    <div class="section-label">Products</div>
+    <h2 class="section-title">Everything you need to<br>dominate WhatsApp marketing</h2>
+    <p class="section-sub">A complete suite of tools built for modern Indian businesses — from solo entrepreneurs to enterprise teams.</p>
+  </div>
+  <div class="products-grid">
+    <div class="product-card reveal">
+      <div class="product-icon">📢</div>
+      <span class="product-arrow">→</span>
+      <h3>Broadcast Campaigns</h3>
+      <p>Send personalized bulk messages to thousands of contacts in one click. Schedule, segment, and track with real-time delivery reports.</p>
+      <div class="product-tags">
+        <span class="tag">Personalization</span>
+        <span class="tag">Scheduling</span>
+        <span class="tag">Segments</span>
+      </div>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">🤖</div>
+      <span class="product-arrow">→</span>
+      <h3>Smart Chatbot Builder</h3>
+      <p>Create no-code chatbot flows that answer FAQs, capture leads, process orders, and qualify prospects 24×7 without human intervention.</p>
+      <div class="product-tags">
+        <span class="tag">No-Code</span>
+        <span class="tag">AI Powered</span>
+        <span class="tag">24×7 Active</span>
+      </div>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">📥</div>
+      <span class="product-arrow">→</span>
+      <h3>Team Shared Inbox</h3>
+      <p>Collaborate on customer conversations with your team. Assign chats, add internal notes, and never let a customer query go unanswered.</p>
+      <div class="product-tags">
+        <span class="tag">Multi-Agent</span>
+        <span class="tag">Assignment</span>
+        <span class="tag">Internal Notes</span>
+      </div>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">📊</div>
+      <span class="product-arrow">→</span>
+      <h3>Campaign Analytics</h3>
+      <p>Deep-dive into open rates, click-through rates, reply rates, and conversion tracking. Make data-driven decisions every time.</p>
+      <div class="product-tags">
+        <span class="tag">Real-Time</span>
+        <span class="tag">Conversion Tracking</span>
+        <span class="tag">Export Reports</span>
+      </div>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">🔗</div>
+      <span class="product-arrow">→</span>
+      <h3>WhatsApp API & Webhooks</h3>
+      <p>Plug iAutomate into your existing systems — CRM, ERP, Shopify, or custom apps — via REST API and webhook integrations.</p>
+      <div class="product-tags">
+        <span class="tag">REST API</span>
+        <span class="tag">Webhooks</span>
+        <span class="tag">Zapier</span>
+      </div>
+    </div>
+    <div class="product-card reveal">
+      <div class="product-icon">👥</div>
+      <span class="product-arrow">→</span>
+      <h3>Contact Manager & CRM</h3>
+      <p>Build rich contact profiles, import from CSV, tag & segment audiences, and track every interaction to close deals faster.</p>
+      <div class="product-tags">
+        <span class="tag">Import CSV</span>
+        <span class="tag">Custom Tags</span>
+        <span class="tag">Activity Log</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="demo-section" style="background: rgba(255,255,255,0.02); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="section-head reveal">
+    <div class="section-label">Features</div>
+    <h2 class="section-title">Built for real conversations,<br>at scale</h2>
+    <p class="section-sub">Every feature designed to maximize engagement and minimize manual work for your team.</p>
+  </div>
+  <div class="features-layout" style="max-width:1100px; margin:0 auto;">
+    <div class="feature-list">
+      <div class="feature-item active reveal" onclick="setActiveFeature(this)">
+        <div class="feature-icon">🎯</div>
+        <div>
+          <h4>Smart Segmentation</h4>
+          <p>Target the right audience with filters by location, behavior, purchase history, tags, and custom attributes.</p>
+        </div>
+      </div>
+      <div class="feature-item reveal" onclick="setActiveFeature(this)">
+        <div class="feature-icon">📎</div>
+        <div>
+          <h4>Rich Media Messages</h4>
+          <p>Send images, videos, PDFs, product catalogs, interactive buttons, and list menus — not just plain text.</p>
+        </div>
+      </div>
+      <div class="feature-item reveal" onclick="setActiveFeature(this)">
+        <div class="feature-icon">⚡</div>
+        <div>
+          <h4>Template Messages</h4>
+          <p>Pre-approved WhatsApp templates for order updates, appointment reminders, payment alerts, and promotional offers.</p>
+        </div>
+      </div>
+      <div class="feature-item reveal" onclick="setActiveFeature(this)">
+        <div class="feature-icon">🔄</div>
+        <div>
+          <h4>Drip & Sequence Campaigns</h4>
+          <p>Set up multi-step automated message sequences triggered by user actions, time delays, or external events.</p>
+        </div>
+      </div>
+      <div class="feature-item reveal" onclick="setActiveFeature(this)">
+        <div class="feature-icon">🌐</div>
+        <div>
+          <h4>Click-to-WhatsApp Ads</h4>
+          <p>Connect your Facebook/Instagram ads directly to WhatsApp. Capture leads instantly with pre-filled messages.</p>
+        </div>
+      </div>
+    </div>
+    <div class="phone-mockup-wrap reveal" style="display:flex; justify-content:center; align-items:center;">
+      <div class="phone-mockup">
+        <div class="phone-notch"><div class="phone-notch-inner"></div></div>
+        <div class="phone-screen">
+          <div class="wa-chat-header">
+            <div class="wa-avatar">iA</div>
+            <div>
+              <div class="wa-chat-name">iAutomate Business</div>
+              <div class="wa-chat-status">● Online</div>
+            </div>
+          </div>
+          <div class="wa-messages">
+            <div class="wa-msg in">
+              👋 Hello Priya! We have an exclusive offer just for you.
+              <div class="wa-msg-time">10:30 AM ✓✓</div>
+            </div>
+            <div class="wa-msg in">
+              🎉 Get 30% OFF on your next order! Use code: <strong>LOYAL30</strong>
+              <div class="wa-msg-time">10:30 AM ✓✓</div>
+            </div>
+            <div class="wa-msg out">
+              That sounds great! How do I use it?
+              <div class="wa-msg-time">10:31 AM ✓✓</div>
+            </div>
+            <div class="wa-msg in">
+              Simply add items to cart and enter LOYAL30 at checkout. Valid till tonight!
+              <div class="wa-msg-time">10:31 AM ✓✓</div>
+            </div>
+            <div class="wa-typing"><span></span><span></span><span></span></div>
+          </div>
+          <div class="wa-input-bar">
+            <div class="wa-input">Type a message...</div>
+            <div class="wa-send">↑</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRY -->
+<section id="industry">
+  <div class="section-head reveal">
+    <div class="section-label">Industry Solutions</div>
+    <h2 class="section-title">Tailored for your industry</h2>
+    <p class="section-sub">iAutomate's WhatsApp marketing platform is customized for the specific needs of each sector.</p>
+  </div>
+  <div class="industry-tabs reveal">
+    <button class="ind-tab active" onclick="switchIndustry('ecommerce', this)">🛒 E-Commerce</button>
+    <button class="ind-tab" onclick="switchIndustry('healthcare', this)">🏥 Healthcare</button>
+    <button class="ind-tab" onclick="switchIndustry('education', this)">🎓 Education</button>
+    <button class="ind-tab" onclick="switchIndustry('realestate', this)">🏘️ Real Estate</button>
+    <button class="ind-tab" onclick="switchIndustry('finance', this)">💳 Finance</button>
+    <button class="ind-tab" onclick="switchIndustry('restaurant', this)">🍕 Restaurants</button>
+  </div>
+
+  <!-- E-Commerce -->
+  <div class="ind-content active reveal" id="ind-ecommerce">
+    <div class="ind-left">
+      <h3>Boost E-Commerce Sales with WhatsApp</h3>
+      <p>From abandoned cart recovery to post-purchase delight — automate your entire customer journey and watch revenue grow.</p>
+      <div class="ind-points">
+        <div class="ind-point"><div class="ind-point-icon">🛒</div><div class="ind-point-text"><h5>Abandoned Cart Recovery</h5><p>Automatically message customers who left without buying. Recover up to 35% of lost carts.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">📦</div><div class="ind-point-text"><h5>Order & Shipping Updates</h5><p>Send real-time order confirmations, dispatch alerts, and delivery notifications automatically.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">⭐</div><div class="ind-point-text"><h5>Review & Feedback Collection</h5><p>Trigger review requests post-delivery to build social proof and improve product ratings.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">🎯</div><div class="ind-point-text"><h5>Flash Sale Broadcasts</h5><p>Instantly announce sales and limited-time offers to segmented customer lists.</p></div></div>
+      </div>
+    </div>
+    <div class="ind-visual reveal">
+      <div style="font-size:0.8rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:20px;">Real Results</div>
+      <div class="ind-metric"><span class="ind-metric-label">Cart Recovery Rate</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:35%"></div></div><span class="ind-metric-val">35%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Message Open Rate</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:92%"></div></div><span class="ind-metric-val">92%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Customer Satisfaction</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:88%"></div></div><span class="ind-metric-val">4.8/5</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Repeat Purchase Rate</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:62%"></div></div><span class="ind-metric-val">+62%</span></div>
+    </div>
+  </div>
+
+  <!-- Healthcare -->
+  <div class="ind-content" id="ind-healthcare">
+    <div class="ind-left">
+      <h3>Healthcare Communication That Saves Time</h3>
+      <p>Manage patient appointments, send health reminders, and provide post-care support — all through WhatsApp.</p>
+      <div class="ind-points">
+        <div class="ind-point"><div class="ind-point-icon">📅</div><div class="ind-point-text"><h5>Appointment Reminders</h5><p>Reduce no-shows by 70% with automated appointment confirmation and reminder messages.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">💊</div><div class="ind-point-text"><h5>Medication Reminders</h5><p>Send daily or scheduled medication reminders to patients for better health compliance.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">🧪</div><div class="ind-point-text"><h5>Lab Report Delivery</h5><p>Securely share lab reports and prescription updates directly via WhatsApp.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">❤️</div><div class="ind-point-text"><h5>Patient Follow-Up</h5><p>Automate post-visit follow-ups and health tips to improve patient outcomes.</p></div></div>
+      </div>
+    </div>
+    <div class="ind-visual reveal">
+      <div style="font-size:0.8rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:20px;">Healthcare Impact</div>
+      <div class="ind-metric"><span class="ind-metric-label">No-Show Reduction</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:70%"></div></div><span class="ind-metric-val">70%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Patient Response Rate</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:85%"></div></div><span class="ind-metric-val">85%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Staff Time Saved</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:60%"></div></div><span class="ind-metric-val">60%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Patient Satisfaction</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:94%"></div></div><span class="ind-metric-val">4.9/5</span></div>
+    </div>
+  </div>
+
+  <!-- Education -->
+  <div class="ind-content" id="ind-education">
+    <div class="ind-left">
+      <h3>Smarter Communication for EdTech & Schools</h3>
+      <p>Keep students, parents, and staff informed — automate admission flows, class updates, and exam reminders.</p>
+      <div class="ind-points">
+        <div class="ind-point"><div class="ind-point-icon">🎓</div><div class="ind-point-text"><h5>Admission Automation</h5><p>Capture leads from ads, send brochures, and follow up automatically through the admission funnel.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">📚</div><div class="ind-point-text"><h5>Class & Exam Alerts</h5><p>Notify students and parents about class schedules, exam dates, and result declarations.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">📝</div><div class="ind-point-text"><h5>Assignment Reminders</h5><p>Automated reminders for homework, assignment submissions, and fee payment deadlines.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">🏆</div><div class="ind-point-text"><h5>Parent Engagement</h5><p>Send progress reports, attendance alerts, and event invitations directly to parents.</p></div></div>
+      </div>
+    </div>
+    <div class="ind-visual reveal">
+      <div style="font-size:0.8rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:20px;">Education Metrics</div>
+      <div class="ind-metric"><span class="ind-metric-label">Lead Conversion Rate</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:48%"></div></div><span class="ind-metric-val">48%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Parent Response Rate</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:90%"></div></div><span class="ind-metric-val">90%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Admin Time Saved</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:55%"></div></div><span class="ind-metric-val">55%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Student Engagement</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:78%"></div></div><span class="ind-metric-val">+78%</span></div>
+    </div>
+  </div>
+
+  <!-- Real Estate -->
+  <div class="ind-content" id="ind-realestate">
+    <div class="ind-left">
+      <h3>Close More Real Estate Deals on WhatsApp</h3>
+      <p>Nurture property leads, share listings with images/videos, and schedule site visits — all automated on WhatsApp.</p>
+      <div class="ind-points">
+        <div class="ind-point"><div class="ind-point-icon">🏠</div><div class="ind-point-text"><h5>Property Listing Alerts</h5><p>Instantly notify interested buyers when matching properties are listed with photos and details.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">📅</div><div class="ind-point-text"><h5>Site Visit Scheduling</h5><p>Let prospects book site visits via WhatsApp with automated confirmation and reminders.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">💰</div><div class="ind-point-text"><h5>Payment Reminders</h5><p>Automated EMI reminders, installment due alerts, and payment confirmation messages.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">🤝</div><div class="ind-point-text"><h5>Broker Network</h5><p>Manage channel partners and brokers with automated lead distribution and updates.</p></div></div>
+      </div>
+    </div>
+    <div class="ind-visual reveal">
+      <div style="font-size:0.8rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:20px;">Real Estate Results</div>
+      <div class="ind-metric"><span class="ind-metric-label">Lead Response Time</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:95%"></div></div><span class="ind-metric-val">&lt;1 min</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Site Visit Conversion</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:42%"></div></div><span class="ind-metric-val">+42%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Follow-Up Rate</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:100%"></div></div><span class="ind-metric-val">100%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Deal Closure Speed</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:65%"></div></div><span class="ind-metric-val">3× faster</span></div>
+    </div>
+  </div>
+
+  <!-- Finance -->
+  <div class="ind-content" id="ind-finance">
+    <div class="ind-left">
+      <h3>Financial Services Communication, Simplified</h3>
+      <p>Send loan updates, payment alerts, KYC reminders, and investment notifications securely over WhatsApp.</p>
+      <div class="ind-points">
+        <div class="ind-point"><div class="ind-point-icon">💳</div><div class="ind-point-text"><h5>Loan Status Updates</h5><p>Keep borrowers informed at every stage — application, approval, disbursement, and repayment.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">🔔</div><div class="ind-point-text"><h5>Payment Due Alerts</h5><p>Automated EMI reminders and overdue notices to reduce defaults and improve collections.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">📋</div><div class="ind-point-text"><h5>KYC & Documentation</h5><p>Collect customer documents, send verification OTPs, and update KYC status via WhatsApp.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">📈</div><div class="ind-point-text"><h5>Investment Alerts</h5><p>Real-time portfolio updates, NAV alerts, and market opportunity notifications for investors.</p></div></div>
+      </div>
+    </div>
+    <div class="ind-visual reveal">
+      <div style="font-size:0.8rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:20px;">Finance Impact</div>
+      <div class="ind-metric"><span class="ind-metric-label">Collection Rate Improvement</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:40%"></div></div><span class="ind-metric-val">+40%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">KYC Completion Speed</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:75%"></div></div><span class="ind-metric-val">5× faster</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Customer Query Resolution</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:80%"></div></div><span class="ind-metric-val">80%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Default Rate Reduction</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:30%"></div></div><span class="ind-metric-val">30%</span></div>
+    </div>
+  </div>
+
+  <!-- Restaurant -->
+  <div class="ind-content" id="ind-restaurant">
+    <div class="ind-left">
+      <h3>Grow Your Restaurant with WhatsApp Orders</h3>
+      <p>Take orders, confirm reservations, send menu updates, and run loyalty campaigns — directly on WhatsApp.</p>
+      <div class="ind-points">
+        <div class="ind-point"><div class="ind-point-icon">🍽️</div><div class="ind-point-text"><h5>WhatsApp Ordering</h5><p>Let customers browse your digital menu and place orders directly through WhatsApp chatbot.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">📅</div><div class="ind-point-text"><h5>Table Reservations</h5><p>Accept reservations, send confirmations, and reduce no-shows with automated reminders.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">🎁</div><div class="ind-point-text"><h5>Loyalty & Offers</h5><p>Run birthday offers, loyalty points updates, and exclusive deals for repeat customers.</p></div></div>
+        <div class="ind-point"><div class="ind-point-icon">⭐</div><div class="ind-point-text"><h5>Review Collection</h5><p>Automatically request feedback after each visit to boost your ratings on Google and Zomato.</p></div></div>
+      </div>
+    </div>
+    <div class="ind-visual reveal">
+      <div style="font-size:0.8rem;font-weight:700;color:var(--muted2);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:20px;">Restaurant Results</div>
+      <div class="ind-metric"><span class="ind-metric-label">Order Conversion via WA</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:55%"></div></div><span class="ind-metric-val">55%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">No-Show Reduction</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:65%"></div></div><span class="ind-metric-val">65%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Repeat Order Rate</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:70%"></div></div><span class="ind-metric-val">+70%</span></div>
+      <div class="ind-metric"><span class="ind-metric-label">Avg. Rating Improvement</span><div class="ind-bar-wrap"><div class="ind-bar" style="width:82%"></div></div><span class="ind-metric-val">+0.8★</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section style="background: rgba(255,255,255,0.015); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="section-head reveal">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">Go live in minutes,<br>not months</h2>
+    <p class="section-sub">Getting started with iAutomate's WhatsApp platform is fast and requires zero technical knowledge.</p>
+  </div>
+  <div class="steps-grid" style="max-width:900px; margin:0 auto;">
+    <div class="step-card reveal">
+      <div class="step-num">1</div>
+      <h4>Connect Your Number</h4>
+      <p>Link your WhatsApp Business number to iAutomate. We handle the WhatsApp Business API setup for you.</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">2</div>
+      <h4>Import Contacts</h4>
+      <p>Upload your customer list via CSV, connect your CRM, or collect contacts through WhatsApp opt-in forms.</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">3</div>
+      <h4>Build Campaigns</h4>
+      <p>Create message templates, set up chatbot flows, and design broadcast campaigns with our visual builder.</p>
+    </div>
+    <div class="step-card reveal">
+      <div class="step-num">4</div>
+      <h4>Send & Grow</h4>
+      <p>Launch campaigns, monitor performance in real-time, and optimize based on open rates and conversions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INTEGRATIONS -->
+<section>
+  <div class="section-head reveal">
+    <div class="section-label">Integrations</div>
+    <h2 class="section-title">Works with your<br>favorite tools</h2>
+    <p class="section-sub">Connect iAutomate with 50+ platforms and tools your business already uses.</p>
+  </div>
+  <div class="int-grid" style="max-width:900px; margin:0 auto;">
+    <div class="int-card reveal"><div class="int-icon">🛍️</div><p>Shopify</p></div>
+    <div class="int-card reveal"><div class="int-icon">📊</div><p>Google Sheets</p></div>
+    <div class="int-card reveal"><div class="int-icon">🔗</div><p>Zapier</p></div>
+    <div class="int-card reveal"><div class="int-icon">💼</div><p>HubSpot CRM</p></div>
+    <div class="int-card reveal"><div class="int-icon">🛒</div><p>WooCommerce</p></div>
+    <div class="int-card reveal"><div class="int-icon">📧</div><p>Mailchimp</p></div>
+    <div class="int-card reveal"><div class="int-icon">📱</div><p>Facebook Ads</p></div>
+    <div class="int-card reveal"><div class="int-icon">🤝</div><p>Salesforce</p></div>
+    <div class="int-card reveal"><div class="int-icon">📋</div><p>Razorpay</p></div>
+    <div class="int-card reveal"><div class="int-icon">🎯</div><p>Pabbly Connect</p></div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background: rgba(255,255,255,0.015); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="section-head reveal">
+    <div class="section-label">Pricing</div>
+    <h2 class="section-title">Transparent pricing.<br>No hidden charges.</h2>
+    <p class="section-sub">Pay per message. No monthly commitments on Starter. Scale up when you're ready.</p>
+  </div>
+  <div class="pricing-grid">
+    <!-- Starter -->
+    <div class="price-card reveal">
+      <div class="price-tier">Starter</div>
+      <div class="messages-badge">Up to 1,000 msgs/month</div>
+      <div class="price-amount"><sup>₹</sup>999<sub>/mo</sub></div>
+      <p class="price-desc">Perfect for small businesses just getting started with WhatsApp marketing.</p>
+      <div class="price-features">
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">1 WhatsApp Number</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">1,000 messages/month</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Broadcast Campaigns</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Basic Chatbot (3 flows)</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Contact Manager</span></div>
+        <div class="pf"><span class="pf-x">✗</span><span class="pf-text">Team Inbox</span></div>
+        <div class="pf"><span class="pf-x">✗</span><span class="pf-text">API Access</span></div>
+        <div class="pf"><span class="pf-x">✗</span><span class="pf-text">Analytics Dashboard</span></div>
+      </div>
+      <button class="price-cta outline" onclick="openWhatsApp()">Get Started</button>
+    </div>
+    <!-- Growth -->
+    <div class="price-card popular reveal">
+      <div class="price-tier">Growth</div>
+      <div class="messages-badge">Up to 10,000 msgs/month</div>
+      <div class="price-amount"><sup>₹</sup>2,999<sub>/mo</sub></div>
+      <p class="price-desc">For growing businesses ready to scale WhatsApp marketing across teams.</p>
+      <div class="price-features">
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">3 WhatsApp Numbers</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">10,000 messages/month</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Advanced Broadcasts</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Unlimited Chatbot Flows</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Team Inbox (5 agents)</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Analytics Dashboard</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Drip Campaigns</span></div>
+        <div class="pf"><span class="pf-x">✗</span><span class="pf-text">API Access</span></div>
+      </div>
+      <button class="price-cta primary" onclick="openWhatsApp()">Start Free Trial</button>
+    </div>
+    <!-- Pro -->
+    <div class="price-card reveal">
+      <div class="price-tier">Pro</div>
+      <div class="messages-badge">Up to 50,000 msgs/month</div>
+      <div class="price-amount"><sup>₹</sup>6,999<sub>/mo</sub></div>
+      <p class="price-desc">For power users and agencies managing multiple brands or high-volume campaigns.</p>
+      <div class="price-features">
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">10 WhatsApp Numbers</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">50,000 messages/month</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Full Automation Suite</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Unlimited Agents</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">REST API + Webhooks</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Advanced Analytics</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Click-to-WhatsApp Ads</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Priority Support</span></div>
+      </div>
+      <button class="price-cta outline" onclick="openWhatsApp()">Get Started</button>
+    </div>
+    <!-- Enterprise -->
+    <div class="price-card reveal">
+      <div class="price-tier">Enterprise</div>
+      <div class="messages-badge">Unlimited messages</div>
+      <div class="price-amount" style="font-size:2rem;">Custom</div>
+      <p class="price-desc">Custom pricing for enterprises with high volumes, SLA guarantees, and dedicated support.</p>
+      <div class="price-features">
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Unlimited Numbers</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Unlimited Messages</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Dedicated Infrastructure</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Custom Integrations</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">SLA Guarantee</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">Dedicated Account Manager</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">On-Premise Deployment</span></div>
+        <div class="pf"><span class="pf-check">✓</span><span class="pf-text has">24/7 Premium Support</span></div>
+      </div>
+      <button class="price-cta outline" onclick="openWhatsApp()">Contact Sales</button>
+    </div>
+  </div>
+  <p style="text-align:center; color:var(--muted); font-size:0.82rem; margin-top:28px;">
+    All plans include a 7-day free trial. No credit card required. WhatsApp conversation charges as per Meta pricing apply separately.
+  </p>
+</section>
+
+<!-- TESTIMONIALS -->
+<section>
+  <div class="section-head reveal">
+    <div class="section-label">Testimonials</div>
+    <h2 class="section-title">Loved by Indian businesses</h2>
+    <p class="section-sub">Real stories from real businesses growing with iAutomate's WhatsApp platform.</p>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p>"We sent a Diwali sale broadcast to 8,000 customers and got 600+ orders in 2 hours. Our WhatsApp ROI is insane. iAutomate is a game changer for e-commerce."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">AR</div>
+        <div><div class="testi-name">Arjun Ramesh</div><div class="testi-role">Owner, ShopKart Online — Bengaluru</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p>"The chatbot handles 90% of patient appointment queries automatically. Our front desk staff now focus on actual patient care. Worth every rupee."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">PM</div>
+        <div><div class="testi-name">Dr. Priya Mehta</div><div class="testi-role">Clinic Director, HealthFirst — Mumbai</div></div>
+      </div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p>"Converted 120 property inquiries in one month through WhatsApp. The broadcast campaigns with property photos and videos work better than any other channel."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">SK</div>
+        <div><div class="testi-name">Suresh Kumar</div><div class="testi-role">Director, PrimeProperties — Delhi</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section style="background: rgba(255,255,255,0.015); border-top:1px solid var(--border); border-bottom:1px solid var(--border);">
+  <div class="section-head reveal">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Frequently asked questions</h2>
+    <p class="section-sub">Everything you need to know before getting started.</p>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Is iAutomate an official WhatsApp Business Solution Provider? <span class="faq-chevron">▾</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Yes. iAutomate uses the official WhatsApp Business API (Meta-approved). Your messages are sent through official channels, ensuring high deliverability, green tick eligibility, and compliance with WhatsApp's policies. We are not a grey-route or unofficial provider.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I send bulk messages without getting banned? <span class="faq-chevron">▾</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Yes, because we use the official WhatsApp Business API with approved message templates. Unlike unofficial bulk senders that get numbers banned, our platform is Meta-compliant. However, you must only message users who have opted in to receive messages from your business.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">How long does it take to set up my WhatsApp Business account? <span class="faq-chevron">▾</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Typically 24–48 hours for account verification and API access. Our team handles the entire onboarding process for you. Once approved, you can start sending messages immediately. We guide you through every step of the Meta Business verification process.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">What's the difference between WhatsApp Business App and WhatsApp Business API? <span class="faq-chevron">▾</span></button>
+      <div class="faq-a"><div class="faq-a-inner">WhatsApp Business App is a free app for small businesses with limited features (1 device, no automation). WhatsApp Business API is for medium-to-large businesses — it supports bulk messaging, chatbots, team inbox, multiple devices, CRM integration, and advanced analytics. iAutomate runs on the API.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Are there per-message charges beyond the subscription? <span class="faq-chevron">▾</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Yes. Meta charges per conversation (24-hour window), not per message. Rates vary by country and conversation type (marketing, utility, authentication, service). For India, marketing conversations are approximately ₹0.58 per conversation. iAutomate's subscription covers platform access; Meta's charges are passed through at cost with no markup.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Can I use my existing WhatsApp number? <span class="faq-chevron">▾</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Yes, but with a caveat: if the number is already registered on WhatsApp (personal or Business App), it needs to be migrated to the API. This process deletes existing chat history on the app. Alternatively, you can use a new number. Our team will guide you through the best approach for your situation.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">Do you offer chatbot building assistance? <span class="faq-chevron">▾</span></button>
+      <div class="faq-a"><div class="faq-a-inner">Absolutely. All paid plans include chatbot setup assistance. Our team helps you design conversation flows, set up automated responses, integrate with your systems, and test the bot thoroughly before going live. For Enterprise, we offer fully custom chatbot development.</div></div>
+    </div>
+    <div class="faq-item reveal">
+      <button class="faq-q" onclick="toggleFaq(this)">What kind of support do you provide? <span class="faq-chevron">▾</span></button>
+      <div class="faq-a"><div class="faq-a-inner">All plans include WhatsApp support (meta!). Starter gets business-hours support, Growth gets extended-hours support, Pro gets priority support with 4-hour response SLA, and Enterprise gets 24/7 dedicated account management. We also have an extensive documentation portal and video tutorials.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band reveal">
+  <h2>Start reaching customers where they already are</h2>
+  <p>Join 5,000+ Indian businesses sending smarter messages on WhatsApp. Start your 7-day free trial today.</p>
+  <button class="btn-white" onclick="openWhatsApp()">
+    🚀 Start Free Trial — No Credit Card Needed
+  </button>
+</div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-head reveal">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Let's talk WhatsApp strategy</h2>
+    <p class="section-sub">Have questions? Our team is ready to help you get started or scale your existing campaigns.</p>
+  </div>
+  <div class="contact-grid" style="max-width:960px; margin:0 auto;">
+    <div class="contact-info reveal">
+      <h3>Reach us directly</h3>
+      <p>We respond within 2 hours during business hours. For urgent queries, WhatsApp us directly.</p>
+      <div class="contact-links">
+        <div class="clink">
+          <div class="clink-icon">💬</div>
+          <div class="clink-text">
+            <h5>WhatsApp</h5>
+            <a href="https://wa.me/917004803084" target="_blank">+91 70048 03084</a>
+          </div>
+        </div>
+        <div class="clink">
+          <div class="clink-icon">📧</div>
+          <div class="clink-text">
+            <h5>Email</h5>
+            <a href="mailto:support@iautomate.in">support@iautomate.in</a>
+          </div>
+        </div>
+        <div class="clink">
+          <div class="clink-icon">📍</div>
+          <div class="clink-text">
+            <h5>Location</h5>
+            <span>India — serving businesses nationwide</span>
+          </div>
+        </div>
+        <div class="clink">
+          <div class="clink-icon">⏰</div>
+          <div class="clink-text">
+            <h5>Business Hours</h5>
+            <span>Mon–Sat, 9 AM – 7 PM IST</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-card reveal">
+      <h3 style="font-family:var(--display);font-size:1.3rem;font-weight:800;margin-bottom:20px;">Get a Free Demo</h3>
+      <form onsubmit="handleFormSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" placeholder="Rahul Sharma" required>
+          </div>
+          <div class="form-group">
+            <label>WhatsApp Number *</label>
+            <input type="tel" placeholder="+91 98765 43210" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Business Name</label>
+          <input type="text" placeholder="Your Business Name">
+        </div>
+        <div class="form-group">
+          <label>Industry</label>
+          <select>
+            <option>Select your industry</option>
+            <option>E-Commerce</option>
+            <option>Healthcare</option>
+            <option>Education</option>
+            <option>Real Estate</option>
+            <option>Finance / NBFC</option>
+            <option>Restaurant / Food</option>
+            <option>Logistics</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Monthly Messages (approx)</label>
+          <select>
+            <option>Less than 1,000</option>
+            <option>1,000 – 10,000</option>
+            <option>10,000 – 50,000</option>
+            <option>50,000+</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>What do you want to achieve?</label>
+          <textarea placeholder="e.g. I want to run abandoned cart campaigns and automate customer support..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message via WhatsApp →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="nav-brand" style="margin-bottom:0">
+        <div class="logo-badge">iA</div>
+        <div>
+          <div style="font-family:var(--display);font-weight:800;">iAutomate</div>
+          <div class="nav-brand-sub">Bulk Messaging Platform</div>
+        </div>
+      </div>
+      <p>India's most trusted WhatsApp marketing platform. Powering thousands of businesses with smart automation, broadcasts, and chatbots.</p>
+    </div>
+    <div class="footer-col">
+      <h6>Products</h6>
+      <a href="#products">Broadcast Campaigns</a>
+      <a href="#products">Smart Chatbot</a>
+      <a href="#products">Team Inbox</a>
+      <a href="#products">Analytics</a>
+      <a href="#products">WhatsApp API</a>
+      <a href="#products">Contact Manager</a>
+    </div>
+    <div class="footer-col">
+      <h6>Company</h6>
+      <a href="index.html">Automation Services</a>
+      <a href="web-design.html">Web Design</a>
+      <a href="bulk-messaging.html">Bulk Messaging</a>
+      <a href="privacy.html" target="_blank">Privacy Policy</a>
+      <a href="#contact">Contact Us</a>
+    </div>
+    <div class="footer-col">
+      <h6>Resources</h6>
+      <a href="#faq">FAQ</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#industry">Industry Solutions</a>
+      <a href="https://wa.me/917004803084" target="_blank">WhatsApp Support</a>
+      <a href="mailto:support@iautomate.in">Email Support</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 iAutomate Services. All rights reserved. | WhatsApp is a trademark of Meta Platforms, Inc.</p>
+    <div class="footer-socials">
+      <a class="social-btn" href="https://wa.me/917004803084" target="_blank" title="WhatsApp">💬</a>
+      <a class="social-btn" href="mailto:support@iautomate.in" title="Email">✉️</a>
+      <a class="social-btn" href="privacy.html" target="_blank" title="Privacy">🔒</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WA FLOAT -->
+<div class="wa-float">
+  <div class="wa-pulse"></div>
+  <button class="wa-float-btn" onclick="openWhatsApp()" title="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </button>
+</div>
+
+<!-- LOGIN MODAL -->
+<div id="loginModal" style="display:none;position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#0b1120;border:1px solid rgba(37,211,102,0.2);border-radius:24px;padding:48px 40px;width:min(440px,94vw);position:relative;">
+    <button onclick="document.getElementById('loginModal').style.display='none'" style="position:absolute;top:16px;right:16px;background:none;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;">✕</button>
+    <div style="text-align:center;margin-bottom:32px;">
+      <div class="logo-badge" style="margin:0 auto 12px;">iA</div>
+      <h3 style="font-family:var(--display);font-size:1.4rem;font-weight:900;">Welcome back</h3>
+      <p style="color:var(--muted);font-size:0.85rem;margin-top:4px;">Sign in to your iAutomate account</p>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="you@business.com"></div>
+    <div class="form-group"><label>Password</label><input type="password" placeholder="••••••••"></div>
+    <button class="form-submit" style="width:100%;padding:13px;border-radius:99px;border:none;background:var(--grad-wa2);color:#fff;font-weight:700;font-size:0.9rem;cursor:pointer;margin-top:4px;">Sign In</button>
+    <p style="text-align:center;font-size:0.82rem;color:var(--muted);margin-top:16px;">Don't have an account? <a href="#" onclick="document.getElementById('loginModal').style.display='none';openWhatsApp()" style="color:#25D366;">Contact us on WhatsApp</a></p>
+  </div>
+</div>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    document.getElementById('pb').style.width = pct + '%';
+  });
+
+  // WhatsApp function
+  function openWhatsApp() {
+    const msg = encodeURIComponent("Hi iAutomate! I'm interested in your WhatsApp Bulk Messaging platform. Please share details.");
+    window.open('https://wa.me/917004803084?text=' + msg, '_blank');
+  }
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        const delay = (Array.from(e.target.parentElement.children).indexOf(e.target)) * 80;
+        setTimeout(() => e.target.classList.add('visible'), Math.min(delay, 400));
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const duration = 2000;
+    const start = performance.now();
+    const update = (now) => {
+      const progress = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(ease * target);
+      el.textContent = current.toLocaleString('en-IN') + (target >= 90 && target <= 100 ? '%' : (target > 100 ? '+' : '+'));
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = target.toLocaleString('en-IN') + (target >= 50 && target <= 100 ? (target === 50 ? 'M+' : '%') : '+');
+    };
+    requestAnimationFrame(update);
+  }
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { animateCounter(e.target); counterObs.unobserve(e.target); }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num[data-target]').forEach(el => counterObs.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+
+  // Industry tabs
+  function switchIndustry(id, btn) {
+    document.querySelectorAll('.ind-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.ind-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('ind-' + id).classList.add('active');
+  }
+
+  // Feature items
+  function setActiveFeature(el) {
+    document.querySelectorAll('.feature-item').forEach(f => f.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Form submit
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.querySelector('input[type="text"]').value || 'there';
+    const msg = encodeURIComponent(`Hi iAutomate! I'm ${name} and I'd like to get a free demo of your WhatsApp Bulk Messaging platform.`);
+    window.open('https://wa.me/917004803084?text=' + msg, '_blank');
+  }
+
+  // Canvas particle animation (WhatsApp green theme)
+  (function() {
+    const canvas = document.getElementById('heroCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let W, H;
+    function resize() { W = canvas.width = window.innerWidth; H = canvas.height = canvas.parentElement.offsetHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    for (let i = 0; i < 80; i++) {
+      particles.push({
+        x: Math.random() * 2000, y: Math.random() * 1000,
+        vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+        r: Math.random() * 2 + 0.5,
+        a: Math.random() * 0.5 + 0.1,
+        green: Math.random() > 0.4
+      });
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => {
+        p.x += p.vx; p.y += p.vy;
+        if (p.x < 0) p.x = W; if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H; if (p.y > H) p.y = 0;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.green ? `rgba(37,211,102,${p.a})` : `rgba(18,140,126,${p.a})`;
+        ctx.fill();
+      });
+      // Connect nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 120) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(37,211,102,${(1 - dist / 120) * 0.12})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // Keyboard: close drawer on Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      document.querySelector('.drawer').classList.remove('open');
+      document.getElementById('loginModal').style.display = 'none';
+    }
+  });
+</script>
+</body>
+</html>
