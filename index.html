@@ -283,6 +283,198 @@
     .drawer-auth { display: flex; gap: 8px; margin-top: 8px; }
     .drawer-auth button { flex: 1; }
 
+    /* ===== DROPDOWN NAV ===== */
+    .nav-dropdown { position: relative; }
+    .dropdown-btn {
+      color: var(--muted);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.87rem;
+      padding: 8px 10px;
+      border-radius: 10px;
+      transition: background 200ms var(--ease), color 200ms var(--ease);
+      white-space: nowrap;
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .dropdown-btn:hover { background: rgba(255,255,255,0.07); color: var(--text); }
+    .dropdown-btn .dd-arrow { font-size: 0.6rem; transition: transform 200ms var(--ease); opacity: 0.7; }
+    .nav-dropdown:hover .dd-arrow,
+    .nav-dropdown:focus-within .dd-arrow { transform: rotate(180deg); }
+    .dropdown-menu {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      min-width: 260px;
+      background: rgba(11,16,34,0.97);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 16px;
+      padding: 8px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.05);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms var(--ease), transform 180ms var(--ease);
+      z-index: 500;
+    }
+    .nav-dropdown:hover .dropdown-menu,
+    .nav-dropdown:focus-within .dropdown-menu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .dropdown-menu a {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      color: rgba(255,255,255,0.75);
+      text-decoration: none;
+      font-size: 0.86rem;
+      font-weight: 700;
+      transition: background 140ms var(--ease), color 140ms var(--ease);
+    }
+    .dropdown-menu a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .dm-icon {
+      width: 30px; height: 30px; border-radius: 9px;
+      background: rgba(255,255,255,0.07);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; flex-shrink: 0;
+    }
+
+    /* ===== DRAWER ACCORDION ===== */
+    .drawer-section { list-style: none; }
+    .drawer-section > summary {
+      color: var(--text); text-decoration: none; font-weight: 800;
+      padding: 12px 14px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.10); border-radius: 14px;
+      transition: background 180ms var(--ease);
+      display: flex; align-items: center; justify-content: space-between;
+      cursor: pointer; list-style: none; font-size: 1rem;
+      font-family: inherit;
+    }
+    .drawer-section > summary::-webkit-details-marker { display: none; }
+    .drawer-section > summary:hover { background: rgba(255,255,255,0.10); }
+    .drawer-section[open] > summary { background: rgba(155,92,255,0.12); border-color: rgba(155,92,255,0.35); }
+    .drawer-section[open] .dd-arrow { transform: rotate(180deg); }
+    .drawer-sub {
+      display: flex; flex-direction: column; gap: 4px;
+      padding: 6px 0 0 0;
+    }
+    .drawer-sub a {
+      padding: 10px 14px 10px 24px !important;
+      font-size: 0.88rem !important;
+      border-radius: 12px !important;
+      border-color: rgba(255,255,255,0.07) !important;
+    }
+
+    /* ===== BENTO FEATURE CARDS ===== */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 48px;
+    }
+    .bento-card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 22px;
+      padding: 28px 26px 26px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 260ms var(--ease), border-color 260ms var(--ease), box-shadow 260ms var(--ease);
+    }
+    .bento-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 22px 64px rgba(0,0,0,0.32);
+    }
+    .bento-card.wide  { grid-column: span 2; }
+    .bento-card.full  { grid-column: 1 / -1; }
+    .bento-card.featured {
+      background: linear-gradient(135deg, #064e2b 0%, #065a5a 50%, #0c2a5e 100%);
+      border-color: rgba(37,211,102,0.25);
+    }
+    .bento-card.featured:hover { border-color: rgba(37,211,102,0.5); }
+    /* header row: icon + tag */
+    .bc-header {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 16px;
+    }
+    .bc-icon { font-size: 1.3rem; line-height: 1; flex-shrink: 0; }
+    .bc-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+    /* large colorful heading */
+    .bc-heading {
+      font-family: var(--display);
+      font-size: 2rem;
+      font-weight: 900;
+      line-height: 1.08;
+      margin: 0 0 10px;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .bento-card.wide  .bc-heading { font-size: 2.3rem; }
+    .bento-card.full  .bc-heading { font-size: 2.5rem; }
+    /* description */
+    .bc-desc {
+      color: rgba(255,255,255,0.52);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .bento-card.featured .bc-desc { color: rgba(255,255,255,0.7); }
+    /* featured full-width layout */
+    .bento-card.full .bc-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .bento-card.full .bc-text { flex: 1; }
+    .bento-card.full .bc-deco {
+      font-size: 5.5rem;
+      opacity: 0.18;
+      flex-shrink: 0;
+      line-height: 1;
+      filter: drop-shadow(0 0 24px rgba(37,211,102,0.4));
+    }
+    /* colour variants */
+    .bento-card.c-green .bc-tag     { background: rgba(37,211,102,0.14);  color: #25d366; }
+    .bento-card.c-green .bc-heading { background-image: linear-gradient(135deg,#25d366,#10b981); }
+    .bento-card.c-purple .bc-tag    { background: rgba(155,92,255,0.14);  color: #a78bfa; }
+    .bento-card.c-purple .bc-heading{ background-image: linear-gradient(135deg,#9b5cff,#c084fc); }
+    .bento-card.c-orange .bc-tag    { background: rgba(251,146,60,0.14);  color: #fb923c; }
+    .bento-card.c-orange .bc-heading{ background-image: linear-gradient(135deg,#fb923c,#f59e0b); }
+    .bento-card.c-blue .bc-tag      { background: rgba(56,189,248,0.14);  color: #38bdf8; }
+    .bento-card.c-blue .bc-heading  { background-image: linear-gradient(135deg,#38bdf8,#818cf8); }
+    .bento-card.c-pink .bc-tag      { background: rgba(244,114,182,0.14); color: #f472b6; }
+    .bento-card.c-pink .bc-heading  { background-image: linear-gradient(135deg,#f472b6,#e879f9); }
+    .bento-card.featured .bc-tag    { background: rgba(255,255,255,0.15); color: #fff; }
+    .bento-card.featured .bc-heading{ background-image: linear-gradient(135deg,#ffffff,#a7f3d0); }
+    @media (max-width: 768px) {
+      .bento-grid { grid-template-columns: 1fr 1fr; }
+      .bento-card.wide { grid-column: 1 / -1; }
+      .bento-card.full .bc-inner { flex-direction: column; gap: 16px; }
+      .bento-card.full .bc-deco { display: none; }
+    }
+    @media (max-width: 480px) {
+      .bento-grid { grid-template-columns: 1fr; }
+      .bc-heading { font-size: 1.75rem; }
+    }
+
     /* ===== SECTIONS ===== */
     section { padding: 88px 0; }
 
@@ -1484,10 +1676,19 @@
 
         <!-- Desktop nav -->
         <nav aria-label="Primary">
-          <a class="link" href="#services">Services</a>
-          <a class="link" href="web-design.html" style="color:#4ade80;font-weight:800;">🌐 Web Design</a>
+          <div class="nav-dropdown">
+            <button class="dropdown-btn">Automation <span class="dd-arrow">▾</span></button>
+            <div class="dropdown-menu">
+              <a href="#service-whatsapp"><span class="dm-icon">💬</span>WhatsApp Messaging BOT</a>
+              <a href="#service-calling"><span class="dm-icon">☎️</span>Calling Bot</a>
+              <a href="#service-servicenow"><span class="dm-icon">🔄</span>ServiceNow Ticket Automation</a>
+              <a href="#service-m365"><span class="dm-icon">☁️</span>Microsoft Office 365 Automation</a>
+              <a href="#service-powershell"><span class="dm-icon">💻</span>PowerShell Automation</a>
+              <a href="#service-rpa"><span class="dm-icon">🤖</span>RPA Automation</a>
+            </div>
+          </div>
+          <a class="link" href="web-design.html" style="color:#4ade80;font-weight:800;">🌐 Web Designing</a>
           <a class="link" href="bulk-messaging.html" style="color:#25D366;font-weight:800;">💬 Bulk Messaging</a>
-          <a class="link" href="#pricing">Pricing</a>
           <a class="link" href="#process">Process</a>
           <a class="link" href="#cases">Success</a>
           <a class="link" href="#contact">Contact</a>
@@ -1573,10 +1774,19 @@
       <button class="drawer-close" id="drawerClose" aria-label="Close menu">✕</button>
     </div>
 
-    <a href="#services">⚡ Automation Services</a>
-    <a href="web-design.html" style="color:#4ade80;">🌐 Web Design — ₹249/mo</a>
+    <details class="drawer-section">
+      <summary>⚡ Automation <span class="dd-arrow" style="font-size:0.65rem;opacity:0.7;">▾</span></summary>
+      <div class="drawer-sub">
+        <a href="#service-whatsapp">💬 WhatsApp Messaging BOT</a>
+        <a href="#service-calling">☎️ Calling Bot</a>
+        <a href="#service-servicenow">🔄 ServiceNow Ticket Automation</a>
+        <a href="#service-m365">☁️ Microsoft Office 365 Automation</a>
+        <a href="#service-powershell">💻 PowerShell Automation</a>
+        <a href="#service-rpa">🤖 RPA Automation</a>
+      </div>
+    </details>
+    <a href="web-design.html" style="color:#4ade80;">🌐 Web Designing — ₹249/mo</a>
     <a href="bulk-messaging.html" style="color:#25D366;">💬 Bulk Messaging (WhatsApp)</a>
-    <a href="#pricing">💰 Pricing</a>
     <a href="#process">🔄 Process</a>
     <a href="#cases">🏆 Success Stories</a>
     <a href="#contact">📬 Contact</a>
@@ -1671,11 +1881,11 @@
       <p class="section-sub reveal">Complete automation solutions for every business need — from WhatsApp chatbots to enterprise IT workflows.</p>
 
       <div class="grid">
-        <div class="card reveal">
+        <div class="card reveal" id="service-whatsapp">
           <div class="icon">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.78L2 22l5.47-1.43a9.86 9.86 0 004.57 1.14h.01c5.46 0 9.91-4.45 9.91-9.91A9.93 9.93 0 0012.04 2zM8.53 7.33c.16 0 .33 0 .47.01.21 0 .44.05.65.47.24.48.8 1.96.87 2.11.07.14.12.31.01.5-.1.2-.15.31-.3.48-.14.16-.3.35-.43.48-.14.14-.29.29-.12.57.16.28.73 1.21 1.57 1.96 1.08.96 1.99 1.26 2.27 1.41.28.14.44.12.6-.07.17-.19.7-.82.89-1.1.19-.28.38-.23.64-.14.26.09 1.65.78 1.93.92.28.14.47.21.54.32.07.12.07.68-.15 1.34-.22.66-1.3 1.26-1.78 1.34-.48.07-1.09.1-1.75-.11-.4-.13-.91-.3-1.56-.58-2.74-1.18-4.53-3.95-4.67-4.13-.14-.18-1.13-1.5-1.13-2.86 0-1.37.72-2.04.97-2.32.26-.28.56-.35.75-.35z"/></svg>
           </div>
-          <h3>WhatsApp Chatbot</h3>
+          <h3>WhatsApp Messaging BOT</h3>
           <p>Smart AI-powered chatbots for instant customer support and lead capture.</p>
           <ul class="list">
             <li>Automated customer support</li>
@@ -1686,9 +1896,9 @@
           <button class="btn primary mini-cta" data-action="whatsapp">Chat on WhatsApp</button>
         </div>
 
-        <div class="card reveal">
+        <div class="card reveal" id="service-calling">
           <div class="icon">☎️</div>
-          <h3>Calling Bot Automation</h3>
+          <h3>Calling Bot</h3>
           <p>Automate inbound/outbound calling with AI voice agents, reminders and routing.</p>
           <ul class="list">
             <li>Inbound &amp; outbound automation</li>
@@ -1699,22 +1909,9 @@
           <a class="btn primary mini-cta" href="#contact">Discuss Voice Automation</a>
         </div>
 
-        <div class="card reveal">
-          <div class="icon">⚙️</div>
-          <h3>IT Service Automation</h3>
-          <p>Automate repetitive IT tasks: onboarding, access control, incidents, monitoring, and more.</p>
-          <ul class="list">
-            <li>User account management</li>
-            <li>Incident handling</li>
-            <li>Access control</li>
-            <li>Health monitoring</li>
-          </ul>
-          <a class="btn primary mini-cta" href="#contact">Automate IT Operations</a>
-        </div>
-
-        <div class="card reveal">
+<div class="card reveal" id="service-servicenow">
           <div class="icon">🔄</div>
-          <h3>ServiceNow Automation</h3>
+          <h3>ServiceNow Ticket Automation</h3>
           <p>Maximize ServiceNow with automated workflows, integrations, and SLA optimization.</p>
           <ul class="list">
             <li>Workflow automation</li>
@@ -1725,9 +1922,9 @@
           <a class="btn primary mini-cta" href="#contact">Optimize ServiceNow</a>
         </div>
 
-        <div class="card reveal">
+        <div class="card reveal" id="service-m365">
           <div class="icon">☁️</div>
-          <h3>Microsoft 365 Automation</h3>
+          <h3>Microsoft Office 365 Automation</h3>
           <p>Automate Microsoft 365 lifecycle management: users, email, Teams, SharePoint &amp; compliance.</p>
           <ul class="list">
             <li>User management</li>
@@ -1738,7 +1935,7 @@
           <a class="btn primary mini-cta" href="#contact">Automate Microsoft 365</a>
         </div>
 
-        <div class="card reveal">
+        <div class="card reveal" id="service-powershell">
           <div class="icon">💻</div>
           <h3>PowerShell Automation</h3>
           <p>Enterprise-grade scripting to automate admin work, servers, deployments, and reporting.</p>
@@ -1750,6 +1947,354 @@
           </ul>
           <a class="btn primary mini-cta" href="#contact">Build Scripts &amp; Runbooks</a>
         </div>
+
+        <div class="card reveal" id="service-rpa">
+          <div class="icon">🤖</div>
+          <h3>RPA Automation</h3>
+          <p>Robotic Process Automation to mimic human actions across legacy apps, web portals, and desktop software — no API needed.</p>
+          <ul class="list">
+            <li>UI-based task automation</li>
+            <li>Legacy system integration</li>
+            <li>Data extraction &amp; processing</li>
+            <li>End-to-end workflow bots</li>
+          </ul>
+          <a class="btn primary mini-cta" href="#contact">Explore RPA Solutions</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOMATION DETAIL SECTIONS REMOVED -->
+  <section id="automation-details" style="display:none;">
+    <div class="container">
+      <h2 class="section-title reveal">What You Can Achieve</h2>
+      <p class="section-sub reveal">Explore real-world automations under each service — built and deployed for businesses like yours.</p>
+
+      <!-- ── AUTOMATION BOXES ── -->
+      <div style="display:flex;flex-direction:column;gap:32px;margin-top:48px;">
+
+        <!-- WhatsApp Messaging BOT -->
+        <div class="reveal" style="border:1px solid rgba(37,211,102,0.22);border-radius:24px;padding:32px;background:rgba(37,211,102,0.04);">
+          <div style="display:flex;align-items:center;gap:14px;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid rgba(37,211,102,0.14);">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(37,211,102,0.15);border:1px solid rgba(37,211,102,0.3);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;">💬</div>
+            <div>
+              <h3 style="font-family:var(--display);font-size:1.18rem;font-weight:800;color:#4ade80;margin:0;">WhatsApp Messaging BOT</h3>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin:3px 0 0;">Automate customer conversations on WhatsApp — 24/7, zero agent cost</p>
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="card reveal">
+              <div class="icon">✅</div>
+              <h3>Customer Support Bot</h3>
+              <p>Handle common queries, complaints &amp; FAQs automatically — no human needed.</p>
+              <ul class="list">
+                <li>Instant replies round the clock</li>
+                <li>Intent detection &amp; smart routing</li>
+                <li>Human handoff for complex issues</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">🎯</div>
+              <h3>Lead Capture &amp; Qualification Bot</h3>
+              <p>Collect prospect details, score leads, and push them directly into your CRM.</p>
+              <ul class="list">
+                <li>Conversational lead forms</li>
+                <li>Auto-qualification questions</li>
+                <li>CRM &amp; Google Sheets sync</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">📅</div>
+              <h3>Appointment Booking Bot</h3>
+              <p>Let customers self-schedule appointments via WhatsApp — confirmations sent automatically.</p>
+              <ul class="list">
+                <li>Calendar availability check</li>
+                <li>Auto-confirmation &amp; reminders</li>
+                <li>Reschedule &amp; cancel flows</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">📦</div>
+              <h3>Order &amp; Delivery Status Bot</h3>
+              <p>Send real-time order updates &amp; let customers track their delivery on WhatsApp.</p>
+              <ul class="list">
+                <li>Order confirmation messages</li>
+                <li>Shipping &amp; delivery alerts</li>
+                <li>Returns &amp; refund flows</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calling Bot -->
+        <div class="reveal" style="border:1px solid rgba(96,213,255,0.22);border-radius:24px;padding:32px;background:rgba(96,213,255,0.04);">
+          <div style="display:flex;align-items:center;gap:14px;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid rgba(96,213,255,0.14);">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(96,213,255,0.15);border:1px solid rgba(96,213,255,0.3);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;">☎️</div>
+            <div>
+              <h3 style="font-family:var(--display);font-size:1.18rem;font-weight:800;color:#60d5ff;margin:0;">Calling Bot</h3>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin:3px 0 0;">AI voice agents that handle inbound &amp; outbound calls at scale</p>
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="card reveal">
+              <div class="icon">🔔</div>
+              <h3>Appointment Reminder Calls</h3>
+              <p>Auto-dial customers before their scheduled appointments to reduce no-shows.</p>
+              <ul class="list">
+                <li>Scheduled outbound calls</li>
+                <li>Confirm, reschedule or cancel via keypress</li>
+                <li>SMS follow-up on no-answer</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">📞</div>
+              <h3>Inbound Query Handling</h3>
+              <p>Replace IVR trees with a conversational AI agent that resolves queries directly.</p>
+              <ul class="list">
+                <li>Natural language understanding</li>
+                <li>Policy, billing &amp; order queries</li>
+                <li>Escalate to live agent seamlessly</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">💳</div>
+              <h3>Payment Reminder Calls</h3>
+              <p>Auto-call customers with overdue invoices and collect payment confirmations.</p>
+              <ul class="list">
+                <li>Personalised reminder scripts</li>
+                <li>Payment link delivery via SMS</li>
+                <li>Retry logic for unanswered calls</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">⭐</div>
+              <h3>Post-Service Feedback Calls</h3>
+              <p>Collect CSAT scores &amp; feedback automatically after every service interaction.</p>
+              <ul class="list">
+                <li>Keypress or voice rating collection</li>
+                <li>Auto-flag negative feedback</li>
+                <li>Dashboard reporting</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- ServiceNow Ticket Automation -->
+        <div class="reveal" style="border:1px solid rgba(155,92,255,0.22);border-radius:24px;padding:32px;background:rgba(155,92,255,0.04);">
+          <div style="display:flex;align-items:center;gap:14px;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid rgba(155,92,255,0.14);">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(155,92,255,0.15);border:1px solid rgba(155,92,255,0.3);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;">🔄</div>
+            <div>
+              <h3 style="font-family:var(--display);font-size:1.18rem;font-weight:800;color:#c084fc;margin:0;">ServiceNow Ticket Automation</h3>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin:3px 0 0;">End-to-end ticket lifecycle automation inside ServiceNow ITSM</p>
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="card reveal">
+              <div class="icon">🏷️</div>
+              <h3>Auto Ticket Classification</h3>
+              <p>Incoming tickets are categorised, prioritised and assigned automatically using ML.</p>
+              <ul class="list">
+                <li>NLP-based category detection</li>
+                <li>Priority scoring by impact &amp; urgency</li>
+                <li>Auto-assignment to correct team</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">⏱️</div>
+              <h3>SLA Breach Prevention</h3>
+              <p>Monitor ticket age and trigger escalation before SLA deadlines are missed.</p>
+              <ul class="list">
+                <li>Real-time SLA countdown tracking</li>
+                <li>Auto-escalate at breach threshold</li>
+                <li>Manager notification alerts</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">🔗</div>
+              <h3>Monitoring Tool Integration</h3>
+              <p>Auto-create incidents in ServiceNow when your monitoring tools fire alerts.</p>
+              <ul class="list">
+                <li>Nagios, Zabbix, Datadog connectors</li>
+                <li>CMDB enrichment on creation</li>
+                <li>Auto-close on alert resolution</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">🛠️</div>
+              <h3>Change Request Automation</h3>
+              <p>Automate approvals, scheduling and rollback steps for change requests.</p>
+              <ul class="list">
+                <li>Auto-approval for standard changes</li>
+                <li>CAB meeting scheduling</li>
+                <li>Post-change review workflows</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Microsoft Office 365 Automation -->
+        <div class="reveal" style="border:1px solid rgba(79,124,255,0.22);border-radius:24px;padding:32px;background:rgba(79,124,255,0.04);">
+          <div style="display:flex;align-items:center;gap:14px;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid rgba(79,124,255,0.14);">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(79,124,255,0.15);border:1px solid rgba(79,124,255,0.3);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;">☁️</div>
+            <div>
+              <h3 style="font-family:var(--display);font-size:1.18rem;font-weight:800;color:#7fa8ff;margin:0;">Microsoft Office 365 Automation</h3>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin:3px 0 0;">Automate the full M365 lifecycle — users, mailboxes, Teams &amp; SharePoint</p>
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="card reveal">
+              <div class="icon">📧</div>
+              <h3>Mailbox / SharePoint / OneDrive / Teams Migration</h3>
+              <p>Migrate mailboxes, files and Teams data between tenants or from on-prem with zero disruption.</p>
+              <ul class="list">
+                <li>Cross-tenant &amp; hybrid migration</li>
+                <li>Delta sync to minimise downtime</li>
+                <li>Permission &amp; metadata preservation</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">👤</div>
+              <h3>User Onboarding &amp; Offboarding</h3>
+              <p>Provision or deprovision M365 accounts, licences, and group memberships automatically.</p>
+              <ul class="list">
+                <li>HR system trigger integration</li>
+                <li>Auto licence assignment by role</li>
+                <li>Secure offboarding &amp; data retention</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">📋</div>
+              <h3>Licence Audit &amp; Optimisation</h3>
+              <p>Identify unused licences, reclaim them automatically, and cut M365 spend.</p>
+              <ul class="list">
+                <li>Inactive account detection</li>
+                <li>Auto-licence reclamation</li>
+                <li>Monthly cost-saving report</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">🏢</div>
+              <h3>Teams &amp; SharePoint Provisioning</h3>
+              <p>Create Teams channels and SharePoint sites from templates instantly on demand.</p>
+              <ul class="list">
+                <li>Project-based site creation</li>
+                <li>Role-based access control</li>
+                <li>Auto-archive stale workspaces</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- PowerShell Automation -->
+        <div class="reveal" style="border:1px solid rgba(244,114,182,0.22);border-radius:24px;padding:32px;background:rgba(244,114,182,0.04);">
+          <div style="display:flex;align-items:center;gap:14px;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid rgba(244,114,182,0.14);">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(244,114,182,0.15);border:1px solid rgba(244,114,182,0.3);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;">💻</div>
+            <div>
+              <h3 style="font-family:var(--display);font-size:1.18rem;font-weight:800;color:#f472b6;margin:0;">PowerShell Automation</h3>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin:3px 0 0;">Enterprise scripts &amp; runbooks that replace repetitive admin tasks</p>
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="card reveal">
+              <div class="icon">🗂️</div>
+              <h3>Active Directory Management</h3>
+              <p>Automate AD user creation, group updates, password resets, and OU management.</p>
+              <ul class="list">
+                <li>Bulk user creation from CSV</li>
+                <li>Group membership sync</li>
+                <li>Expired account cleanup</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">🩺</div>
+              <h3>Server Health Monitoring</h3>
+              <p>Scheduled scripts that check CPU, disk, memory and alert on threshold breaches.</p>
+              <ul class="list">
+                <li>Daily health check reports</li>
+                <li>Email alerts on critical thresholds</li>
+                <li>Auto-restart failed services</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">🔧</div>
+              <h3>Automated Patch Deployment</h3>
+              <p>Push Windows updates and software patches to servers &amp; endpoints on a schedule.</p>
+              <ul class="list">
+                <li>WSUS &amp; SCCM integration</li>
+                <li>Maintenance window enforcement</li>
+                <li>Patch compliance reporting</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">📊</div>
+              <h3>Scheduled Reporting &amp; Alerts</h3>
+              <p>Auto-generate and email operational reports — storage, event logs, user activity.</p>
+              <ul class="list">
+                <li>Event log summaries</li>
+                <li>Storage capacity trends</li>
+                <li>Scheduled HTML report emails</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- RPA Automation -->
+        <div class="reveal" style="border:1px solid rgba(251,146,60,0.22);border-radius:24px;padding:32px;background:rgba(251,146,60,0.04);">
+          <div style="display:flex;align-items:center;gap:14px;padding-bottom:22px;margin-bottom:24px;border-bottom:1px solid rgba(251,146,60,0.14);">
+            <div style="width:44px;height:44px;border-radius:12px;background:rgba(251,146,60,0.15);border:1px solid rgba(251,146,60,0.3);display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0;">🤖</div>
+            <div>
+              <h3 style="font-family:var(--display);font-size:1.18rem;font-weight:800;color:#fb923c;margin:0;">RPA Automation</h3>
+              <p style="color:rgba(255,255,255,0.5);font-size:0.82rem;margin:3px 0 0;">Bots that mimic human actions on any app — no API required</p>
+            </div>
+          </div>
+          <div class="grid two">
+            <div class="card reveal">
+              <div class="icon">📝</div>
+              <h3>Data Entry Automation</h3>
+              <p>Replace manual data entry across portals, ERP, and legacy systems with RPA bots.</p>
+              <ul class="list">
+                <li>Form filling &amp; submission bots</li>
+                <li>Multi-system data sync</li>
+                <li>Validation &amp; error handling</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">🏦</div>
+              <h3>Invoice &amp; Finance Processing</h3>
+              <p>Extract invoice data, match POs, and post to accounting systems automatically.</p>
+              <ul class="list">
+                <li>PDF &amp; email invoice extraction</li>
+                <li>3-way PO matching</li>
+                <li>Auto-post to Tally / SAP / ERP</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">🔗</div>
+              <h3>Legacy System Integration</h3>
+              <p>Connect old systems that have no API by using screen-scraping RPA bots.</p>
+              <ul class="list">
+                <li>Terminal &amp; mainframe automation</li>
+                <li>Web scraping &amp; data extraction</li>
+                <li>Bridge legacy to modern platforms</li>
+              </ul>
+            </div>
+            <div class="card reveal">
+              <div class="icon">🔁</div>
+              <h3>Cross-App Workflow Bots</h3>
+              <p>Chain actions across multiple apps — copy from one, transform, paste into another.</p>
+              <ul class="list">
+                <li>Email → CRM → ERP pipelines</li>
+                <li>Browser + desktop app bots</li>
+                <li>Scheduled or event-triggered runs</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center;margin-top:56px;">
+        <a class="btn primary" href="#contact">✨ Discuss Your Automation Need</a>
       </div>
     </div>
   </section>
@@ -1760,72 +2305,70 @@
       <h2 class="section-title reveal">Bulk Messaging &amp; WhatsApp API Suite</h2>
       <p class="section-sub reveal">Run broadcasts, automate follow-ups, manage support, and collaborate as a team — powered by the official WhatsApp Business API.</p>
 
-      <div class="grid two">
-        <div class="card reveal">
-          <div class="icon">✅</div>
-          <h3>Official WhatsApp API Workflows</h3>
-          <p>Run WhatsApp marketing campaigns and manage customer support at scale, with chatbots and AI assist for reply quality.</p>
-          <ul class="list">
-            <li>Automate customer interaction with a chatbot builder</li>
-            <li>AI assist to improve quality &amp; SLA of replies</li>
-            <li>Shared team inbox for collaboration</li>
-          </ul>
+      <div class="bento-grid">
+
+        <!-- Row 1: three equal cards -->
+        <div class="bento-card c-green reveal">
+          <div class="bc-header">
+            <span class="bc-icon">✅</span>
+            <span class="bc-tag">Official</span>
+          </div>
+          <h3 class="bc-heading">API-Ready</h3>
+          <p class="bc-desc">Certified WhatsApp Business API — compliant, reliable, and enterprise-grade workflows.</p>
         </div>
 
-        <div class="card reveal">
-          <div class="icon">🎉</div>
-          <h3>Coexistence: App + Cloud API (Dual Access)</h3>
-          <p>Use the WhatsApp Business app alongside API automation for flexible operations.</p>
-          <ul class="list">
-            <li>Retain the mobile app while sending bulk messages via API</li>
-            <li>Sync contacts and chat history across interfaces</li>
-            <li>Switch between manual and automated messaging</li>
-          </ul>
+        <div class="bento-card c-purple reveal">
+          <div class="bc-header">
+            <span class="bc-icon">🔄</span>
+            <span class="bc-tag">Flexible</span>
+          </div>
+          <h3 class="bc-heading">Hybrid Cloud</h3>
+          <p class="bc-desc">Run WhatsApp App &amp; Cloud API side-by-side — zero disruption to existing setup.</p>
         </div>
 
-        <div class="card reveal">
-          <div class="icon">📣</div>
-          <h3>Bulk Messaging &amp; Broadcast Campaigns</h3>
-          <p>Send campaigns at scale — personalize templates using merge tags and schedule messages for later.</p>
-          <ul class="list">
-            <li>Unlimited broadcasts (by audience rules)</li>
-            <li>Personalized templates with dynamic fields</li>
-            <li>Campaign scheduling and delivery tracking</li>
-          </ul>
+        <div class="bento-card c-orange reveal">
+          <div class="bc-header">
+            <span class="bc-icon">📣</span>
+            <span class="bc-tag">Marketing</span>
+          </div>
+          <h3 class="bc-heading">Broadcast</h3>
+          <p class="bc-desc">Personalized templates + scheduling for mass outreach that actually gets read.</p>
         </div>
 
-        <div class="card reveal">
-          <div class="icon">🧩</div>
-          <h3>Drip Campaigns &amp; Sales Sequences</h3>
-          <p>No-code workflow builder to automate follow-ups, reminders, and long-running sequences.</p>
-          <ul class="list">
-            <li>Multi-step journeys running for days/months</li>
-            <li>Personalize based on customer journey stage</li>
-            <li>Recurring scheduled reminders</li>
-          </ul>
+        <!-- Row 2: wide + normal -->
+        <div class="bento-card c-blue wide reveal">
+          <div class="bc-header">
+            <span class="bc-icon">🧩</span>
+            <span class="bc-tag">Sales</span>
+          </div>
+          <h3 class="bc-heading">Drip Flows</h3>
+          <p class="bc-desc">Automated follow-up sequences that nurture leads, close deals, and recover abandoned carts — on autopilot.</p>
         </div>
 
-        <div class="card reveal">
-          <div class="icon">👥</div>
-          <h3>Shared Inbox + Auto Allocation</h3>
-          <p>Centralize conversations so no message is missed. Route to the right agent and reply faster.</p>
-          <ul class="list">
-            <li>Rule-based assignment to relevant agents</li>
-            <li>Linked lead/contact view in the same dashboard</li>
-            <li>Canned responses (quick replies)</li>
-          </ul>
+        <div class="bento-card c-pink reveal">
+          <div class="bc-header">
+            <span class="bc-icon">👥</span>
+            <span class="bc-tag">Support</span>
+          </div>
+          <h3 class="bc-heading">Team-ready</h3>
+          <p class="bc-desc">Shared inbox with auto allocation &amp; quick replies for the whole team.</p>
         </div>
 
-        <div class="card reveal">
-          <div class="icon">🤖</div>
-          <h3>Chatbots + AI Bots</h3>
-          <p>Build bots to handle common queries, qualify leads, and hand off to agents when needed.</p>
-          <ul class="list">
-            <li>FAQ automation &amp; intent routing</li>
-            <li>Lead capture, forms, and appointment booking</li>
-            <li>Human handoff for complex cases</li>
-          </ul>
+        <!-- Row 3: featured full-width -->
+        <div class="bento-card featured full reveal">
+          <div class="bc-inner">
+            <div class="bc-text">
+              <div class="bc-header">
+                <span class="bc-icon">🤖</span>
+                <span class="bc-tag">AI-Powered</span>
+              </div>
+              <h3 class="bc-heading">AI Bots</h3>
+              <p class="bc-desc">Intelligent chatbots that understand context, handle FAQs, qualify leads, and escalate to a human exactly when needed — running 24 × 7 without a break.</p>
+            </div>
+            <div class="bc-deco">🤖</div>
+          </div>
         </div>
+
       </div>
 
       <div style="margin-top:28px;" class="cta-band reveal">
@@ -1840,92 +2383,63 @@
     </div>
   </section>
 
-  <!-- ===== PRICING ===== -->
-  <section id="pricing">
+
+  <!-- ===== INDUSTRIES & TOP AUTOMATIONS ===== -->
+  <section id="automations">
     <div class="container">
-      <h2 class="section-title reveal">Simple, Honest Pricing</h2>
-      <p class="section-sub reveal">Everything your business needs to automate WhatsApp — no hidden fees, no contracts.</p>
+      <h2 class="section-title reveal">Industries &amp; Top Automations</h2>
+      <p class="section-sub reveal">Industries we serve and the most-deployed WhatsApp automations — built for real businesses.</p>
 
-      <div class="pricing-wrap">
-        <div class="pricing-card reveal">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:48px;" class="reveal">
 
-          <!-- shimmer sweep handled by ::before -->
-
-          <!-- Badge -->
-          <div style="text-align:center;">
-            <span class="pricing-badge">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.78L2 22l5.47-1.43a9.86 9.86 0 004.57 1.14h.01c5.46 0 9.91-4.45 9.91-9.91A9.93 9.93 0 0012.04 2z"/></svg>
-              WhatsApp Business API — Starter Plan
-            </span>
+        <!-- LEFT: 10 Industries -->
+        <div style="border:1px solid rgba(96,213,255,0.2);border-radius:22px;padding:28px;background:rgba(96,213,255,0.03);">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(96,213,255,0.12);">
+            <div style="width:38px;height:38px;border-radius:10px;background:rgba(96,213,255,0.14);border:1px solid rgba(96,213,255,0.28);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">🏭</div>
+            <h3 style="font-family:var(--display);font-size:1.1rem;font-weight:800;color:#60d5ff;margin:0;">10 Industries We Serve</h3>
           </div>
-
-          <!-- Price -->
-          <div class="pricing-header">
-            <div class="price-glow-ring"></div>
-            <div class="pricing-plan-name">Monthly Subscription</div>
-            <span class="price-only">Only</span>
-            <span class="price-amount"><span class="price-rupee">₹</span><span id="priceCount">0</span></span>
-            <span class="price-period">per month &nbsp;·&nbsp; Cancel anytime</span>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);transition:background 180ms;"><span style="width:26px;height:26px;border-radius:8px;background:rgba(155,92,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏥</span><span style="font-weight:700;font-size:0.9rem;">Healthcare &amp; Clinics</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(79,124,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏠</span><span style="font-weight:700;font-size:0.9rem;">Real Estate &amp; Builders</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(251,146,60,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🛒</span><span style="font-weight:700;font-size:0.9rem;">Retail &amp; E-Commerce</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(251,191,36,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🎓</span><span style="font-weight:700;font-size:0.9rem;">Education &amp; Coaching</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(37,211,102,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">💰</span><span style="font-weight:700;font-size:0.9rem;">Finance, Banking &amp; Insurance</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(251,146,60,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🍱</span><span style="font-weight:700;font-size:0.9rem;">Food, Tiffin &amp; Hospitality</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(96,213,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🚚</span><span style="font-weight:700;font-size:0.9rem;">Logistics &amp; Supply Chain</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(20,184,166,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏘️</span><span style="font-weight:700;font-size:0.9rem;">Housing Societies &amp; PGs</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(244,114,182,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🎊</span><span style="font-weight:700;font-size:0.9rem;">Events &amp; Wedding Planning</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(79,124,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏭</span><span style="font-weight:700;font-size:0.9rem;">Manufacturing &amp; Wholesale</span></div>
           </div>
-
-          <div class="pricing-divider"></div>
-
-          <!-- Features -->
-          <div class="pricing-features">
-            <div class="pf-item">
-              <div class="pf-check">✓</div>
-              Template Messages /month
-            </div>
-            <div class="pf-item">
-              <div class="pf-check">✓</div>
-              Unlimited Session Messages
-            </div>
-            <div class="pf-item">
-              <div class="pf-check">✓</div>
-              Official WhatsApp API
-            </div>
-            <div class="pf-item">
-              <div class="pf-check">✓</div>
-              Co-Existence Support
-            </div>
-            <div class="pf-item">
-              <div class="pf-check">✓</div>
-              No-code Chatbot Builder
-            </div>
-            <div class="pf-item">
-              <div class="pf-check">✓</div>
-              Broadcast Campaigns
-            </div>
-            <div class="pf-item">
-              <div class="pf-check">✓</div>
-              Campaign Segmentation
-            </div>
-            <div class="pf-item">
-              <div class="pf-check">✓</div>
-              Full API Access
-            </div>
-          </div>
-
-          <div class="pricing-divider"></div>
-
-          <!-- CTA -->
-          <div class="pricing-cta">
-            <a class="btn primary" href="#contact">🚀 Get Started at ₹599 / mo</a>
-            <p class="pricing-note">No setup fees · No credit card required · Go live in 48 hours</p>
-          </div>
-
         </div>
+
+        <!-- RIGHT: Top 10 WhatsApp Automations -->
+        <div style="border:1px solid rgba(37,211,102,0.2);border-radius:22px;padding:28px;background:rgba(37,211,102,0.03);">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid rgba(37,211,102,0.12);">
+            <div style="width:38px;height:38px;border-radius:10px;background:rgba(37,211,102,0.14);border:1px solid rgba(37,211,102,0.28);display:flex;align-items:center;justify-content:center;font-size:1.1rem;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="#25d366"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.38 1.26 4.78L2 22l5.47-1.43a9.86 9.86 0 004.57 1.14h.01c5.46 0 9.91-4.45 9.91-9.91A9.93 9.93 0 0012.04 2z"/></svg>
+            </div>
+            <h3 style="font-family:var(--display);font-size:1.1rem;font-weight:800;color:#4ade80;margin:0;">Top 10 WhatsApp Automations</h3>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(155,92,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">📅</span><span style="font-weight:700;font-size:0.9rem;">Clinic Appointment Booking Bot</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(79,124,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏠</span><span style="font-weight:700;font-size:0.9rem;">Real Estate Lead Capture Bot</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(37,211,102,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">💳</span><span style="font-weight:700;font-size:0.9rem;">EMI &amp; Loan Repayment Reminder Bot</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(96,213,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">📦</span><span style="font-weight:700;font-size:0.9rem;">Order Tracking &amp; Delivery Status Bot</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(251,191,36,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🎓</span><span style="font-weight:700;font-size:0.9rem;">School Fee Reminder &amp; Receipt Bot</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(251,146,60,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🍱</span><span style="font-weight:700;font-size:0.9rem;">Tiffin / Cloud Kitchen Subscription Bot</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(20,184,166,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🏘️</span><span style="font-weight:700;font-size:0.9rem;">Society Maintenance Collection Bot</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(37,211,102,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">💼</span><span style="font-weight:700;font-size:0.9rem;">Salary Slip Dispatcher for SMEs</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(244,114,182,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">🎊</span><span style="font-weight:700;font-size:0.9rem;">Event / Wedding RSVP &amp; Guest Info Bot</span></div>
+            <div style="display:flex;align-items:center;gap:12px;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);"><span style="width:26px;height:26px;border-radius:8px;background:rgba(155,92,255,0.18);display:flex;align-items:center;justify-content:center;font-size:0.9rem;flex-shrink:0;">💊</span><span style="font-weight:700;font-size:0.9rem;">Doctor Prescription Follow-up Bot</span></div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- ===== TOP WHATSAPP AUTOMATIONS ===== -->
-  <section id="automations">
-    <div class="container">
-      <h2 class="section-title reveal">Top WhatsApp Automations</h2>
-      <p class="section-sub reveal">Real-world automation bots built for Indian businesses — deploy in days, see results from day one.</p>
-
-      <div class="wa-grid">
+  <!-- ===== (removed old wa-grid) ===== -->
+  <div style="display:none"><div>
 
         <!-- 1 Real Estate -->
         <div class="wa-item reveal" style="--item-accent:rgba(79,124,255,0.45);--item-glow:rgba(79,124,255,0.14);">
@@ -2148,8 +2662,7 @@
         </div>
 
       </div>
-    </div>
-  </section>
+    </div></div>
 
   <!-- ===== PROCESS ===== -->
   <section id="process">
@@ -2480,12 +2993,9 @@
     </div>
   </section>
 
-  <!-- ===== PRIVACY POLICY ===== -->
-  <section id="privacy" style="background:rgba(255,255,255,0.015);">
+  <!-- PRIVACY POLICY REMOVED - separate page exists -->
+  <section id="privacy" style="display:none;">
     <div class="container">
-      <h2 class="section-title reveal">Privacy Policy</h2>
-      <p class="section-sub reveal">Your privacy matters to us. Here's how iAutomate collects, uses, and protects your information.</p>
-
       <div class="privacy-grid">
         <div class="privacy-card reveal">
           <h4>📋 Data We Collect</h4>
@@ -2571,7 +3081,6 @@
           <div><a href="#about">About Us</a></div>
           <div><a href="privacy.html" target="_blank">Privacy Policy</a></div>
           <div><a href="#contact">Contact Us</a></div>
-          <div><a href="#pricing">Pricing</a></div>
         </div>
       </div>
 
