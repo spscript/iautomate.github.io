@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — iAutomate.in | AI Business Automation Solutions</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    :root {
+      --white:#ffffff; --off:#f7f7f5; --off2:#f0f0ec;
+      --black:#0f0f0f; --dark:#1c1c1c; --mid:#4a4a4a; --muted:#7a7a7a;
+      --stroke:#e4e4e0; --stroke2:#d0d0ca;
+      --yellow:#e8b84b; --yellow-d:#c99b2a; --yellow-l:#fdf3d9; --yellow-m:rgba(232,184,75,0.12);
+      --display:"Outfit",sans-serif; --body:"DM Sans",sans-serif; --mono:"DM Mono",monospace;
+      --max:1140px; --px:clamp(18px,4vw,48px);
+    }
+    body { font-family:var(--body); background:var(--white); color:var(--black); overflow-x:hidden; line-height:1.65; -webkit-font-smoothing:antialiased; }
+    .wrap { max-width:var(--max); margin:0 auto; padding:0 var(--px); }
+    @keyframes scan { 0%{top:-2px;} 100%{top:100%;} }
+
+    /* HEADER */
+    header { position:sticky; top:0; z-index:500; background:rgba(255,255,255,0.92); backdrop-filter:blur(16px); border-bottom:1px solid var(--stroke); }
+    .nav { display:flex; align-items:center; justify-content:space-between; height:64px; gap:16px; }
+    .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
+    .logo-mark { width:42px; height:42px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .logo-mark img { width:42px; height:42px; object-fit:contain; }
+    .logo-name { font-family:var(--display); font-size:1.05rem; font-weight:800; color:var(--black); letter-spacing:-.02em; }
+    .logo-name span { color:var(--yellow-d); }
+    .logo-slogan { font-family:var(--mono); font-size:.58rem; color:var(--muted); letter-spacing:.04em; line-height:1; margin-top:1px; }
+    .nav-links { display:flex; gap:4px; }
+    .nav-links a { font-size:.88rem; font-weight:500; color:var(--mid); text-decoration:none; padding:7px 14px; border-radius:6px; transition:color .2s, background .2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--black); background:var(--off); }
+    .nav-cta { font-family:var(--display); font-size:.88rem; font-weight:700; background:var(--black); color:var(--white); border:none; padding:10px 22px; border-radius:6px; cursor:pointer; text-decoration:none; transition:background .2s; }
+    .nav-cta:hover { background:var(--dark); }
+    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:6px; }
+    .hamburger span { display:block; width:20px; height:1.5px; background:var(--black); border-radius:2px; }
+    .mob-nav { display:none; flex-direction:column; background:var(--white); border-bottom:1px solid var(--stroke); }
+    .mob-nav a { font-size:.9rem; font-weight:500; color:var(--dark); text-decoration:none; padding:13px var(--px); border-bottom:1px solid var(--stroke); }
+
+    /* PAGE HERO */
+    .page-hero { padding:72px 0 56px; background:var(--white); border-bottom:1px solid var(--stroke); position:relative; overflow:hidden; }
+    .page-hero::after { content:""; position:absolute; right:-100px; top:-60px; width:400px; height:400px; border-radius:50%; background:var(--yellow-m); pointer-events:none; }
+    .page-hero-inner { position:relative; z-index:1; }
+    .page-label { font-family:var(--mono); font-size:.7rem; color:var(--yellow-d); letter-spacing:.1em; text-transform:uppercase; margin-bottom:12px; display:block; }
+    .page-hero h1 { font-family:var(--display); font-size:clamp(2.2rem,4vw,3.4rem); font-weight:900; letter-spacing:-.04em; line-height:1.1; margin-bottom:16px; }
+    .page-hero h1 em { font-style:normal; color:var(--yellow-d); }
+    .page-hero p { color:var(--mid); font-size:1.05rem; max-width:52ch; line-height:1.75; }
+
+    /* SECTIONS */
+    .section { padding:80px 0; }
+    .section.bg-off { background:var(--off); }
+    .s-label { font-family:var(--mono); font-size:.7rem; color:var(--yellow-d); letter-spacing:.1em; text-transform:uppercase; margin-bottom:10px; display:block; }
+    .s-title { font-family:var(--display); font-size:clamp(1.6rem,2.8vw,2.2rem); font-weight:800; letter-spacing:-.04em; line-height:1.2; color:var(--black); margin-bottom:14px; }
+    .s-body { color:var(--mid); font-size:.97rem; line-height:1.8; max-width:62ch; }
+    .s-body + .s-body { margin-top:14px; }
+
+    /* MISSION */
+    .mission-grid { display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center; }
+    .mission-visual { background:var(--black); border-radius:12px; padding:36px 32px; font-family:var(--mono); font-size:.82rem; line-height:1.9; }
+    .mv-line { display:flex; gap:10px; }
+    .mv-prompt { color:var(--yellow); }
+    .mv-out { color:rgba(255,255,255,.4); font-size:.75rem; padding-left:20px; }
+    .mv-hi { color:var(--yellow); }
+    .mv-green { color:#6ee7b7; }
+
+    /* VALUES */
+    .values-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:8px; }
+    .val-card { background:var(--white); border:1.5px solid var(--stroke); border-radius:10px; padding:28px 24px; transition:border-color .25s, transform .25s; }
+    .val-card:hover { border-color:var(--yellow); transform:translateY(-3px); }
+    .val-icon { font-size:1.6rem; margin-bottom:14px; display:block; }
+    .val-card h3 { font-family:var(--display); font-size:1rem; font-weight:700; margin-bottom:8px; color:var(--black); }
+    .val-card p { color:var(--mid); font-size:.86rem; line-height:1.65; }
+
+    /* TEAM */
+    .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    .team-card { background:var(--white); border:1.5px solid var(--stroke); border-radius:10px; padding:28px 24px; text-align:center; transition:border-color .25s, box-shadow .25s; }
+    .team-card:hover { border-color:var(--yellow); box-shadow:0 8px 30px rgba(232,184,75,.1); }
+    .team-avatar { width:64px; height:64px; border-radius:10px; background:var(--yellow); margin:0 auto 16px; display:flex; align-items:center; justify-content:center; font-family:var(--display); font-size:1.4rem; font-weight:900; color:var(--black); }
+    .team-name { font-family:var(--display); font-size:1rem; font-weight:700; color:var(--black); margin-bottom:4px; }
+    .team-role { font-family:var(--mono); font-size:.7rem; color:var(--yellow-d); text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px; }
+    .team-bio { color:var(--mid); font-size:.84rem; line-height:1.6; }
+
+    /* STATS ROW */
+    .stats-row { display:grid; grid-template-columns:repeat(4,1fr); border:1.5px solid var(--stroke); border-radius:10px; overflow:hidden; }
+    .sr-box { padding:32px 24px; border-right:1.5px solid var(--stroke); transition:background .2s; }
+    .sr-box:hover { background:var(--yellow-l); }
+    .sr-box:last-child { border-right:none; }
+    .sr-num { font-family:var(--display); font-size:2.4rem; font-weight:900; color:var(--yellow-d); line-height:1; letter-spacing:-.04em; }
+    .sr-label { font-family:var(--mono); font-size:.68rem; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; margin-top:4px; }
+
+    /* CTA STRIP */
+    .cta-strip { background:var(--black); padding:64px 0; }
+    .cta-strip-inner { display:flex; align-items:center; justify-content:space-between; gap:32px; flex-wrap:wrap; }
+    .cta-strip h2 { font-family:var(--display); font-size:clamp(1.5rem,2.8vw,2.2rem); font-weight:900; color:var(--white); letter-spacing:-.04em; line-height:1.15; }
+    .cta-strip h2 span { color:var(--yellow); }
+    .btn-y { font-family:var(--display); font-size:.9rem; font-weight:700; background:var(--yellow); color:var(--black); border:none; padding:13px 26px; border-radius:6px; cursor:pointer; text-decoration:none; display:inline-flex; align-items:center; gap:8px; transition:background .2s; white-space:nowrap; }
+    .btn-y:hover { background:var(--yellow-d); color:var(--white); }
+
+    /* FOOTER */
+    footer { background:var(--white); border-top:1px solid var(--stroke); padding:36px 0 20px; }
+    .footer-inner { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+    .footer-links { display:flex; gap:20px; flex-wrap:wrap; }
+    .footer-links a { font-size:.83rem; color:var(--muted); text-decoration:none; transition:color .2s; }
+    .footer-links a:hover { color:var(--black); }
+    .footer-copy { font-family:var(--mono); font-size:.68rem; color:var(--muted); margin-top:16px; padding-top:16px; border-top:1px solid var(--stroke); text-align:center; }
+
+    @media(max-width:900px) {
+      .mission-grid { grid-template-columns:1fr; }
+      .mission-visual { display:none; }
+      .values-grid { grid-template-columns:1fr 1fr; }
+      .team-grid { grid-template-columns:1fr 1fr; }
+      .stats-row { grid-template-columns:1fr 1fr; }
+      .sr-box:nth-child(2){ border-right:none; }
+    }
+    @media(max-width:640px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .values-grid { grid-template-columns:1fr; }
+      .team-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="nav">
+      <a class="logo" href="index.html">
+        <div class="logo-mark"><img src="favicon.png" alt="iAutomate" /></div>
+        <div><span class="logo-name">iAutomate<span>.in</span></span><div class="logo-slogan">AI Business Automation Solutions</div></div>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#how">Process</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="about.html" class="active">About Us</a>
+        <a href="contact.html">Contact Us</a>
+      </nav>
+      <a class="nav-cta" href="contact.html">Book a Demo</a>
+      <button class="hamburger" id="ham" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mob-nav" id="mob">
+    <a href="index.html#services" onclick="closeMob()">Services</a>
+    <a href="index.html#how" onclick="closeMob()">Process</a>
+    <a href="index.html#faq" onclick="closeMob()">FAQ</a>
+    <a href="about.html" onclick="closeMob()">About Us</a>
+    <a href="contact.html" onclick="closeMob()">Contact Us</a>
+  </nav>
+</header>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="wrap page-hero-inner">
+    <span class="page-label">Who We Are</span>
+    <h1>We Build the <em>Systems</em><br>That Run Your Business.</h1>
+    <p>iAutomate.in is a global AI automation company helping businesses eliminate repetitive work, scale operations, and deliver faster — without adding headcount.</p>
+  </div>
+</div>
+
+<!-- MISSION -->
+<div class="section">
+  <div class="wrap">
+    <div class="mission-grid">
+      <div>
+        <span class="s-label">Our Mission</span>
+        <h2 class="s-title">Automation Should Be<br>Accessible to Every Business</h2>
+        <p class="s-body">We started iAutomate.in with one belief: the tools that Fortune 500 companies use to automate their operations should be available to every business — regardless of size, industry, or technical capability.</p>
+        <p class="s-body">From a CA firm managing hundreds of clients, to a logistics company processing thousands of daily requests, to an IT team managing ServiceNow tickets — we build automation that fits your exact workflow and runs 24/7 without supervision.</p>
+        <p class="s-body">No generic templates. No bloated enterprise contracts. Just automation that works.</p>
+      </div>
+      <div class="mission-visual" aria-hidden="true">
+        <div class="mv-line"><span class="mv-prompt">$</span><span>iautomate --mission</span></div>
+        <div class="mv-out"><span class="mv-green">✓</span> Founded to democratize automation<br><span class="mv-green">✓</span> Built for speed — <span class="mv-hi">48h deploy</span><br><span class="mv-green">✓</span> Serving businesses <span class="mv-hi">globally</span><br><span class="mv-green">✓</span> <span class="mv-hi">50+</span> automations live<br><span class="mv-green">✓</span> Zero fluff. <span class="mv-hi">Just results.</span></div>
+        <div class="mv-line" style="margin-top:12px;"><span class="mv-prompt">$</span><span style="color:var(--yellow);">mission loaded ✓</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="section bg-off">
+  <div class="wrap">
+    <div class="stats-row">
+      <div class="sr-box"><div class="sr-num">50+</div><div class="sr-label">Automations Deployed</div></div>
+      <div class="sr-box"><div class="sr-num">6</div><div class="sr-label">Service Verticals</div></div>
+      <div class="sr-box"><div class="sr-num">48h</div><div class="sr-label">Average Go-Live</div></div>
+      <div class="sr-box"><div class="sr-num">24/7</div><div class="sr-label">System Uptime</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- VALUES -->
+<div class="section">
+  <div class="wrap">
+    <span class="s-label">What We Stand For</span>
+    <h2 class="s-title">Our Core Values</h2>
+    <div class="values-grid">
+      <div class="val-card">
+        <span class="val-icon">⚡</span>
+        <h3>Speed First</h3>
+        <p>We move fast. Most automations go live in 24–48 hours. We don't believe in long discovery phases that delay results.</p>
+      </div>
+      <div class="val-card">
+        <span class="val-icon">🎯</span>
+        <h3>Built to Fit</h3>
+        <p>No off-the-shelf templates. Every automation is designed around your exact process, tools, and team workflow.</p>
+      </div>
+      <div class="val-card">
+        <span class="val-icon">🔒</span>
+        <h3>Reliability Over Flash</h3>
+        <p>We don't sell demos — we deliver systems that run reliably for months and years without constant babysitting.</p>
+      </div>
+      <div class="val-card">
+        <span class="val-icon">🌍</span>
+        <h3>Global Thinking</h3>
+        <p>We build automation that works across time zones, languages, and markets — for businesses with global ambitions.</p>
+      </div>
+      <div class="val-card">
+        <span class="val-icon">🤝</span>
+        <h3>Partnership, Not Vendor</h3>
+        <p>We don't disappear after deployment. Monthly support, proactive monitoring, and ongoing improvements are standard.</p>
+      </div>
+      <div class="val-card">
+        <span class="val-icon">💡</span>
+        <h3>Simplicity Wins</h3>
+        <p>Automation should make your life simpler, not add complexity. We obsess over clean, maintainable solutions.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<div class="section bg-off">
+  <div class="wrap">
+    <span class="s-label">The Team</span>
+    <h2 class="s-title">People Behind the Automation</h2>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">S</div>
+        <div class="team-name">Sneha Jaiswal</div>
+        <div class="team-role">Founder & Automation Architect</div>
+        <p class="team-bio">Automation engineer with deep expertise in WhatsApp APIs, ServiceNow, Office 365, and PowerShell-based workflows. Passionate about building systems that scale.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#e0e0dc;">AI</div>
+        <div class="team-name">AI Engineering Team</div>
+        <div class="team-role">Development & Deployment</div>
+        <p class="team-bio">Our technical team specialises in building production-grade automation bots, integrations, and AI workflows — deployed fast and maintained reliably.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar" style="background:#e0e0dc;">CS</div>
+        <div class="team-name">Client Success Team</div>
+        <div class="team-role">Support & Onboarding</div>
+        <p class="team-bio">Dedicated to ensuring your automation runs perfectly. From onboarding to monthly reviews, we're available on WhatsApp whenever you need us.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-strip">
+  <div class="wrap">
+    <div class="cta-strip-inner">
+      <h2>Ready to Work<br>With <span>iAutomate?</span></h2>
+      <a class="btn-y" href="contact.html">Book a Free Demo →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-inner">
+      <div class="logo">
+        <div class="logo-mark"><img src="favicon.png" alt="iAutomate" /></div>
+        <div><span class="logo-name">iAutomate<span>.in</span></span><div class="logo-slogan">AI Business Automation Solutions</div></div>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+      </div>
+    </div>
+    <p class="footer-copy">© 2025 iAutomate.in — All rights reserved</p>
+  </div>
+</footer>
+
+<script>
+  const ham = document.getElementById('ham');
+  const mob = document.getElementById('mob');
+  ham.addEventListener('click', () => mob.style.display = mob.style.display === 'flex' ? 'none' : 'flex');
+  function closeMob() { mob.style.display = 'none'; }
+</script>
+
+<!-- CHAT WIDGET -->
+<style>
+  :root{--yellow:#e8b84b;--yellow-d:#c99b2a;--yellow-l:#fdf3d9;--off:#f7f7f5;--stroke:#e4e4e0;--stroke2:#d0d0ca;--dark:#1c1c1c;--mid:#4a4a4a;--muted:#7a7a7a;--black:#0f0f0f;--body:"DM Sans",sans-serif;--display:"Outfit",sans-serif;--mono:"DM Mono",monospace;}
+  .chat-bubble{position:fixed;bottom:26px;right:26px;z-index:700;width:54px;height:54px;border-radius:50%;background:var(--black);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 28px rgba(0,0,0,.28);transition:transform .25s,box-shadow .25s;}
+  .chat-bubble:hover{transform:scale(1.1);}
+  .chat-bubble svg{transition:transform .3s;}
+  .chat-bubble.open svg{transform:rotate(90deg);}
+  .chat-badge{position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:var(--yellow);color:var(--black);font-family:var(--display);font-size:.62rem;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #fff;animation:badge-pop 2s ease-in-out infinite;}
+  @keyframes badge-pop{0%,100%{transform:scale(1);}50%{transform:scale(1.18);}}
+  .chat-panel{position:fixed;bottom:92px;right:26px;z-index:700;width:340px;border-radius:16px;overflow:hidden;box-shadow:0 20px 64px rgba(0,0,0,.22);display:flex;flex-direction:column;transform:scale(.92) translateY(20px);opacity:0;pointer-events:none;transition:transform .3s cubic-bezier(.16,1,.3,1),opacity .3s ease;max-height:520px;}
+  .chat-panel.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all;}
+  .cp-head{background:var(--black);padding:16px 18px;display:flex;align-items:center;gap:12px;}
+  .cp-avatar{width:40px;height:40px;border-radius:50%;overflow:hidden;flex-shrink:0;border:2px solid var(--yellow);}
+  .cp-avatar img{width:100%;height:100%;object-fit:cover;}
+  .cp-info{flex:1;}
+  .cp-name{font-family:var(--display);font-size:.92rem;font-weight:800;color:#fff;}
+  .cp-status{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.65rem;color:rgba(255,255,255,.55);margin-top:1px;}
+  .cp-dot{width:6px;height:6px;border-radius:50%;background:#25d366;animation:badge-pop 2s infinite;flex-shrink:0;}
+  .cp-close{background:rgba(255,255,255,.1);border:none;color:#fff;width:28px;height:28px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.75rem;transition:background .2s;}
+  .cp-close:hover{background:rgba(255,255,255,.22);}
+  .cp-messages{flex:1;overflow-y:auto;padding:16px 14px;background:var(--off);display:flex;flex-direction:column;gap:10px;max-height:300px;}
+  .cp-messages::-webkit-scrollbar{width:4px;}
+  .cp-messages::-webkit-scrollbar-thumb{background:var(--stroke2);border-radius:2px;}
+  .msg{display:flex;gap:8px;align-items:flex-end;}
+  .msg.bot{justify-content:flex-start;}
+  .msg.user{justify-content:flex-end;}
+  .msg-av{width:28px;height:28px;border-radius:50%;overflow:hidden;flex-shrink:0;}
+  .msg-av img{width:100%;height:100%;object-fit:cover;}
+  .msg-bubble{max-width:75%;padding:10px 13px;border-radius:14px;font-size:.85rem;line-height:1.55;word-break:break-word;}
+  .msg.bot .msg-bubble{background:#fff;border:1px solid var(--stroke);color:var(--dark);border-radius:4px 14px 14px 14px;}
+  .msg.user .msg-bubble{background:var(--black);color:#fff;border-radius:14px 14px 4px 14px;}
+  .msg-time{font-family:var(--mono);font-size:.58rem;color:var(--muted);margin-top:3px;display:block;text-align:right;}
+  .typing{display:flex;align-items:center;gap:4px;padding:10px 13px;background:#fff;border:1px solid var(--stroke);border-radius:4px 14px 14px 14px;width:fit-content;}
+  .typing span{width:7px;height:7px;border-radius:50%;background:var(--muted);animation:typing-dot 1.2s ease-in-out infinite;}
+  .typing span:nth-child(2){animation-delay:.2s;}
+  .typing span:nth-child(3){animation-delay:.4s;}
+  @keyframes typing-dot{0%,60%,100%{transform:translateY(0);opacity:.4;}30%{transform:translateY(-5px);opacity:1;}}
+  .cp-quick{padding:8px 14px 4px;background:var(--off);display:flex;gap:6px;flex-wrap:wrap;}
+  .qr-chip{font-family:var(--mono);font-size:.65rem;font-weight:600;background:#fff;border:1.5px solid var(--stroke2);color:var(--dark);padding:5px 11px;border-radius:100px;cursor:pointer;transition:border-color .2s,background .2s,color .2s;white-space:nowrap;}
+  .qr-chip:hover{border-color:var(--yellow);background:var(--yellow-l);color:var(--yellow-d);}
+  .cp-input-row{background:#fff;border-top:1px solid var(--stroke);padding:10px 12px;display:flex;gap:8px;align-items:center;}
+  .cp-input{flex:1;border:1.5px solid var(--stroke);border-radius:100px;padding:9px 14px;font-family:var(--body);font-size:.87rem;color:var(--black);outline:none;transition:border-color .2s;background:var(--off);}
+  .cp-input:focus{border-color:var(--yellow);background:#fff;}
+  .cp-send{width:38px;height:38px;border-radius:50%;flex-shrink:0;background:var(--yellow);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .15s;}
+  .cp-send:hover{background:var(--yellow-d);transform:scale(1.08);}
+  .cp-footer{background:#fff;border-top:1px solid var(--stroke);padding:6px 14px;text-align:center;font-family:var(--mono);font-size:.6rem;color:var(--muted);}
+  .cp-footer a{color:var(--yellow-d);text-decoration:none;}
+  @media(max-width:400px){.chat-panel{width:calc(100vw - 20px);right:10px;}}
+</style>
+
+<button class="chat-bubble" id="chatBubble" onclick="toggleChat()" aria-label="Open chat">
+  <span class="chat-badge" id="chatBadge">1</span>
+  <svg id="chatIcon" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="22" height="22"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+</button>
+
+<div class="chat-panel" id="chatPanel">
+  <div class="cp-head">
+    <div class="cp-avatar"><img src="favicon.png" alt="iAutomate" /></div>
+    <div class="cp-info">
+      <div class="cp-name">iAutomate Support</div>
+      <div class="cp-status"><span class="cp-dot"></span> Online · Typically replies instantly</div>
+    </div>
+    <button class="cp-close" onclick="toggleChat()">✕</button>
+  </div>
+  <div class="cp-messages" id="chatMessages">
+    <div class="msg bot"><div class="msg-av"><img src="favicon.png" alt=""/></div><div><div class="msg-bubble">👋 Hi there! Welcome to <strong>iAutomate.in</strong>.<br>How can I help you today?</div><span class="msg-time">Just now</span></div></div>
+    <div class="msg bot"><div class="msg-av"><img src="favicon.png" alt=""/></div><div><div class="msg-bubble">Tell us what you'd like to automate and we'll get back to you — or tap a quick option below. ⚡</div><span class="msg-time">Just now</span></div></div>
+  </div>
+  <div class="cp-quick" id="quickReplies">
+    <button class="qr-chip" onclick="sendQuick('💬 WhatsApp ChatBot')">💬 WhatsApp Bot</button>
+    <button class="qr-chip" onclick="sendQuick('📞 Calling Assistant')">📞 Calling Bot</button>
+    <button class="qr-chip" onclick="sendQuick('🔄 ServiceNow Automation')">🔄 ServiceNow</button>
+    <button class="qr-chip" onclick="sendQuick('☁️ Office 365 Automation')">☁️ Office 365</button>
+    <button class="qr-chip" onclick="sendQuick('💰 Pricing & Plans')">💰 Pricing</button>
+    <button class="qr-chip" onclick="sendQuick('🎯 Book a Free Demo')">🎯 Free Demo</button>
+  </div>
+  <div class="cp-input-row">
+    <input class="cp-input" id="chatInput" type="text" placeholder="Type your message…" onkeydown="if(event.key==='Enter')sendMessage()"/>
+    <button class="cp-send" onclick="sendMessage()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+  <div class="cp-footer">Powered by <a href="index.html">iAutomate.in</a> · We reply on WhatsApp</div>
+</div>
+
+<script>
+  let chatOpen=false,msgCount=0;
+  function toggleChat(){chatOpen=!chatOpen;const p=document.getElementById('chatPanel'),b=document.getElementById('chatBubble'),bd=document.getElementById('chatBadge');p.classList.toggle('open',chatOpen);b.classList.toggle('open',chatOpen);if(chatOpen){bd.style.display='none';document.getElementById('chatInput').focus();}else{bd.style.display='flex';}}
+  function sendQuick(t){document.getElementById('chatInput').value=t;sendMessage();}
+  function sendMessage(){const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;input.value='';const msgs=document.getElementById('chatMessages');const qr=document.getElementById('quickReplies');qr.style.display='none';const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});msgs.innerHTML+=`<div class="msg user"><div><div class="msg-bubble">${escHtml(text)}</div><span class="msg-time">${now}</span></div></div>`;scrollChat();const tid='t'+Date.now();msgs.innerHTML+=`<div class="msg bot" id="${tid}"><div class="msg-av"><img src="favicon.png" alt=""/></div><div class="typing"><span></span><span></span><span></span></div></div>`;scrollChat();msgCount++;setTimeout(()=>{const el=document.getElementById(tid);if(el)el.remove();const reply=getBotReply(text);msgs.innerHTML+=`<div class="msg bot"><div class="msg-av"><img src="favicon.png" alt=""/></div><div><div class="msg-bubble">${reply}</div><span class="msg-time">${now}</span></div></div>`;setTimeout(()=>{msgs.innerHTML+=`<div class="msg bot"><div class="msg-av"><img src="favicon.png" alt=""/></div><div><div class="msg-bubble">Want to continue on WhatsApp? 👇<br><br><a href="https://wa.me/919888790890?text=${encodeURIComponent('Hi iAutomate! '+text)}" target="_blank" rel="noopener" style="display:inline-block;background:#25d366;color:#fff;padding:8px 16px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.82rem;">💬 Continue on WhatsApp</a></div><span class="msg-time">${now}</span></div></div>`;scrollChat();},900);scrollChat();},1200);}
+  function getBotReply(t){const l=t.toLowerCase();if(l.includes('whatsapp')||l.includes('chatbot')||l.includes('bot'))return"Great choice! 💬 Our <strong>WhatsApp AI ChatBot</strong> handles auto-replies, lead capture, appointment booking and more — 24/7 via official Meta API.";if(l.includes('call')||l.includes('voice'))return"📞 Our <strong>Calling Assistant</strong> handles inbound & outbound calls with AI — qualifies leads, routes calls automatically.";if(l.includes('servicenow')||l.includes('ticket'))return"🔄 Our <strong>ServiceNow Automation</strong> auto-creates, routes and closes tickets — reducing manual ITSM effort by up to 80%.";if(l.includes('office')||l.includes('365')||l.includes('microsoft'))return"☁️ We handle <strong>Office 365 migrations</strong>, automated user provisioning, Teams workflows and SharePoint integrations.";if(l.includes('price')||l.includes('cost')||l.includes('plan'))return"💰 Automation starts from <strong>₹1,000/month</strong>. Website plans from <strong>₹249/mo</strong>. Contact us for a custom quote!";if(l.includes('demo')||l.includes('book')||l.includes('free'))return"🎯 Let's book your <strong>free 30-minute demo</strong> — we'll map your workflows and show exactly what we can automate for you.";return"Thanks for reaching out! 🙏 Can you tell us more about your business and what you'd like to automate?";}
+  function escHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function scrollChat(){const m=document.getElementById('chatMessages');m.scrollTop=m.scrollHeight;}
+
+  // Auto-open chat after 6 seconds — only once per visitor
+  if (!localStorage.getItem('chatShown')) {
+    setTimeout(() => {
+      if (!chatOpen) {
+        toggleChat();
+        localStorage.setItem('chatShown', '1');
+      }
+    }, 6000);
+  }
+</script>
+</body>
+</html>
