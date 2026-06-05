@@ -56,11 +56,11 @@
     header { position:sticky; top:0; z-index:500; background:rgba(255,255,255,0.92); backdrop-filter:blur(16px); border-bottom:1px solid var(--stroke); }
     .nav { display:flex; align-items:center; justify-content:space-between; height:64px; gap:16px; }
     .logo { display:flex; align-items:center; gap:10px; text-decoration:none; }
-    .logo-mark { width:42px; height:42px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .logo-mark { width:42px; height:42px; display:flex; align-items:center; justify-content:center; flex-shrink:0; background:#fff; border-radius:50%; }
     .logo-mark img { width:42px; height:42px; object-fit:contain; }
     .logo-name { font-family:var(--display); font-size:1.05rem; font-weight:800; color:var(--black); letter-spacing:-.02em; }
     .logo-name span { color:var(--yellow-d); }
-    .logo-slogan { font-family:var(--mono); font-size:.58rem; color:var(--muted); letter-spacing:.04em; line-height:1; margin-top:1px; }
+    .logo-slogan { font-family:var(--display); font-size:.72rem; font-weight:600; color:var(--muted); letter-spacing:.04em; line-height:1; margin-top:1px; }
     .nav-links { display:flex; gap:4px; }
     .nav-links a { font-size:.88rem; font-weight:500; color:var(--mid); text-decoration:none; padding:7px 14px; border-radius:6px; transition:color .2s, background .2s; }
     .nav-links a:hover { color:var(--black); background:var(--off); }
@@ -455,7 +455,7 @@
     <div class="nav">
       <a class="logo" href="#top">
         <div class="logo-mark"><img src="favicon.png" alt="iAutomate" /></div>
-        <div><span class="logo-name">iAutomate<span>.in</span></span><div class="logo-slogan">AI Business Automation Solutions</div></div>
+        <div><span class="logo-name"><span style="color:var(--yellow-d)">i</span>Automate</span><div class="logo-slogan">AI Business Automation Solutions</div></div>
       </a>
       <nav class="nav-links">
         <a href="#services">Services</a>
@@ -772,7 +772,7 @@
       <div>
         <div class="logo">
           <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-          <span class="logo-name">iAutomate<span>.in</span></span>
+          <span class="logo-name"><span style="color:var(--yellow-d)">i</span>Automate</span>
         </div>
         <p class="footer-tag">AI Automation for Modern Businesses</p>
       </div>
@@ -794,10 +794,10 @@
 
 <!-- ─── BALLOON CARD ─── -->
 <style>
-  /* Anchor at top-right, whole thing swings from here */
+  /* Anchor at top-left, whole thing swings from here */
   .bl-anchor {
     position: fixed;
-    top: 0; right: 32px;
+    top: 0; left: 32px;
     z-index: 600;
     display: flex;
     flex-direction: column;
@@ -1111,6 +1111,7 @@
     <button class="qr-chip" onclick="sendQuick('☁️ Office 365 Automation')">☁️ Office 365</button>
     <button class="qr-chip" onclick="sendQuick('💰 Pricing & Plans')">💰 Pricing</button>
     <button class="qr-chip" onclick="sendQuick('🎯 Book a Free Demo')">🎯 Free Demo</button>
+    <button class="qr-chip" onclick="sendQuick('🌐 Web Designing')">🌐 Web Designing</button>
   </div>
 
   <!-- Input -->
@@ -1233,6 +1234,8 @@
       return "🎯 Awesome! Let's book your <strong>free 30-minute demo</strong>. We'll map your workflows and show exactly what we can automate for you — no commitment needed.";
     if (t.includes('powershell') || t.includes('script'))
       return "💻 We build <strong>PowerShell automation</strong> for Windows environments — IT ops, scheduled tasks, user management and system monitoring scripts.";
+    if (t.includes('web') || t.includes('website') || t.includes('design') || t.includes('designing'))
+      return "🌐 We design <strong>professional websites</strong> — fast, mobile-friendly and fully set up. Includes FREE design + hosting starting at just <strong>₹249/month</strong>. Domain excluded. Go live in 1 day! Want to see examples?";
     return "Thanks for reaching out! 🙏 Our team will be happy to help. Can you tell us a bit more about your business and what you'd like to automate?";
   }
 
@@ -1314,17 +1317,17 @@
     }
     addEntry(); addEntry(); addEntry();
     setInterval(addEntry, 2400);
+
   })();
 
-  // Auto-open chat after 6 seconds — only once per visitor
-  if (!localStorage.getItem('chatShown')) {
-    setTimeout(() => {
-      if (!chatOpen) {
-        toggleChat();
-        localStorage.setItem('chatShown', '1');
-      }
-    }, 6000);
-  }
+  // Auto-open once per page load after 6 seconds — never again until manually clicked
+  let autoShown = false;
+  setTimeout(() => {
+    if (!chatOpen && !autoShown) {
+      toggleChat();
+      autoShown = true;
+    }
+  }, 6000);
 </script>
 
 <script>
