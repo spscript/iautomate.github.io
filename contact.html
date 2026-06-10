@@ -180,11 +180,11 @@
         <p class="side-body">The fastest way to reach us is WhatsApp — we typically respond within a few hours. Prefer email? We're there too.</p>
 
         <div class="channels">
-          <a class="channel-card" href="https://wa.me/919888790890?text=Hi%2C%20I%20want%20to%20book%20a%20free%20demo%20with%20iAutomate" target="_blank" rel="noopener">
+          <a class="channel-card" href="https://wa.me/919801519456?text=Hi%2C%20I%20want%20to%20book%20a%20free%20demo%20with%20iAutomate" target="_blank" rel="noopener">
             <div class="channel-icon wa">💬</div>
             <div>
               <div class="channel-name">WhatsApp</div>
-              <div class="channel-detail">+91 9888790890 · Fastest response</div>
+              <div class="channel-detail">+91 9801519456 · Fastest response</div>
             </div>
             <span class="channel-arrow">→</span>
           </a>
@@ -237,7 +237,7 @@
 
         <div class="form-group">
           <label>WhatsApp / Phone</label>
-          <input type="tel" placeholder="+91 9888790890" />
+          <input type="tel" placeholder="+91 9801519456" />
         </div>
 
         <div class="form-group">
@@ -304,7 +304,7 @@
     btn.disabled = true;
     // In production, replace with actual form submission
     setTimeout(() => {
-      window.location.href = 'https://wa.me/919888790890?text=Hi%2C%20I%20just%20submitted%20a%20demo%20request%20on%20your%20website';
+      window.location.href = 'https://wa.me/919801519456?text=Hi%2C%20I%20just%20submitted%20a%20demo%20request%20on%20your%20website';
     }, 1500);
   }
 </script>
@@ -392,7 +392,7 @@
   let chatOpen=false,msgCount=0;
   function toggleChat(){chatOpen=!chatOpen;const p=document.getElementById('chatPanel'),b=document.getElementById('chatBubble'),bd=document.getElementById('chatBadge');p.classList.toggle('open',chatOpen);b.classList.toggle('open',chatOpen);if(chatOpen){bd.style.display='none';document.getElementById('chatInput').focus();}else{bd.style.display='flex';}}
   function sendQuick(t){document.getElementById('chatInput').value=t;sendMessage();}
-  function sendMessage(){const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;input.value='';const msgs=document.getElementById('chatMessages');document.getElementById('quickReplies').style.display='none';const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});msgs.innerHTML+=`<div class="msg user"><div><div class="msg-bubble">${escHtml(text)}</div><span class="msg-time">${now}</span></div></div>`;scrollChat();const tid='t'+Date.now();msgs.innerHTML+=`<div class="msg bot" id="${tid}"><div class="msg-av"><img src="favicon.png" alt=""/></div><div class="typing"><span></span><span></span><span></span></div></div>`;scrollChat();msgCount++;setTimeout(()=>{const el=document.getElementById(tid);if(el)el.remove();msgs.innerHTML+=`<div class="msg bot"><div class="msg-av"><img src="favicon.png" alt=""/></div><div><div class="msg-bubble">${getBotReply(text)}</div><span class="msg-time">${now}</span></div></div>`;setTimeout(()=>{msgs.innerHTML+=`<div class="msg bot"><div class="msg-av"><img src="favicon.png" alt=""/></div><div><div class="msg-bubble">Want a faster reply? 👇<br><br><a href="https://wa.me/919888790890?text=${encodeURIComponent('Hi iAutomate! '+text)}" target="_blank" rel="noopener" style="display:inline-block;background:#25d366;color:#fff;padding:8px 16px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.82rem;">💬 Continue on WhatsApp</a></div><span class="msg-time">${now}</span></div></div>`;scrollChat();},900);scrollChat();},1200);}
+  function sendMessage(){const input=document.getElementById('chatInput');const text=input.value.trim();if(!text)return;input.value='';const msgs=document.getElementById('chatMessages');document.getElementById('quickReplies').style.display='none';const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});msgs.innerHTML+=`<div class="msg user"><div><div class="msg-bubble">${escHtml(text)}</div><span class="msg-time">${now}</span></div></div>`;scrollChat();const tid='t'+Date.now();msgs.innerHTML+=`<div class="msg bot" id="${tid}"><div class="msg-av"><img src="favicon.png" alt=""/></div><div class="typing"><span></span><span></span><span></span></div></div>`;scrollChat();msgCount++;setTimeout(()=>{const el=document.getElementById(tid);if(el)el.remove();msgs.innerHTML+=`<div class="msg bot"><div class="msg-av"><img src="favicon.png" alt=""/></div><div><div class="msg-bubble">${getBotReply(text)}</div><span class="msg-time">${now}</span></div></div>`;setTimeout(()=>{msgs.innerHTML+=`<div class="msg bot"><div class="msg-av"><img src="favicon.png" alt=""/></div><div><div class="msg-bubble">Want a faster reply? 👇<br><br><a href="https://wa.me/919801519456?text=${encodeURIComponent('Hi iAutomate! '+text)}" target="_blank" rel="noopener" style="display:inline-block;background:#25d366;color:#fff;padding:8px 16px;border-radius:8px;text-decoration:none;font-weight:700;font-size:.82rem;">💬 Continue on WhatsApp</a></div><span class="msg-time">${now}</span></div></div>`;scrollChat();},900);scrollChat();},1200);}
   function getBotReply(t){const l=t.toLowerCase();if(l.includes('whatsapp')||l.includes('bot'))return"💬 Our <strong>WhatsApp AI ChatBot</strong> handles auto-replies, lead capture, booking and more — 24/7 via official Meta API.";if(l.includes('call'))return"📞 Our <strong>Calling Assistant</strong> handles inbound & outbound calls with AI automatically.";if(l.includes('servicenow')||l.includes('ticket'))return"🔄 Our <strong>ServiceNow Automation</strong> auto-creates, routes and closes tickets — reducing ITSM effort by 80%.";if(l.includes('office')||l.includes('365'))return"☁️ We handle <strong>Office 365 migrations</strong>, user provisioning, Teams workflows and SharePoint.";if(l.includes('price')||l.includes('plan')||l.includes('cost'))return"💰 Automation starts from <strong>₹1,000/month</strong>. Website plans from <strong>₹249/mo</strong>.";if(l.includes('demo')||l.includes('book'))return"🎯 Let's book your <strong>free 30-min demo</strong> — we'll map your workflows and show what we can automate.";return"Thanks! 🙏 Tell us more about your business and what you'd like to automate.";}
   function escHtml(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
   function scrollChat(){const m=document.getElementById('chatMessages');m.scrollTop=m.scrollHeight;}
