@@ -1095,4 +1095,165 @@ function filterCusts(){
   });
   renderCustomers(filtered);
 }
-function clearCustFilter
+
+function clearCustFilter()
+{document.getElementById('cust-name-f').value='';document.getElementById('cust-phone-f').value='';custFiltN='';custFiltP='';renderCustomers(allCust);}
+
+function renderCustomers(custs){
+  const maxS=custs.length?Math.max(...custs.map(c=>c.total)):1;
+  const tb=document.getElementById('cust-body');
+  if(!custs.length){tb.innerHTML='<tr><td colspan="9"><div class="empty">👥 No customers</div></td></tr>';return;}
+  tb.innerHTML=custs.map((c,i)=>{
+    const avg=c.orders?Math.round(c.total/c.orders):0,lp=Math.round(c.total/maxS*100);
+    const medal=i===0?'🥇 ':i===1?'🥈 ':i===2?'🥉 ':'';
+    return`<tr>
+      <td class="tdm">${i+1}</td>
+      <td><div class="nw"><div class="av ${avc(c.name||c.phone)}">${ini(c.name||c.phone)}</div><div class="td1">${medal}${c.name||'Guest'}</div></div></td>
+      <td class="tdm" style="font-family:monospace">${c.phone}</td>
+      <td style="font-weight:800;color:var(--t1)">${c.orders}</td>
+      <td class="tda">${rup(c.total)}</td>
+      <td>${rup(avg)}</td>
+      <td class="tdm">${fmtDate(c.lastOrder)}</td>
+      <td style="min-width:80px"><div class="lbar"><div class="lfill" style="width:${lp}%"></div></div><div class="tdm" style="margin-top:2px">${lp}%</div></td>
+      <td><div class="act-row">
+        <button class="ab ab-print" onclick="printBill('${getCustLastOrder(c.phone)}')">🖨 Bill</button>
+        <button class="ab ab-wa" onclick="sendCustInvoice('${c.phone}')">📲 Invoice</button>
+        <button class="ab ab-pay" onclick="openPayLink('${getCustLastOrder(c.phone)}','${c.phone}','${c.name}',${avg})">💳 Pay</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function getCustLastOrder(phone){
+  const orders=allO.filter(o=>String(o['Phone'])===String(phone)).sort((a,b)=>new Date(b['Ordered At']||0)-new Date(a['Ordered At']||0));
+  return orders.length?orders[0]['Order ID']:'';
+}
+function sendCustInvoice(phone){
+  const orders=allO.filter(o=>String(o['Phone'])===String(phone)).sort((a,b)=>new Date(b['Ordered At']||0)-new Date(a['Ordered At']||0));
+  if(!orders.length){toast('No orders found',false);return;}
+  sendInvoice(orders[0]['Order ID'],phone);
+}
+
+/* SESSIONS */
+function renderSesDetail(sessions){
+  const active=sessions.filter(s=>s['State']==='selecting'||s['State']==='awaiting_qty');
+  document.getElementById('ls-act').textContent=sessions.filter(s=>s['State']==='selecting').length;
+  document.getElementById('ls-awt').textContent=sessions.filter(s=>s['State']==='awaiting_qty').length;
+  document.getElementById('ls-tot').textContent=sessions.length;
+  document.getElementById('nb-ses').textContent=active.length;
+  const el=document.getElementById('ses-detail');
+  if(!active.length){el.innerHTML='<div class="empty">💤 No active sessions</div>';return;}
+  el.innerHTML=active.map(s=>{
+    const name=s['Customer Name']||'',phone=s['Phone']||'',state=s['State']||'';
+    let cart=[];try{cart=JSON.parse(s['Cart']||'[]');}catch(e){}
+    const total=cart.reduce((n,i)=>(Number(i.price)||0)*(i.qty||1)+n,0);
+    return`<div class="scard"><div style="flex:1"><div class="nw" style="margin-bottom:8px;flex-wrap:wrap;gap:5px"><span class="pulse"></span><div class="av ${avc(name||phone)}">${ini(name||phone)}</div><div><div class="td1">${name||'Guest'}</div><div class="tdm">${phone}</div></div><span class="sbdg ${state==='selecting'?'sb-s':'sb-a'}">${state==='selecting'?'🟢 Browsing':'🟡 Selecting'}</span>${total>0?`<span style="font-weight:800;color:var(--green)">${rup(total)}</span>`:''}</div>${cart.length?`<div>${cart.map(i=>`<span class="cart-chip">${i.name||''} ×${i.qty||1}${i.price?' ₹'+(Number(i.price)*(i.qty||1)):''}</span>`).join('')}</div>`:'<div class="tdm">Cart empty</div>'}</div><button class="clr-btn" onclick="clearSess('${phone}',this)">🗑 Clear</button></div>`;
+  }).join('');
+}
+function clearSess(phone,btn){
+  if(!confirm('Clear session for '+phone+'?'))return;
+  btn.disabled=true;btn.textContent='…';
+  api({action:'clearSess',phone}).then(r=>{toast('Cleared',true);allS=allS.filter(s=>s['Phone']!==phone);renderSesDetail(allS);renderSesMini(allS);}).catch(e=>{btn.disabled=false;btn.textContent='🗑 Clear';toast(e.message,false);});
+}
+
+function renderSesMini(sessions){
+  const active=sessions.filter(s=>s['State']==='selecting'||s['State']==='awaiting_qty');
+  document.getElementById('k-ses').textContent=active.length;
+  document.getElementById('k-ses-s').textContent=sessions.length+' total';
+  document.getElementById('k3b').textContent=active.length+' active';
+  document.getElementById('kb-ses').style.width=Math.min(active.length*20,100)+'%';
+  document.getElementById('sesbdg').textContent=active.length;
+  document.getElementById('sm-tot').textContent=sessions.length;
+  document.getElementById('sm-sel').textContent=sessions.filter(s=>s['State']==='selecting').length;
+  document.getElementById('sm-awt').textContent=sessions.filter(s=>s['State']==='awaiting_qty').length;
+  document.getElementById('sm-stats').style.display=sessions.length?'grid':'none';
+  document.getElementById('nb-ses').textContent=active.length;
+  const el=document.getElementById('ses-mini');
+  if(!active.length){el.innerHTML='<div class="empty">💤 No active sessions</div>';return;}
+  el.innerHTML=active.slice(0,4).map(s=>{
+    const name=s['Customer Name']||'',phone=s['Phone']||'',state=s['State']||'';
+    let cc=0;try{cc=JSON.parse(s['Cart']||'[]').reduce((n,i)=>n+(i.qty||1),0);}catch(e){}
+    return`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid rgba(240,246,252,0.05)"><div class="nw"><div class="av ${avc(name||phone)}">${ini(name||phone)}</div><div><div class="td1">${name||'Guest'}</div><div class="tdm">${phone}</div></div></div><div style="text-align:right"><span class="sbdg ${state==='selecting'?'sb-s':'sb-a'}">${state}</span><div class="tdm" style="margin-top:2px">${cc} item${cc!==1?'s':''}</div></div></div>`;
+  }).join('');
+}
+
+/* CHARTS */
+function renderRev(orders){
+  const endD=fe||new Date(),rangeD=fs&&fe?Math.ceil((fe-fs)/86400000):6;
+  const num=Math.min(rangeD+1,30);const days=[],labels=[];
+  for(let i=num-1;i>=0;i--){const d=new Date(endD);d.setDate(d.getDate()-i);d.setHours(0,0,0,0);days.push(d.toDateString());labels.push(d.toLocaleDateString('en-IN',{day:'numeric',month:'short'}));}
+  const data=days.map(d=>orders.filter(o=>new Date(o['Ordered At']||o.orderedAt||'').toDateString()===d).reduce((s,o)=>s+Number(o['Total (Rs)']||o.total||0),0));
+  document.getElementById('rl').textContent=rup(data.reduce((a,b)=>a+b,0));
+  if(cR)cR.destroy();
+  cR=new Chart(document.getElementById('cRev'),{type:'bar',data:{labels,datasets:[{data,backgroundColor:data.map(v=>v>0?'rgba(88,166,255,0.85)':'rgba(88,166,255,0.15)'),borderRadius:4,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:v=>'₹'+Math.round(v.raw).toLocaleString('en-IN')}}},scales:{x:{grid:{display:false},ticks:{color:'#b0bec5',font:{size:10},maxRotation:45}},y:{grid:{color:'rgba(240,246,252,0.06)'},ticks:{color:'#b0bec5',font:{size:10},callback:v=>'₹'+v}}}}});
+}
+function renderStatus(orders){
+  const c={'New':0,'Preparing Order':0,'Delivered':0,'Cancelled':0};
+  orders.forEach(o=>{const s=o['Status']||'New';if(c[s]!==undefined)c[s]++;});
+  document.getElementById('sl').textContent=orders.length+' orders';
+  if(cSt)cSt.destroy();
+  cSt=new Chart(document.getElementById('cSt'),{type:'doughnut',data:{labels:['New','Preparing','Delivered','Cancelled'],datasets:[{data:Object.values(c),backgroundColor:['#3fb950','#d29922','#58a6ff','#f85149'],borderWidth:0,hoverOffset:5}]},options:{responsive:true,maintainAspectRatio:false,cutout:'60%',plugins:{legend:{position:'bottom',labels:{color:'#b0bec5',font:{size:10},padding:7,usePointStyle:true}},tooltip:{...TIP,callbacks:{label:v=>v.label+': '+v.raw}}}}});
+}
+function renderItems(orders){
+  const cnt={};orders.forEach(o=>{(o['Items']||o.items||'').split(',').forEach(p=>{const m=p.trim().match(/^(.+?)\s+x(\d+)/);if(m){const n=m[1].trim();cnt[n]=(cnt[n]||0)+parseInt(m[2]);}});});
+  const sorted=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,6);
+  document.getElementById('il').textContent=sorted.length+' items';
+  if(cI)cI.destroy();if(!sorted.length)return;
+  cI=new Chart(document.getElementById('cIt'),{type:'bar',data:{labels:sorted.map(x=>x[0]),datasets:[{data:sorted.map(x=>x[1]),backgroundColor:['#3fb950','#58a6ff','#bc8cff','#d29922','#f85149','#39d353'],borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TIP}},scales:{x:{grid:{color:'rgba(240,246,252,0.06)'},ticks:{color:'#b0bec5',font:{size:10}}},y:{grid:{display:false},ticks:{color:'#c9d1d9',font:{size:11}}}}}});
+}
+function renderHourly(orders){
+  const today=new Date().toDateString();
+  const to=orders.filter(o=>new Date(o['Ordered At']||o.orderedAt||'').toDateString()===today);
+  const hrs=Array(24).fill(0);
+  to.forEach(o=>{const h=new Date(o['Ordered At']||o.orderedAt||'').getHours();if(!isNaN(h))hrs[h]++;});
+  const labels=Array.from({length:24},(_,i)=>i%3===0?(i===0?'12am':i<12?i+'am':i===12?'12pm':(i-12)+'pm'):'');
+  document.getElementById('hl').textContent=to.length+' today';
+  if(cH)cH.destroy();
+  cH=new Chart(document.getElementById('cHr'),{type:'line',data:{labels,datasets:[{data:hrs,borderColor:'#bc8cff',backgroundColor:'rgba(188,140,255,0.1)',fill:true,tension:0.4,pointRadius:hrs.map(v=>v>0?4:0),pointBackgroundColor:'#bc8cff'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{title:ctx=>'Hour '+ctx[0].dataIndex+':00'}}},scales:{x:{grid:{display:false},ticks:{color:'#b0bec5',font:{size:10}}},y:{grid:{color:'rgba(240,246,252,0.06)'},ticks:{color:'#b0bec5',font:{size:10},stepSize:1}}}}});
+}
+function renderAnalytics(){
+  const now=new Date(),days30=[],labels30=[];
+  for(let i=29;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);d.setHours(0,0,0,0);days30.push(d.toDateString());labels30.push(d.toLocaleDateString('en-IN',{day:'numeric',month:'short'}));}
+  const revD=days30.map(d=>allO.filter(o=>new Date(o['Ordered At']||o.orderedAt||'').toDateString()===d).reduce((s,o)=>s+Number(o['Total (Rs)']||o.total||0),0));
+  const ordD=days30.map(d=>allO.filter(o=>new Date(o['Ordered At']||o.orderedAt||'').toDateString()===d).length);
+  document.getElementById('an1l').textContent=rup(revD.reduce((a,b)=>a+b,0));
+  document.getElementById('an2l').textContent=ordD.reduce((a,b)=>a+b,0)+' orders';
+  if(cA1)cA1.destroy();
+  cA1=new Chart(document.getElementById('cA1'),{type:'line',data:{labels:labels30,datasets:[{data:revD,borderColor:'#58a6ff',backgroundColor:'rgba(88,166,255,0.08)',fill:true,tension:0.3,pointRadius:0}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:v=>'₹'+Math.round(v.raw).toLocaleString('en-IN')}}},scales:{x:{grid:{display:false},ticks:{color:'#b0bec5',font:{size:9},maxTicksLimit:8}},y:{grid:{color:'rgba(240,246,252,0.06)'},ticks:{color:'#b0bec5',font:{size:10},callback:v=>'₹'+v}}}}});
+  if(cA2)cA2.destroy();
+  cA2=new Chart(document.getElementById('cA2'),{type:'bar',data:{labels:labels30,datasets:[{data:ordD,backgroundColor:'rgba(63,185,80,0.75)',borderRadius:3,borderSkipped:false}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TIP}},scales:{x:{grid:{display:false},ticks:{color:'#b0bec5',font:{size:9},maxTicksLimit:8}},y:{grid:{color:'rgba(240,246,252,0.06)'},ticks:{color:'#b0bec5',font:{size:10},stepSize:1}}}}});
+  const cnt={};allO.forEach(o=>{(o['Items']||o.items||'').split(',').forEach(p=>{const m=p.trim().match(/^(.+?)\s+x(\d+)/);if(m){const n=m[1].trim();cnt[n]=(cnt[n]||0)+parseInt(m[2]);}});});
+  const itS=Object.entries(cnt).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  document.getElementById('an3l').textContent=itS.length+' items';
+  if(cA3)cA3.destroy();
+  if(itS.length)cA3=new Chart(document.getElementById('cA3'),{type:'bar',data:{labels:itS.map(x=>x[0]),datasets:[{data:itS.map(x=>x[1]),backgroundColor:['#3fb950','#58a6ff','#bc8cff','#d29922','#f85149','#39d353','#3fb950','#58a6ff'],borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TIP}},scales:{x:{grid:{color:'rgba(240,246,252,0.06)'},ticks:{color:'#b0bec5',font:{size:10}}},y:{grid:{display:false},ticks:{color:'#c9d1d9',font:{size:11}}}}}});
+  if(cA4)cA4.destroy();
+  if(allCust.length)cA4=new Chart(document.getElementById('cA4'),{type:'bar',data:{labels:allCust.slice(0,10).map(c=>c.name||c.phone.slice(-4)),datasets:[{data:allCust.slice(0,10).map(c=>c.total),backgroundColor:'rgba(188,140,255,0.8)',borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{...TIP,callbacks:{label:v=>'₹'+Math.round(v.raw).toLocaleString('en-IN')}}},scales:{x:{grid:{color:'rgba(240,246,252,0.06)'},ticks:{color:'#b0bec5',font:{size:10},callback:v=>'₹'+v}},y:{grid:{display:false},ticks:{color:'#c9d1d9',font:{size:11}}}}}});
+}
+
+/* LOAD */
+function loadDashboard(){
+  api({action:'getOrders'}).then(data=>{
+    allO=data.orders||[];applyF();
+    document.getElementById('nb-ord').textContent=allO.filter(x=>(x['Status']||'New')==='New').length;
+    renderPayments();
+  }).catch(e=>console.error(e));
+  api({action:'getSessions'}).then(data=>{
+    allS=data.sessions||[];renderSesMini(allS);
+    if(document.getElementById('pt').textContent==='Live Sessions')renderSesDetail(allS);
+    document.getElementById('upd').textContent='Updated '+new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+  }).catch(e=>console.error(e));
+}
+
+function updClk(){const m=String(Math.floor(cdV/60)).padStart(2,'0'),s=String(cdV%60).padStart(2,'0');document.getElementById('dig').textContent=m+':'+s;document.getElementById('prog').style.width=(cdV/30*100)+'%';}
+function startCD(){cdV=30;if(cdT)clearInterval(cdT);updClk();cdT=setInterval(()=>{cdV--;updClk();if(cdV<=0){clearInterval(cdT);loadDashboard();startCD();}},1000);}
+function manualRefresh(){if(cdT)clearInterval(cdT);loadDashboard();const p=document.getElementById('pt').textContent;if(p==='Menu')loadMenu();if(p==='Customer Details')loadCustomers();if(p==='Razorpay')loadRazorpay();startCD();}
+
+const now=new Date();
+document.getElementById('df').value=new Date(now-6*86400000).toISOString().split('T')[0];
+document.getElementById('dt').value=now.toISOString().split('T')[0];
+fs=new Date(now-6*86400000);fs.setHours(0,0,0,0);fe=new Date();
+loadDashboard();startCD();
+</script>
+</body>
+</html>
