@@ -1096,8 +1096,7 @@ function filterCusts(){
   renderCustomers(filtered);
 }
 
-function clearCustFilter()
-{document.getElementById('cust-name-f').value='';document.getElementById('cust-phone-f').value='';custFiltN='';custFiltP='';renderCustomers(allCust);}
+function clearCustFilter(){document.getElementById('cust-name-f').value='';document.getElementById('cust-phone-f').value='';custFiltN='';custFiltP='';renderCustomers(allCust);}
 
 function renderCustomers(custs){
   const maxS=custs.length?Math.max(...custs.map(c=>c.total)):1;
