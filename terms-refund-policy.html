@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Terms of Service and Refund Policy — iAutomate.in" />
+  <title>Terms & Refund Policy — iAutomate.in</title>
+  <link rel="icon" type="image/png" href="favicon.png" />
+  <link rel="shortcut icon" href="favicon.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: clamp(13px, 1.1vw, 16px); }
+
+    :root {
+      --white:    #ffffff;
+      --off:      #f7f7f5;
+      --off2:     #f0f0ec;
+      --black:    #0f0f0f;
+      --dark:     #1c1c1c;
+      --mid:      #4a4a4a;
+      --muted:    #7a7a7a;
+      --stroke:   #e4e4e0;
+      --stroke2:  #d0d0ca;
+      --yellow:   #e8b84b;
+      --yellow-d: #c99b2a;
+      --yellow-l: #fdf3d9;
+      --yellow-m: rgba(232,184,75,0.15);
+      --display:  "Outfit", sans-serif;
+      --body:     "DM Sans", sans-serif;
+      --mono:     "DM Mono", monospace;
+      --max:      1140px;
+      --px:       clamp(16px, 4vw, 48px);
+      --r:        8px;
+      --sec-py:   clamp(48px, 7vw, 92px);
+    }
+
+    body { font-family: var(--body); background: var(--white); color: var(--black); overflow-x: hidden; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--px); }
+
+    header { position: sticky; top: 0; z-index: 500; background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--stroke); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: clamp(52px,5.5vw,64px); gap: clamp(8px,1.5vw,16px); }
+    .logo { display: flex; align-items: center; gap: clamp(6px,1vw,10px); text-decoration: none; flex-shrink: 0; }
+    .logo-mark { width: clamp(30px,3.2vw,42px); height: clamp(30px,3.2vw,42px); display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: #fff; border-radius: 50%; }
+    .logo-mark img { width: 100%; height: 100%; object-fit: contain; }
+    .logo-name { font-family: var(--display); font-size: clamp(.88rem,1.05vw,1.05rem); font-weight: 800; color: var(--black); letter-spacing: -.02em; }
+    .logo-name span { color: var(--yellow-d); }
+    .logo-slogan { font-family: var(--display); font-size: clamp(.6rem,.72vw,.72rem); font-weight: 600; color: var(--muted); letter-spacing: .04em; line-height: 1; margin-top: 1px; }
+    .nav-cta { font-family: var(--display); font-size: clamp(.76rem,.88vw,.88rem); font-weight: 700; background: var(--black); color: var(--white); border: none; padding: clamp(7px,1vw,10px) clamp(12px,1.6vw,22px); border-radius: 6px; cursor: pointer; transition: background .2s; text-decoration: none; white-space: nowrap; }
+    .nav-cta:hover { background: var(--dark); }
+
+    .policy { padding: var(--sec-py) 0; }
+    .policy-header { margin-bottom: clamp(32px, 4vw, 56px); }
+    .policy-header p { font-family: var(--mono); font-size: clamp(.7rem,.78vw,.78rem); color: var(--muted); text-transform: uppercase; letter-spacing: .12em; margin-bottom: 10px; }
+    .policy-header h1 { font-family: var(--display); font-size: clamp(1.8rem, 3vw, 2.8rem); font-weight: 800; color: var(--black); line-height: 1.15; }
+
+    .policy-section { margin-bottom: clamp(28px, 3.5vw, 44px); }
+    .policy-section h2 { font-family: var(--display); font-size: clamp(1.1rem, 1.4vw, 1.4rem); font-weight: 700; color: var(--black); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 2px solid var(--yellow-m); display: inline-block; }
+    .policy-section p, .policy-section li { font-size: clamp(.88rem, 1vw, 1rem); color: var(--mid); line-height: 1.75; }
+    .policy-section ul { padding-left: 1.4em; margin-top: 8px; }
+    .policy-section li { margin-bottom: 6px; }
+    .policy-section li::marker { color: var(--yellow-d); }
+
+    .highlight-box { background: var(--yellow-l); border-left: 4px solid var(--yellow); padding: clamp(16px, 2vw, 24px); border-radius: 0 var(--r) var(--r) 0; margin: 20px 0; }
+    .highlight-box p { color: var(--dark); font-weight: 500; }
+    .highlight-box strong { color: var(--black); }
+
+    footer { background: var(--white); border-top: 1px solid var(--stroke); padding: clamp(28px,3.5vw,40px) 0 clamp(16px,2vw,24px); }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: clamp(16px,2vw,24px); margin-bottom: clamp(20px,2.5vw,30px); }
+    .footer-tag { font-family: var(--mono); font-size: clamp(.6rem,.68vw,.68rem); color: var(--muted); margin-top: 5px; }
+    .footer-links { display: flex; gap: clamp(14px,2vw,24px); flex-wrap: wrap; align-items: center; }
+    .footer-links a { font-size: clamp(.76rem,.85vw,.85rem); color: var(--muted); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--black); }
+    .footer-bottom { border-top: 1px solid var(--stroke); padding-top: clamp(12px,1.5vw,18px); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .footer-copy { font-family: var(--mono); font-size: clamp(.6rem,.68vw,.68rem); color: var(--muted); }
+
+    @media (max-width: 600px) {
+      .footer-top { flex-direction: column; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <nav class="nav">
+      <a href="index.html" class="logo">
+        <div class="logo-mark"><img src="favicon.png" alt="iAutomate logo" /></div>
+        <div>
+          <div class="logo-name"><span>i</span>Automate</div>
+          <div class="logo-slogan">AI Business Automation Solutions</div>
+        </div>
+      </a>
+      <a href="index.html" class="nav-cta">← Back to Home</a>
+    </nav>
+  </div>
+</header>
+
+<section class="policy">
+  <div class="wrap">
+
+    <div class="policy-header">
+      <p>// Legal</p>
+      <h1>Terms of Service &<br>Refund Policy</h1>
+    </div>
+
+    <!-- Terms of Service -->
+
+    <div class="policy-section">
+      <h2>1. Introduction</h2>
+      <p>These Terms of Service ("Terms") govern your use of the services provided by iAutomate.in ("we", "us", "our"). By engaging our services, you agree to be bound by these Terms. Please read them carefully before proceeding.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>2. Services</h2>
+      <p>iAutomate.in provides AI-powered business automation solutions including but not limited to:</p>
+      <ul>
+        <li>WhatsApp chatbots and calling assistants</li>
+        <li>Custom workflow automations (n8n)</li>
+        <li>Website design, hosting, and maintenance</li>
+        <li>ServiceNow, Office 365, and third-party integrations</li>
+        <li>CRM and lead management systems</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>3. Payment Terms</h2>
+      <p>All service plans require advance payment as agreed upon at the time of engagement. Payment terms are as follows:</p>
+      <ul>
+        <li>Payments must be made in advance for the agreed billing cycle (monthly, quarterly, or annually).</li>
+        <li>Invoices are generated at the beginning of each billing period.</li>
+        <li>Late payments may result in temporary suspension of services after a 7-day grace period.</li>
+        <li>All prices are in Indian Rupees (INR) and inclusive of applicable taxes unless stated otherwise.</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>4. Service Delivery</h2>
+      <p>We aim to deliver all automation setups within the agreed timeline, typically 48 hours to 2 weeks depending on project complexity. Timelines are communicated during the onboarding process and may vary based on client responsiveness and requirement changes.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>5. Client Responsibilities</h2>
+      <ul>
+        <li>Provide accurate and complete information required for service setup.</li>
+        <li>Grant necessary access to third-party platforms and APIs as needed.</li>
+        <li>Respond to queries and approval requests within a reasonable timeframe.</li>
+        <li>Ensure compliance with applicable laws when using our automation services.</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>6. Intellectual Property</h2>
+      <p>All custom automations, workflows, and configurations built by iAutomate.in remain our intellectual property until full payment is received. Upon complete payment, the client receives a non-exclusive license to use the deliverables for their business operations. Resale or redistribution of our work is not permitted without prior written consent.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>7. Service Modifications &amp; Termination</h2>
+      <ul>
+        <li>Either party may terminate the service agreement with 30 days' written notice.</li>
+        <li>We reserve the right to modify service features and pricing with 15 days' advance notice.</li>
+        <li>Upon termination, we will provide reasonable assistance for data export where applicable.</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>8. Limitation of Liability</h2>
+      <p>iAutomate.in shall not be liable for any indirect, incidental, or consequential damages arising from the use or inability to use our services. Our total liability shall not exceed the amount paid by the client in the preceding 3 months. We are not responsible for downtime or issues caused by third-party platforms (WhatsApp, Meta, Razorpay, etc.).</p>
+    </div>
+
+    <!-- Refund Policy -->
+
+    <div class="policy-section">
+      <h2>9. Refund Policy</h2>
+      <p>We strive to deliver exceptional value to every client. Our refund policy is designed to be fair and transparent:</p>
+
+      <div class="highlight-box">
+        <p><strong>Important:</strong> Advance payments made for a 3-month (quarterly) or longer billing cycle are non-refundable. By opting for an advance payment plan, you acknowledge and agree that such payments will not be refunded under any circumstances.</p>
+      </div>
+
+      <ul>
+        <li><strong>Monthly plans:</strong> If you are dissatisfied within the first 7 days of your initial subscription, you may request a full refund provided no deliverables have been deployed.</li>
+        <li><strong>Quarterly / Advance payments (3 months):</strong> These payments are <strong>non-refundable</strong>. The discounted pricing offered on advance plans accounts for this commitment.</li>
+        <li><strong>Annual plans:</strong> Non-refundable. Early termination does not entitle the client to a pro-rata refund.</li>
+        <li><strong>Custom projects:</strong> Refunds for one-time project work are evaluated on a case-by-case basis. No refund is applicable once the project has been delivered and approved.</li>
+        <li><strong>Website hosting plans:</strong> The ₹249/mo hosting plan and similar recurring plans are non-refundable once the billing cycle has begun.</li>
+      </ul>
+    </div>
+
+    <div class="policy-section">
+      <h2>10. How to Request a Refund</h2>
+      <p>To request a refund (where eligible), please contact us within the applicable refund window:</p>
+      <ul>
+        <li>Email: <strong>info@iautomate.in</strong></li>
+        <li>WhatsApp: via the chat on our website</li>
+      </ul>
+      <p style="margin-top:10px;">Refund requests will be reviewed within 5–7 business days. Approved refunds will be processed to the original payment method within 10 business days.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>11. Dispute Resolution</h2>
+      <p>Any disputes arising from these Terms shall be resolved through mutual discussion. If unresolved, disputes shall be subject to the jurisdiction of courts in India.</p>
+    </div>
+
+    <div class="policy-section">
+      <h2>12. Changes to These Terms</h2>
+      <p>We may update these Terms from time to time. Changes will be communicated via email or posted on this page. Continued use of our services after any modifications constitutes acceptance of the revised Terms.</p>
+    </div>
+
+    <div class="policy-section" style="margin-bottom:0;">
+      <p style="color:var(--muted); font-size:clamp(.75rem,.85vw,.85rem); font-family:var(--mono);">Last updated: June 2025</p>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div>
+        <a href="index.html" class="logo" style="margin-bottom:4px;">
+          <div class="logo-mark"><img src="favicon.png" alt="iAutomate logo" /></div>
+          <div>
+            <div class="logo-name"><span>i</span>Automate</div>
+          </div>
+        </a>
+        <p class="footer-tag">AI Automation for Modern Businesses</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html#services">Services</a>
+        <a href="index.html#process">Process</a>
+        <a href="index.html#faq">FAQ</a>
+        <a href="index.html#about">About Us</a>
+        <a href="index.html#contact">Contact Us</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms-refund-policy.html" style="color:var(--yellow-d);">Terms & Refund</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">&copy; 2025 iAutomate.in — All rights reserved</span>
+      <span class="footer-made">Built for the world 🌍</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
