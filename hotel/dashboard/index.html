@@ -316,7 +316,7 @@
   </header>
 
   <!-- CONTENT -->
-  <div class="content" id="dashboardPage">
+  <div class="content" id="dashboardPage" data-page="dashboard">
     <!-- PERIOD BAR -->
     <div class="period-bar">
       <span style="font-size:11px;color:var(--text-muted);font-weight:600;margin-right:4px;">PERIOD</span>
@@ -474,6 +474,191 @@
       </div>
     </div>
   </div>
+
+<!-- ORDERS PAGE -->
+<div class="content" id="ordersPage" data-page="orders" style="display:none">
+  <div class="period-bar" style="margin-bottom:20px;">
+    <span style="font-size:11px;color:var(--text-muted);font-weight:600;margin-right:4px;">SEARCH</span>
+    <input type="text" class="header-search" id="ordersSearch" placeholder="Search by name, phone, ID..." style="width:260px;padding:7px 14px;" oninput="filterOrders()" />
+    <span style="font-size:11px;color:var(--text-muted);font-weight:600;margin-left:8px;">STATUS</span>
+    <select class="period-date" id="ordersStatus" onchange="filterOrders()">
+      <option value="">All</option>
+      <option value="New">New</option>
+      <option value="Preparing">Preparing</option>
+      <option value="Delivered">Delivered</option>
+      <option value="Cancelled">Cancelled</option>
+    </select>
+    <button class="period-apply" onclick="loadPage('orders')">Refresh</button>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title"><i class="fas fa-receipt" style="color:var(--accent);margin-right:6px;"></i> All Orders</div><div class="card-subtitle" id="ordersCount">Loading...</div></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Order ID</th><th>Customer</th><th>Phone</th><th>Items</th><th>Amount</th><th>Status</th><th>Time</th><th>Actions</th></tr></thead>
+        <tbody id="ordersTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- BOOKINGS PAGE -->
+<div class="content" id="bookingsPage" data-page="bookings" style="display:none">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title"><i class="fas fa-calendar-check" style="color:var(--green);margin-right:6px;"></i> Table Bookings</div><div class="card-subtitle" id="bookingsCount">Loading...</div></div>
+      <button class="period-apply" onclick="loadPage('bookings')">Refresh</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Booking ID</th><th>Customer</th><th>Phone</th><th>Date</th><th>Time</th><th>Guests</th><th>Table</th><th>Status</th></tr></thead>
+        <tbody id="bookingsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- MENU PAGE -->
+<div class="content" id="menuPage" data-page="menu" style="display:none">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title"><i class="fas fa-utensils" style="color:var(--orange);margin-right:6px;"></i> Menu Items</div><div class="card-subtitle" id="menuCount">Loading...</div></div>
+      <button class="period-apply" onclick="loadPage('menu')">Refresh</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Item Name</th><th>Category</th><th>Price (₹)</th><th>Available</th><th>Description</th></tr></thead>
+        <tbody id="menuTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOMERS PAGE -->
+<div class="content" id="customersPage" data-page="customers" style="display:none">
+  <div class="period-bar" style="margin-bottom:20px;">
+    <input type="text" class="header-search" id="customersSearch" placeholder="Search by name or phone..." style="width:260px;padding:7px 14px;" oninput="filterCustomers()" />
+    <button class="period-apply" onclick="loadPage('customers')">Refresh</button>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title"><i class="fas fa-users" style="color:var(--purple);margin-right:6px;"></i> Customer Details</div><div class="card-subtitle" id="customersCount">Loading...</div></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Customer</th><th>Phone</th><th>Total Orders</th><th>Total Spent</th><th>Last Order</th><th>Actions</th></tr></thead>
+        <tbody id="customersTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SESSIONS PAGE -->
+<div class="content" id="sessionsPage" data-page="sessions" style="display:none">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title"><i class="fas fa-comments" style="color:var(--green);margin-right:6px;"></i> WhatsApp Sessions</div><div class="card-subtitle" id="sessionsCount">Loading...</div></div>
+      <button class="period-apply" onclick="loadPage('sessions')">Refresh</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Phone</th><th>Customer</th><th>State</th><th>Cart / Selection</th><th>Last Message</th><th>Updated At</th></tr></thead>
+        <tbody id="sessionsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- PAYMENTS PAGE -->
+<div class="content" id="paymentsPage" data-page="payments" style="display:none">
+  <div class="kpi-grid" style="margin-bottom:20px;">
+    <div class="kpi-card"><div class="kpi-top"><div class="kpi-info"><div class="kpi-label">Total Collected</div><div class="kpi-value" id="pyTotal">₹0</div></div><div class="kpi-icon" style="background:var(--green-light);color:var(--green);"><i class="fas fa-indian-rupee-sign"></i></div></div></div>
+    <div class="kpi-card"><div class="kpi-top"><div class="kpi-info"><div class="kpi-label">Online (Razorpay)</div><div class="kpi-value" id="pyOnline">₹0</div></div><div class="kpi-icon" style="background:var(--accent-light);color:var(--accent);"><i class="fas fa-credit-card"></i></div></div></div>
+    <div class="kpi-card"><div class="kpi-top"><div class="kpi-info"><div class="kpi-label">Cash</div><div class="kpi-value" id="pyCash">₹0</div></div><div class="kpi-icon" style="background:var(--orange-light);color:var(--orange);"><i class="fas fa-money-bill"></i></div></div></div>
+    <div class="kpi-card"><div class="kpi-top"><div class="kpi-info"><div class="kpi-label">Pending</div><div class="kpi-value" id="pyPending">₹0</div></div><div class="kpi-icon" style="background:var(--red-light);color:var(--red);"><i class="fas fa-clock"></i></div></div></div>
+  </div>
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title"><i class="fas fa-credit-card" style="color:var(--accent);margin-right:6px;"></i> Payment Records</div><div class="card-subtitle" id="paymentsCount">Loading...</div></div>
+      <button class="period-apply" onclick="loadPage('payments')">Refresh</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Order ID</th><th>Customer</th><th>Amount</th><th>Method</th><th>Status</th><th>Transaction ID</th><th>Time</th></tr></thead>
+        <tbody id="paymentsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- RAZORPAY PAGE -->
+<div class="content" id="razorpayPage" data-page="razorpay" style="display:none">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title"><i class="fas fa-bolt" style="color:var(--accent);margin-right:6px;"></i> Razorpay Transactions</div><div class="card-subtitle" id="razorpayCount">Loading...</div></div>
+      <button class="period-apply" onclick="loadPage('razorpay')">Refresh</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Payment ID</th><th>Order ID</th><th>Customer</th><th>Amount</th><th>Status</th><th>Method</th><th>Time</th></tr></thead>
+        <tbody id="razorpayTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- BILLS PAGE -->
+<div class="content" id="billsPage" data-page="bills" style="display:none">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title"><i class="fas fa-file-invoice" style="color:var(--purple);margin-right:6px;"></i> Bills & Invoices</div><div class="card-subtitle" id="billsCount">Loading...</div></div>
+      <button class="period-apply" onclick="loadPage('bills')">Refresh</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Bill No</th><th>Order ID</th><th>Customer</th><th>Phone</th><th>Items</th><th>Amount</th><th>Sent</th><th>Time</th></tr></thead>
+        <tbody id="billsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ANALYTICS PAGE -->
+<div class="content" id="analyticsPage" data-page="analytics" style="display:none">
+  <div class="kpi-grid" style="margin-bottom:20px;">
+    <div class="kpi-card"><div class="kpi-top"><div class="kpi-info"><div class="kpi-label">Total Revenue</div><div class="kpi-value" id="anRevenue">₹0</div></div><div class="kpi-icon" style="background:var(--green-light);color:var(--green);"><i class="fas fa-indian-rupee-sign"></i></div></div></div>
+    <div class="kpi-card"><div class="kpi-top"><div class="kpi-info"><div class="kpi-label">Total Orders</div><div class="kpi-value" id="anOrders">0</div></div><div class="kpi-icon" style="background:var(--accent-light);color:var(--accent);"><i class="fas fa-receipt"></i></div></div></div>
+    <div class="kpi-card"><div class="kpi-top"><div class="kpi-info"><div class="kpi-label">Unique Customers</div><div class="kpi-value" id="anCustomers">0</div></div><div class="kpi-icon" style="background:var(--purple-light);color:var(--purple);"><i class="fas fa-users"></i></div></div></div>
+    <div class="kpi-card"><div class="kpi-top"><div class="kpi-info"><div class="kpi-label">Avg Order Value</div><div class="kpi-value" id="anAvg">₹0</div></div><div class="kpi-icon" style="background:var(--orange-light);color:var(--orange);"><i class="fas fa-chart-line"></i></div></div></div>
+  </div>
+  <div class="cards-row cards-2">
+    <div class="card">
+      <div class="card-header"><div><div class="card-title"><i class="fas fa-chart-bar" style="color:var(--accent);margin-right:6px;"></i> Revenue by Day</div></div></div>
+      <div class="chart-container"><canvas id="anRevenueChart"></canvas></div>
+    </div>
+    <div class="card">
+      <div class="card-header"><div><div class="card-title"><i class="fas fa-chart-pie" style="color:var(--green);margin-right:6px;"></i> Top Menu Items</div></div></div>
+      <div id="anTopItems"></div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORTS PAGE -->
+<div class="content" id="reportsPage" data-page="reports" style="display:none">
+  <div class="card">
+    <div class="card-header">
+      <div><div class="card-title"><i class="fas fa-chart-line" style="color:var(--accent);margin-right:6px;"></i> Daily Reports</div><div class="card-subtitle" id="reportsCount">Loading...</div></div>
+      <button class="period-apply" onclick="loadPage('reports')">Refresh</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Orders</th><th>Revenue</th><th>Avg Order</th><th>Delivered</th><th>Cancelled</th></tr></thead>
+        <tbody id="reportsTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
 </div>
 
 <!-- THEME PICKER PANEL -->
@@ -718,13 +903,34 @@ function loadDashboard() {
 
 function sendInvoice(oid, phone) {
   api({action:'sendInvoice', orderId:oid}).then(r => {
-    alert(r && r.error ? r.error : 'Invoice sent to ' + phone + '!');
+    alert(r && r.error ? '❌ ' + r.error : '✅ Invoice sent to ' + phone + '!');
   });
 }
 
 function notifyKitchen(oid, name, phone, items, total) {
   api({action:'notifyKitch', orderId:oid, name, phone, items, total}).then(r => {
-    alert(r && r.error ? r.error : 'Kitchen notified! 🔔');
+    alert(r && r.error ? '❌ ' + r.error : 'Kitchen notified! 🔔');
+  });
+}
+
+function sendWhatsApp(phone) {
+  const clean = String(phone).replace(/\D/g,'');
+  window.open('https://wa.me/91' + clean, '_blank');
+}
+
+function updateOrderStatus(orderId, status) {
+  api({action:'updateStatus', orderId, status}).then(r => {
+    if (r && r.error) { alert('❌ ' + r.error); return; }
+    // refresh current page
+    loadPage(document.querySelector('.nav-item.active')?.dataset.page || 'orders');
+  });
+}
+
+function cancelOrder(orderId) {
+  if (!confirm('Cancel order ' + orderId + '?')) return;
+  api({action:'cancelOrder', orderId}).then(r => {
+    if (r && r.error) { alert('❌ ' + r.error); return; }
+    loadPage(document.querySelector('.nav-item.active')?.dataset.page || 'orders');
   });
 }
 
@@ -737,10 +943,334 @@ function setPeriod(el, period) {
 function applyPeriod() { loadDashboard(); }
 
 // ===================== NAV =====================
+const pageCache = {};
+
 function showPage(page) {
+  document.querySelectorAll('[data-page]').forEach(el => {
+    if (el.classList.contains('content')) el.style.display = el.dataset.page === page ? '' : 'none';
+  });
   document.querySelectorAll('.nav-item').forEach(n => n.classList.toggle('active', n.dataset.page === page));
+  loadPage(page);
 }
 document.querySelectorAll('.nav-item').forEach(n => n.addEventListener('click', () => showPage(n.dataset.page)));
+
+function loadPage(page) {
+  if (page === 'dashboard') { loadDashboard(); return; }
+  // Pages with no backend sheet yet — show placeholder
+  if (['bookings','payments','bills'].includes(page)) {
+    const ids = { bookings:'bookingsTableBody', payments:'paymentsTableBody', bills:'billsTableBody' };
+    const counts = { bookings:'bookingsCount', payments:'paymentsCount', bills:'billsCount' };
+    const cols = { bookings:8, payments:7, bills:8 };
+    if (counts[page]) document.getElementById(counts[page]).textContent = 'No data source configured';
+    if (ids[page]) document.getElementById(ids[page]).innerHTML = `<tr><td colspan="${cols[page]}" style="text-align:center;color:var(--text-muted);padding:40px"><i class="fas fa-database" style="font-size:24px;opacity:.3;display:block;margin-bottom:8px"></i>No sheet configured for this section yet</td></tr>`;
+    return;
+  }
+  const actions = {
+    orders:    { action: 'getOrders',    key: 'orders'    },
+    menu:      { action: 'getMenuItems', key: 'items'     },
+    customers: { action: 'getCustomers', key: 'customers' },
+    sessions:  { action: 'getSessions',  key: 'sessions'  },
+    razorpay:  { action: 'getRazorpay',  key: 'items'     },
+    analytics: { action: 'getOrders',    key: 'orders'    },
+    reports:   { action: 'getOrders',    key: 'orders'    },
+  };
+  const cfg = actions[page];
+  if (!cfg) return;
+  api({action: cfg.action}).then(r => {
+    const data = r[cfg.key] || [];
+    renderPage(page, data, r);
+  }).catch(e => console.error(page + ' fetch error:', e));
+}
+
+function renderPage(page, data, raw) {
+  switch(page) {
+    case 'orders':    renderOrders(data); break;
+    case 'menu':      renderMenu(data); break;
+    case 'customers': renderCustomersPage(data); break;
+    case 'sessions':  renderSessions(data); break;
+    case 'razorpay':  renderRazorpay(raw); break;
+    case 'analytics': renderAnalytics(data); break;
+    case 'reports':   renderReports(data); break;
+  }
+}
+
+// ===================== ORDERS PAGE =====================
+let filteredOrders = [];
+function renderOrders(data) {
+  filteredOrders = data;
+  allOrders = data;
+  filterOrders();
+}
+function filterOrders() {
+  const search = (document.getElementById('ordersSearch')?.value || '').toLowerCase();
+  const status = document.getElementById('ordersStatus')?.value || '';
+  const list = filteredOrders.filter(o =>
+    (!search || (o['Customer Name']||'').toLowerCase().includes(search) || (o['Phone']||'').includes(search) || (o['Order ID']||'').toLowerCase().includes(search)) &&
+    (!status || (o['Status']||'New') === status)
+  );
+  document.getElementById('ordersCount').textContent = list.length + ' orders';
+  document.getElementById('ordersTableBody').innerHTML = list.map(o => {
+    const name = o['Customer Name'] || 'Guest';
+    const statusClass = (o['Status']||'New').toLowerCase().replace(/ /g,'');
+    const time = o['Ordered At'] ? new Date(o['Ordered At']).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+    return `<tr>
+      <td style="font-weight:600;color:var(--accent)">${o['Order ID']||''}</td>
+      <td>${name}</td>
+      <td>${o['Phone']||''}</td>
+      <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text-secondary)">${o['Items']||''}</td>
+      <td style="font-weight:700">₹${Number(o['Total (Rs)']||0).toLocaleString()}</td>
+      <td><span class="status-badge status-${statusClass}">${o['Status']||'New'}</span></td>
+      <td style="color:var(--text-muted);font-size:12px">${time}</td>
+      <td><div class="action-btns">
+        <button class="action-btn green" onclick="sendInvoice('${o['Order ID']}','${o['Phone']}')">📲 Invoice</button>
+        <button class="action-btn orange" onclick="notifyKitchen('${o['Order ID']}','${name}','${o['Phone']}','${(o['Items']||'').replace(/'/g,"\\'")}',${o['Total (Rs)']||0})">🔔 Kitchen</button>
+        <select class="action-btn" style="cursor:pointer" onchange="updateOrderStatus('${o['Order ID']}',this.value);this.value=''">
+          <option value="" disabled selected>▾ Status</option>
+          <option value="New">New</option>
+          <option value="Preparing">Preparing</option>
+          <option value="Delivered">Delivered</option>
+          <option value="Cancelled">Cancelled</option>
+        </select>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+// ===================== BOOKINGS PAGE =====================
+function renderBookings(data) {
+  document.getElementById('bookingsCount').textContent = data.length + ' bookings';
+  document.getElementById('bookingsTableBody').innerHTML = data.length ? data.map(b => {
+    const statusClass = (b['Status']||'Pending').toLowerCase();
+    return `<tr>
+      <td style="font-weight:600;color:var(--accent)">${b['Booking ID']||b['ID']||''}</td>
+      <td>${b['Customer Name']||b['Name']||'Guest'}</td>
+      <td>${b['Phone']||''}</td>
+      <td>${b['Date']||b['Booking Date']||''}</td>
+      <td>${b['Time']||b['Booking Time']||''}</td>
+      <td>${b['Guests']||b['No of Guests']||''}</td>
+      <td>${b['Table']||b['Table No']||''}</td>
+      <td><span class="status-badge status-${statusClass}">${b['Status']||'Pending'}</span></td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:30px">No bookings found</td></tr>';
+}
+
+// ===================== MENU PAGE =====================
+function renderMenu(data) {
+  document.getElementById('menuCount').textContent = data.length + ' items';
+  document.getElementById('menuTableBody').innerHTML = data.length ? data.map((m, i) => `<tr>
+    <td style="color:var(--text-muted)">${i+1}</td>
+    <td style="font-weight:600">${m['Item Name']||m['Name']||''}</td>
+    <td><span class="status-badge status-new">${m['Category']||''}</span></td>
+    <td style="font-weight:700">₹${Number(m['Price']||m['Price (Rs)']||0).toLocaleString()}</td>
+    <td><span class="status-badge ${(m['Available']||m['Is Available']||'Yes')==='Yes'?'status-delivered':'status-cancelled'}">${m['Available']||m['Is Available']||'Yes'}</span></td>
+    <td style="color:var(--text-secondary);font-size:12px">${m['Description']||''}</td>
+  </tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:30px">No menu items found</td></tr>';
+}
+
+// ===================== CUSTOMERS PAGE =====================
+// API returns: { phone, name, orders, total, lastOrder } (all lowercase)
+let allCustomersData = [];
+function renderCustomersPage(data) {
+  allCustomersData = data;
+  filterCustomers();
+}
+function filterCustomers() {
+  const search = (document.getElementById('customersSearch')?.value || '').toLowerCase();
+  const list = allCustomersData.filter(c =>
+    !search || (c.name||'').toLowerCase().includes(search) || (c.phone||'').includes(search)
+  );
+  document.getElementById('customersCount').textContent = list.length + ' customers';
+  const avatarColors = ['#4f7cff','#7551ff','#01b574','#ffb547','#ee5d50','#ec4899'];
+  document.getElementById('customersTableBody').innerHTML = list.length ? list.map(c => {
+    const name = c.name || 'Guest';
+    const phone = c.phone || '';
+    const color = avatarColors[Math.abs(hashStr(name)) % avatarColors.length];
+    const initials = name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+    const lastFmt = c.lastOrder ? new Date(c.lastOrder).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—';
+    return `<tr>
+      <td><div class="customer-cell"><div class="customer-avatar" style="background:${color}">${initials}</div><div><div class="customer-name">${name}</div></div></div></td>
+      <td>${phone}</td>
+      <td style="font-weight:700">${c.orders||0}</td>
+      <td style="font-weight:700;color:var(--green)">₹${Number(c.total||0).toLocaleString()}</td>
+      <td style="color:var(--text-muted);font-size:12px">${lastFmt}</td>
+      <td><button class="action-btn green" onclick="sendWhatsApp('${phone}')">📲 WhatsApp</button></td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:30px">No customers found</td></tr>';
+}
+
+// ===================== SESSIONS PAGE =====================
+function renderSessions(data) {
+  const sessions = Array.isArray(data) ? data : (data.sessions || []);
+  document.getElementById('sessionsCount').textContent = sessions.length + ' sessions';
+  const active = sessions.filter(s => s['State']==='selecting'||s['State']==='awaiting_qty'||s['State']==='active').length;
+  document.getElementById('kpiSessions').textContent = sessions.length;
+  document.getElementById('kpiSessionsDelta').textContent = active + ' active';
+  document.getElementById('sessionsTableBody').innerHTML = sessions.length ? sessions.map(s => {
+    const state = s['State']||'unknown';
+    const stateClass = state==='idle'?'status-cancelled': state==='delivered'?'status-delivered':'status-preparing';
+    const updated = s['Updated At']||s['Last Updated']||'';
+    const updFmt = updated ? new Date(updated).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+    return `<tr>
+      <td style="font-weight:600">${s['Phone']||''}</td>
+      <td>${s['Customer Name']||s['Name']||''}</td>
+      <td><span class="status-badge ${stateClass}">${state}</span></td>
+      <td style="max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text-secondary);font-size:12px">${s['Cart']||s['Selection']||s['Current Order']||''}</td>
+      <td style="color:var(--text-secondary);font-size:12px;max-width:200px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${s['Last Message']||''}</td>
+      <td style="color:var(--text-muted);font-size:12px">${updFmt}</td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:30px">No sessions found</td></tr>';
+}
+
+// ===================== PAYMENTS PAGE =====================
+function renderPayments(data) {
+  document.getElementById('paymentsCount').textContent = data.length + ' records';
+  let total=0, online=0, cash=0, pending=0;
+  data.forEach(p => {
+    const amt = Number(p['Amount']||p['Amount (Rs)']||0);
+    total += amt;
+    const method = (p['Method']||p['Payment Method']||'').toLowerCase();
+    const status = (p['Status']||p['Payment Status']||'').toLowerCase();
+    if (status.includes('pend')) pending += amt;
+    if (method.includes('cash')) cash += amt; else online += amt;
+  });
+  document.getElementById('pyTotal').textContent = '₹' + total.toLocaleString();
+  document.getElementById('pyOnline').textContent = '₹' + online.toLocaleString();
+  document.getElementById('pyCash').textContent = '₹' + cash.toLocaleString();
+  document.getElementById('pyPending').textContent = '₹' + pending.toLocaleString();
+  document.getElementById('paymentsTableBody').innerHTML = data.length ? data.map(p => {
+    const status = p['Status']||p['Payment Status']||'Pending';
+    const stClass = status.toLowerCase().includes('success')||status.toLowerCase().includes('paid') ? 'status-delivered' : status.toLowerCase().includes('fail') ? 'status-cancelled' : 'status-preparing';
+    const time = p['Created At']||p['Time']||p['Ordered At']||'';
+    const timeFmt = time ? new Date(time).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+    return `<tr>
+      <td style="font-weight:600;color:var(--accent)">${p['Order ID']||''}</td>
+      <td>${p['Customer Name']||p['Name']||'Guest'}</td>
+      <td style="font-weight:700">₹${Number(p['Amount']||p['Amount (Rs)']||0).toLocaleString()}</td>
+      <td>${p['Method']||p['Payment Method']||''}</td>
+      <td><span class="status-badge ${stClass}">${status}</span></td>
+      <td style="font-size:11px;color:var(--text-muted)">${p['Transaction ID']||p['Payment ID']||p['Razorpay ID']||'—'}</td>
+      <td style="color:var(--text-muted);font-size:12px">${timeFmt}</td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:30px">No payment records found</td></tr>';
+}
+
+// ===================== RAZORPAY PAGE =====================
+// raw = full Razorpay API response: { count, items: [{ id, amount(paise), status, method, contact, notes, created_at(unix), ... }] }
+function renderRazorpay(raw) {
+  if (raw && raw.error) {
+    document.getElementById('razorpayCount').textContent = 'Error: ' + raw.error;
+    document.getElementById('razorpayTableBody').innerHTML = `<tr><td colspan="7" style="text-align:center;color:var(--red);padding:30px">${raw.error}</td></tr>`;
+    return;
+  }
+  const items = (raw && raw.items) ? raw.items : [];
+  document.getElementById('razorpayCount').textContent = (raw && raw.count ? raw.count : items.length) + ' transactions';
+  document.getElementById('razorpayTableBody').innerHTML = items.length ? items.map(p => {
+    const status = p.status || '';
+    const stClass = status === 'captured' ? 'status-delivered' : status === 'failed' ? 'status-cancelled' : 'status-preparing';
+    const amountRs = (Number(p.amount || 0) / 100).toLocaleString('en-IN');
+    const timeFmt = p.created_at ? new Date(p.created_at * 1000).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+    const orderId = (p.notes && p.notes.order_id) ? p.notes.order_id : (p.order_id || '—');
+    const contact = (p.contact || '').replace('+91','');
+    return `<tr>
+      <td style="font-weight:600;color:var(--accent);font-size:11px">${p.id||''}</td>
+      <td style="font-size:11px;color:var(--text-secondary)">${orderId}</td>
+      <td>${contact}</td>
+      <td style="font-weight:700">₹${amountRs}</td>
+      <td><span class="status-badge ${stClass}">${status}</span></td>
+      <td style="color:var(--text-muted);font-size:12px">${p.method||''}</td>
+      <td style="color:var(--text-muted);font-size:12px">${timeFmt}</td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:30px">No Razorpay transactions found</td></tr>';
+}
+
+// ===================== BILLS PAGE =====================
+function renderBills(data) {
+  document.getElementById('billsCount').textContent = data.length + ' bills';
+  document.getElementById('billsTableBody').innerHTML = data.length ? data.map(b => {
+    const sent = b['Sent']||b['Invoice Sent']||'';
+    const sentClass = sent==='Yes'||sent===true ? 'status-delivered' : 'status-preparing';
+    const time = b['Created At']||b['Time']||b['Ordered At']||'';
+    const timeFmt = time ? new Date(time).toLocaleString('en-IN',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'}) : '';
+    return `<tr>
+      <td style="font-weight:600;color:var(--accent)">${b['Bill No']||b['Bill ID']||''}</td>
+      <td style="color:var(--text-secondary)">${b['Order ID']||''}</td>
+      <td>${b['Customer Name']||b['Name']||'Guest'}</td>
+      <td>${b['Phone']||''}</td>
+      <td style="max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text-secondary);font-size:12px">${b['Items']||''}</td>
+      <td style="font-weight:700">₹${Number(b['Amount']||b['Total (Rs)']||0).toLocaleString()}</td>
+      <td><span class="status-badge ${sentClass}">${sent||'No'}</span></td>
+      <td style="color:var(--text-muted);font-size:12px">${timeFmt}</td>
+    </tr>`;
+  }).join('') : '<tr><td colspan="8" style="text-align:center;color:var(--text-muted);padding:30px">No bills found</td></tr>';
+}
+
+// ===================== ANALYTICS PAGE =====================
+let anRevenueChart;
+function renderAnalytics(orders) {
+  const total = orders.length;
+  const revenue = orders.reduce((s,o) => s + Number(o['Total (Rs)']||0), 0);
+  const avg = total ? Math.round(revenue/total) : 0;
+  const uniquePhones = new Set(orders.map(o => o['Phone']||'').filter(Boolean)).size;
+  document.getElementById('anRevenue').textContent = '₹' + revenue.toLocaleString();
+  document.getElementById('anOrders').textContent = total;
+  document.getElementById('anCustomers').textContent = uniquePhones;
+  document.getElementById('anAvg').textContent = '₹' + avg;
+
+  // Revenue by day chart
+  const byDate = {};
+  orders.forEach(o => {
+    const d = o['Ordered At'] ? new Date(o['Ordered At']).toLocaleDateString('en-IN',{day:'numeric',month:'short'}) : 'Unknown';
+    byDate[d] = (byDate[d]||0) + Number(o['Total (Rs)']||0);
+  });
+  const dateKeys = Object.keys(byDate).slice(-14);
+  const canvas = document.getElementById('anRevenueChart');
+  if (anRevenueChart) anRevenueChart.destroy();
+  anRevenueChart = new Chart(canvas, {
+    type: 'bar',
+    data: { labels: dateKeys, datasets: [{ label: 'Revenue', data: dateKeys.map(k=>byDate[k]), backgroundColor: 'rgba(79,124,255,0.6)', borderColor: '#4f7cff', borderWidth: 1, borderRadius: 6, barPercentage: 0.6 }] },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { color: '#718096', font: { size: 10 } } }, y: { grid: { color: 'rgba(0,0,0,0.06)' }, ticks: { color: '#718096', font: { size: 10 }, callback: v => '₹'+(v>=1000?(v/1000).toFixed(0)+'K':v) } } } }
+  });
+
+  // Top items
+  const itemCount = {};
+  orders.forEach(o => {
+    (o['Items']||'').split(',').forEach(it => {
+      const match = it.trim().match(/^(.+?)\s*x(\d+)/);
+      if (match) { const n = match[1].trim(); itemCount[n] = (itemCount[n]||0) + parseInt(match[2]); }
+    });
+  });
+  const sorted = Object.entries(itemCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const maxQty = sorted.length ? sorted[0][1] : 1;
+  document.getElementById('anTopItems').innerHTML = sorted.map(([name, qty], i) => `
+    <div class="top-item">
+      <div class="top-item-rank">${i+1}</div>
+      <div class="top-item-info"><div class="top-item-name">${name}</div><div class="top-item-qty">${qty} sold</div></div>
+      <div class="top-item-bar"><div class="top-item-fill" style="width:${(qty/maxQty*100)}%"></div></div>
+    </div>`).join('');
+}
+
+// ===================== REPORTS PAGE =====================
+function renderReports(orders) {
+  const byDate = {};
+  orders.forEach(o => {
+    const d = o['Ordered At'] ? new Date(o['Ordered At']).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : 'Unknown';
+    if (!byDate[d]) byDate[d] = { orders:0, revenue:0, delivered:0, cancelled:0 };
+    byDate[d].orders++;
+    byDate[d].revenue += Number(o['Total (Rs)']||0);
+    if ((o['Status']||'') === 'Delivered') byDate[d].delivered++;
+    if ((o['Status']||'') === 'Cancelled') byDate[d].cancelled++;
+  });
+  const rows = Object.entries(byDate).reverse();
+  document.getElementById('reportsCount').textContent = rows.length + ' days';
+  document.getElementById('reportsTableBody').innerHTML = rows.length ? rows.map(([date, d]) => `<tr>
+    <td style="font-weight:600">${date}</td>
+    <td>${d.orders}</td>
+    <td style="font-weight:700;color:var(--green)">₹${d.revenue.toLocaleString()}</td>
+    <td style="color:var(--text-secondary)">₹${d.orders ? Math.round(d.revenue/d.orders).toLocaleString() : 0}</td>
+    <td style="color:var(--green)">${d.delivered}</td>
+    <td style="color:var(--red)">${d.cancelled}</td>
+  </tr>`).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--text-muted);padding:30px">No data</td></tr>';
+}
 
 // ===================== DEMO DATA =====================
 function loadDemoData() {
@@ -841,7 +1371,8 @@ document.querySelectorAll('#dashColors .theme-dot').forEach(dot => {
 
 // ===================== INIT =====================
 initCharts();
-if (API) { loadDashboard(); } else { loadDemoData(); }
+showPage('dashboard');
+if (!API) { loadDemoData(); }
 </script>
 </body>
 </html>
