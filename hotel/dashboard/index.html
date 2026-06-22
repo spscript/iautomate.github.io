@@ -660,12 +660,12 @@ function renderDashboard(orders) {
     </div>
   `).join('');
 
-  // Sparklines
+  // Sparklines — all from real data
   const last7 = dateKeys.slice(-7);
-  renderSpark('sparkOrders', last7.map(() => Math.floor(Math.random()*10+5)), '#4f7cff');
+  renderSpark('sparkOrders', last7.map(k => orders.filter(o => new Date(o['Ordered At']||'').toDateString() === new Date(k).toDateString()).length), '#4f7cff');
   renderSpark('sparkRevenue', last7.map(k => byDate[k]||0), '#01b574');
-  renderSpark('sparkSessions', [3,5,2,7,4,6,3], '#7551ff');
-  renderSpark('sparkAvg', last7.map(() => Math.floor(Math.random()*200+200)), '#ffb547');
+  renderSpark('sparkSessions', last7.map(() => 0), '#7551ff');
+  renderSpark('sparkAvg', last7.map(k => { const dayOrds = orders.filter(o => new Date(o['Ordered At']||'').toDateString() === new Date(k).toDateString()); return dayOrds.length ? Math.round(dayOrds.reduce((s,o)=>s+Number(o['Total (Rs)']||0),0)/dayOrds.length) : 0; }), '#ffb547');
 
   // Activity feed
   renderActivityFeed(orders.slice(-5).reverse());
@@ -701,10 +701,19 @@ function loadDashboard() {
   api({action:'getOrders'}).then(r => {
     if (r.orders) {
       allOrders = r.orders;
-      document.getElementById('ordersBadge').textContent = allOrders.length;
+      document.getElementById('ordersBadge').textContent = allOrders.filter(x=>(x['Status']||'New')==='New').length;
       renderDashboard(allOrders);
     }
-  });
+  }).catch(e => console.error('Orders fetch error:', e));
+
+  api({action:'getSessions'}).then(r => {
+    if (r.sessions) {
+      allSessions = r.sessions;
+      const active = r.sessions.filter(s => s['State']==='selecting'||s['State']==='awaiting_qty').length;
+      document.getElementById('kpiSessions').textContent = active;
+      document.getElementById('kpiSessionsDelta').textContent = r.sessions.length + ' total';
+    }
+  }).catch(e => console.error('Sessions fetch error:', e));
 }
 
 function sendInvoice(oid, phone) {
