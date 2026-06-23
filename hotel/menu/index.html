@@ -17,18 +17,18 @@
       --red:    #dc2626;
       --accent: #e0aaff;
 
-      /* fluid font scale — grows smoothly from mobile → desktop */
-      --fs-xs:   clamp(11px, 2.5vw, 14px);
-      --fs-sm:   clamp(13px, 3vw,   16px);
-      --fs-md:   clamp(15px, 3.5vw, 19px);
-      --fs-lg:   clamp(18px, 4.5vw, 24px);
-      --fs-xl:   clamp(22px, 5.5vw, 32px);
+      /* fluid font scale — big on mobile, grows to desktop */
+      --fs-xs:   clamp(14px, 3.8vw,  16px);
+      --fs-sm:   clamp(16px, 4.5vw,  19px);
+      --fs-md:   clamp(19px, 5.2vw,  23px);
+      --fs-lg:   clamp(22px, 6vw,    28px);
+      --fs-xl:   clamp(28px, 7.5vw,  38px);
 
       /* fluid spacing */
-      --sp-xs: clamp(6px,  1.5vw, 10px);
-      --sp-sm: clamp(10px, 2.5vw, 16px);
-      --sp-md: clamp(14px, 3.5vw, 22px);
-      --sp-lg: clamp(18px, 4.5vw, 30px);
+      --sp-xs: clamp(8px,   2vw,  12px);
+      --sp-sm: clamp(14px,  3.5vw, 20px);
+      --sp-md: clamp(18px,  4.5vw, 26px);
+      --sp-lg: clamp(22px,  5.5vw, 34px);
     }
 
     html { font-size: 16px; }
@@ -36,7 +36,7 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--grad);
       min-height: 100vh;
-      padding: 0 0 clamp(150px, 22vw, 200px);
+      padding: 0;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -51,13 +51,13 @@
       overflow: hidden;
     }
     @media (min-width: 640px) {
-      body { padding: 28px 20px clamp(150px,20vw,200px); align-items: center; }
+      body { padding: 28px 20px 40px; align-items: center; }
       .card {
         max-width: 580px;
         border: 1.5px solid rgba(231,70,148,0.2);
         border-radius: 22px;
+        overflow: hidden;
       }
-      .footer { border-radius: 18px 18px 0 0; border: 1.5px solid rgba(231,70,148,0.3); border-bottom: none; }
     }
 
     /* HEADER */
@@ -204,17 +204,15 @@
     }
     .qi::-webkit-inner-spin-button, .qi::-webkit-outer-spin-button { -webkit-appearance:none; }
 
-    /* FOOTER */
+    /* FOOTER — in-flow, sits below menu items */
     .footer {
-      position: fixed; bottom: 0;
-      left: 50%; transform: translateX(-50%);
-      width: 100%; max-width: clamp(340px, 90vw, 600px);
       background: rgba(10,6,26,0.97);
-      border: 1.5px solid rgba(231,70,148,0.3); border-bottom: none;
-      border-radius: clamp(16px,4vw,24px) clamp(16px,4vw,24px) 0 0;
-      padding: clamp(12px,3vw,18px) clamp(14px,4vw,24px) clamp(22px,5vw,32px);
-      backdrop-filter: blur(24px);
-      z-index: 200;
+      border-top: 2px solid rgba(231,70,148,0.3);
+      border-radius: 0 0 clamp(16px,4vw,24px) clamp(16px,4vw,24px);
+      padding: clamp(18px,4vw,28px) clamp(16px,4vw,26px) clamp(28px,6vw,40px);
+    }
+    @media (min-width: 640px) {
+      .footer { border-radius: 0 0 22px 22px; }
     }
     .foot-row { display:flex; align-items:center; justify-content:space-between; margin-bottom: clamp(10px,2.5vw,16px); }
     .foot-lbl { font-size: var(--fs-xs); font-weight:700; color:rgba(255,255,255,0.35); text-transform:uppercase; letter-spacing:.07em; }
@@ -306,21 +304,21 @@
     </div>
   </div>
 
-</div><!-- /card -->
-
-<!-- FOOTER -->
-<div class="footer">
-  <div class="foot-row">
-    <div>
-      <div class="foot-lbl">Total Amount</div>
-      <div class="foot-sub" id="footSub">No items selected</div>
+  <!-- TOTAL — flows below menu, pushes down when categories expand -->
+  <div class="footer">
+    <div class="foot-row">
+      <div>
+        <div class="foot-lbl">Total Amount</div>
+        <div class="foot-sub" id="footSub">No items selected</div>
+      </div>
+      <div class="foot-amt"><span class="sym">₹</span><span class="num" id="footNum">0</span></div>
     </div>
-    <div class="foot-amt"><span class="sym">₹</span><span class="num" id="footNum">0</span></div>
+    <button class="obtn" id="obtn" disabled onclick="placeOrder()">
+      <i class="fas fa-shopping-bag"></i> Order Now
+    </button>
   </div>
-  <button class="obtn" id="obtn" disabled onclick="placeOrder()">
-    <i class="fas fa-shopping-bag"></i> Order Now
-  </button>
-</div>
+
+</div><!-- /card -->
 
 <!-- SUCCESS -->
 <div class="sov" id="sov">
