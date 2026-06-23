@@ -9,228 +9,228 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /*
-     * ROOT SCALING — 1rem tracks the viewport width.
-     * Everything below uses rem so it auto-scales on any device.
-     * Mobile 360px → 1rem ≈ 16px
-     * Tablet 768px → 1rem ≈ 20px
-     * Desktop 1440px → capped at 22px
-    */
-    html { font-size: clamp(17px, 4.8vw, 24px); }
+    /* Root scales with viewport — everything in rem auto-fits any screen */
+    html { font-size: clamp(16px, 4.5vw, 22px); }
 
     :root {
-      --pink:   #e74694;
-      --pink2:  #c2336e;
-      --purple: #7551ff;
-      --grad:   linear-gradient(180deg, #3d1259 0%, #1a103a 40%, #0d1224 100%);
-      --green:  #16a34a;
-      --red:    #dc2626;
-      --accent: #e0aaff;
+      --blue:        #2563eb;
+      --blue-dark:   #1d4ed8;
+      --blue-light:  #3b82f6;
+      --blue-bg:     #eff6ff;
+      --blue-bg2:    #dbeafe;
+      --border:      #bfdbfe;
+      --text:        #1e3a5f;
+      --text-sub:    #3b5a7a;
+      --text-muted:  #7ea8cc;
+      --green:       #16a34a;
+      --red:         #dc2626;
+      --white:       #ffffff;
     }
 
     body {
       font-family: 'Plus Jakarta Sans', sans-serif;
-      background: var(--grad);
+      background: linear-gradient(160deg, #dbeafe 0%, #e0f2fe 50%, #eff6ff 100%);
       min-height: 100vh;
-      /* zoom out from all sides so gradient border shows */
-      padding: clamp(10px, 2.5vw, 20px);
+      padding: clamp(10px, 2.5vw, 18px);
       display: flex;
       flex-direction: column;
       align-items: stretch;
     }
 
-    /* CARD — fills screen minus the padding gap, border visible all around */
+    /* OUTER CARD */
     .card {
-      width: 100%;
-      flex: 1;
-      border: 2px solid rgba(231,70,148,0.45);
+      width: 100%; flex: 1;
+      background: var(--white);
+      border: 2px solid var(--border);
       border-radius: clamp(14px, 3vw, 22px);
       overflow: hidden;
-      box-shadow: 0 0 0 1px rgba(117,81,255,0.2),
-                  0 8px 40px rgba(0,0,0,0.4);
+      box-shadow: 0 4px 32px rgba(37,99,235,0.1), 0 1px 4px rgba(0,0,0,0.06);
     }
 
     /* HEADER */
     .hdr {
-      background: linear-gradient(135deg, #e74694, #c2336e 50%, #7551ff);
-      padding: 0.75rem 1.1rem;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb 50%, #3b82f6);
+      padding: 0.75rem 1rem;
       display: flex; align-items: center; gap: 0.6rem;
     }
     .hdr-logo {
       width: 2.4rem; height: 2.4rem; border-radius: 0.6rem; flex-shrink: 0;
-      background: rgba(255,255,255,0.2); border: 2px solid rgba(255,255,255,0.3);
+      background: rgba(255,255,255,0.22); border: 2px solid rgba(255,255,255,0.35);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; font-weight: 900; color: #fff;
+      font-size: 0.82rem; font-weight: 900; color: #fff;
     }
-    .hdr-title { font-size: 1.15rem; font-weight: 900; color: #fff; }
-    .hdr-sub   { font-size: 0.65rem; color: rgba(255,255,255,0.6); margin-top: 0.1rem; }
+    .hdr-title { font-size: 1.1rem; font-weight: 900; color: #fff; }
+    .hdr-sub   { font-size: 0.6rem; color: rgba(255,255,255,0.65); margin-top: 0.1rem; }
     .hdr .live {
       margin-left: auto; flex-shrink: 0;
-      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
-      color: #fff; font-size: 0.6rem; font-weight: 700;
-      padding: 0.25rem 0.6rem; border-radius: 2rem;
-      display: flex; align-items: center; gap: 0.3rem;
+      background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3);
+      color: #fff; font-size: 0.58rem; font-weight: 700;
+      padding: 0.22rem 0.55rem; border-radius: 2rem;
+      display: flex; align-items: center; gap: 0.28rem;
     }
-    .ldot { width: 0.38rem; height: 0.38rem; border-radius: 50%; background: #4ade80; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,0.6)} 50%{box-shadow:0 0 0 0.35rem rgba(74,222,128,0)} }
+    .ldot { width: 0.35rem; height: 0.35rem; border-radius: 50%; background: #4ade80; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 rgba(74,222,128,.6)} 50%{box-shadow:0 0 0 0.3rem rgba(74,222,128,0)} }
 
     /* CUSTOMER */
     .cust {
-      background: rgba(231,70,148,0.08);
-      border-bottom: 1px solid rgba(231,70,148,0.2);
-      padding: 0.7rem 1rem;
+      background: var(--blue-bg);
+      border-bottom: 2px solid var(--border);
+      padding: 0.7rem 0.9rem;
     }
-    .cust-lbl { font-size: 0.62rem; font-weight: 700; color: var(--pink); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 0.5rem; }
-    .cust-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; }
-    .fw { display: flex; flex-direction: column; gap: 0.2rem; }
-    .fw label { font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.5); }
+    .cust-lbl { font-size: 0.6rem; font-weight: 800; color: var(--blue); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 0.45rem; }
+    .cust-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; }
+    .fw { display: flex; flex-direction: column; gap: 0.18rem; }
+    .fw label { font-size: 0.6rem; font-weight: 700; color: var(--text-sub); }
     .fw input {
-      background: rgba(255,255,255,0.08); border: 2px solid rgba(231,70,148,0.25);
+      background: var(--white); border: 2px solid var(--border);
       border-radius: 0.5rem; padding: 0.5rem 0.65rem;
-      color: #fff; font-family: inherit; font-size: 0.82rem; font-weight: 600; outline: none;
+      color: var(--text); font-family: inherit; font-size: 0.8rem; font-weight: 600; outline: none;
       transition: border-color .15s; width: 100%;
     }
-    .fw input:focus { border-color: var(--pink); }
-    .fw input::placeholder { color: rgba(255,255,255,0.25); font-weight: 400; }
+    .fw input:focus { border-color: var(--blue); }
+    .fw input::placeholder { color: var(--text-muted); font-weight: 400; }
 
     /* MENU BODY */
-    .mbody { padding: 0.5rem; }
+    .mbody { padding: 0.5rem; background: #f8fbff; }
 
     /* SPINNER */
     .loading { display: flex; flex-direction: column; align-items: center; padding: 3rem 1rem; gap: 0.7rem; }
-    .spin { width: 2.4rem; height: 2.4rem; border: 3px solid rgba(231,70,148,0.2); border-top-color: var(--pink); border-radius: 50%; animation: spin .75s linear infinite; }
+    .spin { width: 2.2rem; height: 2.2rem; border: 3px solid var(--border); border-top-color: var(--blue); border-radius: 50%; animation: spin .75s linear infinite; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .loading p { color: rgba(255,255,255,0.4); font-size: 0.85rem; }
+    .loading p { color: var(--text-muted); font-size: 0.82rem; }
 
     /* CATEGORY BLOCK */
-    .cat-block { margin-bottom: 0.4rem; border-radius: 0.75rem; overflow: hidden; border: 1px solid rgba(231,70,148,0.18); }
+    .cat-block { margin-bottom: 0.45rem; border-radius: 0.75rem; overflow: hidden; border: 1.5px solid var(--border); background: var(--white); }
 
     .cat-head {
       display: flex; align-items: center; gap: 0.5rem;
       padding: 0.75rem 0.9rem;
       cursor: pointer; user-select: none;
-      background: rgba(231,70,148,0.08);
+      background: var(--blue-bg);
       transition: background .18s;
     }
-    .cat-block.open .cat-head { background: linear-gradient(135deg, #e74694, #c2336e 60%, #7551ff); }
-    .cat-emoji { font-size: 1.1rem; flex-shrink: 0; }
-    .cat-name  { flex: 1; font-size: 1rem; font-weight: 800; color: var(--pink); transition: color .18s; }
+    .cat-block.open .cat-head {
+      background: linear-gradient(135deg, #1d4ed8, #2563eb 60%, #3b82f6);
+    }
+    .cat-emoji { font-size: 1.05rem; flex-shrink: 0; }
+    .cat-name  { flex: 1; font-size: 0.95rem; font-weight: 800; color: var(--blue); transition: color .18s; }
     .cat-block.open .cat-name { color: #fff; }
     .cat-pill {
-      font-size: 0.6rem; font-weight: 700; padding: 0.15rem 0.45rem; border-radius: 2rem;
-      background: rgba(231,70,148,0.15); color: var(--pink); transition: all .18s; flex-shrink: 0;
+      font-size: 0.58rem; font-weight: 700; padding: 0.14rem 0.42rem; border-radius: 2rem;
+      background: rgba(37,99,235,0.12); color: var(--blue); transition: all .18s; flex-shrink: 0;
     }
-    .cat-block.open .cat-pill { background: rgba(255,255,255,0.2); color: #fff; }
-    .cat-arr { font-size: 0.65rem; color: rgba(255,255,255,0.4); transition: transform .28s cubic-bezier(.34,1.56,.64,1); flex-shrink: 0; }
-    .cat-block.open .cat-arr { transform: rotate(180deg); color: rgba(255,255,255,0.8); }
+    .cat-block.open .cat-pill { background: rgba(255,255,255,0.25); color: #fff; }
+    .cat-arr { font-size: 0.62rem; color: var(--blue); transition: transform .28s cubic-bezier(.34,1.56,.64,1); flex-shrink: 0; }
+    .cat-block.open .cat-arr { transform: rotate(180deg); color: rgba(255,255,255,0.9); }
 
-    .cat-panel { max-height: 0; overflow: hidden; transition: max-height .38s cubic-bezier(.4,0,.2,1); background: rgba(255,255,255,0.03); }
+    .cat-panel { max-height: 0; overflow: hidden; transition: max-height .38s cubic-bezier(.4,0,.2,1); }
     .cat-block.open .cat-panel { max-height: 3000px; }
 
     /* ITEM ROW */
     .item-row {
-      display: flex; align-items: center; gap: 0.6rem;
-      padding: 0.7rem 0.9rem;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      transition: all .2s cubic-bezier(.34,1.56,.64,1); position: relative;
+      border-bottom: 1px solid var(--blue-bg2);
+      cursor: pointer;
+      transition: background .18s;
     }
     .item-row:last-child { border-bottom: none; }
-    .item-row:hover {
-      background: rgba(231,70,148,0.08);
-      transform: scale(1.012) translateY(-1px);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3), 0 0 0 1px rgba(231,70,148,0.2);
-      border-radius: 0.6rem; z-index: 2;
-    }
+    .item-row:hover { background: var(--blue-bg); }
 
-    .item-img {
-      width: 3.2rem; height: 3.2rem; flex-shrink: 0; border-radius: 0.65rem; overflow: hidden;
-      background: rgba(231,70,148,0.12); border: 1.5px solid rgba(231,70,148,0.2);
-      display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+    /* top part — always visible */
+    .item-top {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.75rem 0.9rem;
     }
-    .item-img img { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; }
 
     .vdot {
-      width: 0.82rem; height: 0.82rem; flex-shrink: 0; border-radius: 0.2rem; border: 2px solid;
-      display: flex; align-items: center; justify-content: center; align-self: flex-start; margin-top: 0.2rem;
+      width: 0.78rem; height: 0.78rem; flex-shrink: 0; border-radius: 0.18rem; border: 2px solid;
+      display: flex; align-items: center; justify-content: center; align-self: center;
     }
-    .vdot::after { content:''; width: 0.32rem; height: 0.32rem; border-radius: 50%; background: currentColor; }
+    .vdot::after { content:''; width: 0.3rem; height: 0.3rem; border-radius: 50%; background: currentColor; }
     .vdot.veg     { color: var(--green); border-color: var(--green); }
     .vdot.non-veg { color: var(--red);   border-color: var(--red); }
 
     .item-info { flex: 1; min-width: 0; }
-    .item-name  { font-size: 0.88rem; font-weight: 700; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .item-desc  { font-size: 0.68rem; color: rgba(255,255,255,0.4); margin-top: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .item-price { font-size: 0.95rem; font-weight: 900; color: var(--accent); flex-shrink: 0; }
+    .item-name { font-size: 0.9rem; font-weight: 700; color: var(--text); }
+    .item-desc { font-size: 0.65rem; color: var(--text-muted); margin-top: 0.12rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    /* QTY */
+    /* tap hint */
+    .tap-hint {
+      font-size: 0.6rem; color: var(--text-muted); font-weight: 600;
+      display: flex; align-items: center; gap: 0.2rem; flex-shrink: 0;
+    }
+    .item-row.expanded .tap-hint { display: none; }
+
+    /* EXPAND SECTION */
+    .item-expand { max-height: 0; overflow: hidden; transition: max-height .3s cubic-bezier(.4,0,.2,1); }
+    .item-row.expanded .item-expand { max-height: 120px; }
+
+    .item-expand-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 0.9rem 0.8rem;
+      gap: 0.6rem;
+    }
+    .item-price { font-size: 1.05rem; font-weight: 900; color: var(--blue-dark); }
+
     .qty { display: flex; align-items: center; flex-shrink: 0; }
     .qb {
-      width: 1.8rem; height: 1.8rem;
-      background: rgba(231,70,148,0.15); border: 1.5px solid rgba(231,70,148,0.3);
-      color: var(--pink); font-size: 1.1rem; font-weight: 700;
+      width: 2rem; height: 2rem;
+      background: var(--blue-bg); border: 2px solid var(--border);
+      color: var(--blue); font-size: 1.1rem; font-weight: 800;
       cursor: pointer; display: flex; align-items: center; justify-content: center;
       transition: all .15s; user-select: none; touch-action: manipulation;
     }
-    .qb:first-child { border-radius: 0.4rem 0 0 0.4rem; }
-    .qb:last-child  { border-radius: 0 0.4rem 0.4rem 0; }
-    .qb:hover, .qb:active { background: var(--pink); color: #fff; border-color: var(--pink); }
+    .qb:first-child { border-radius: 0.45rem 0 0 0.45rem; }
+    .qb:last-child  { border-radius: 0 0.45rem 0.45rem 0; }
+    .qb:hover, .qb:active { background: var(--blue); color: #fff; border-color: var(--blue); }
     .qi {
-      width: 2rem; height: 1.8rem; background: rgba(255,255,255,0.07);
-      border: 1.5px solid rgba(231,70,148,0.2); border-left: none; border-right: none;
-      color: #fff; text-align: center; font-family: inherit; font-size: 0.88rem; font-weight: 800; outline: none;
+      width: 2.2rem; height: 2rem;
+      background: var(--white); border: 2px solid var(--border); border-left: none; border-right: none;
+      color: var(--text); text-align: center; font-family: inherit; font-size: 0.9rem; font-weight: 800; outline: none;
     }
     .qi::-webkit-inner-spin-button, .qi::-webkit-outer-spin-button { -webkit-appearance: none; }
 
-    /* TOTAL — in-flow below menu */
+    /* TOTAL */
     .footer {
-      background: rgba(10,6,26,0.97);
-      border-top: 2px solid rgba(231,70,148,0.3);
-      padding: 1rem 1rem 1.6rem;
+      background: var(--blue-bg);
+      border-top: 2px solid var(--border);
+      padding: 0.9rem 1rem 1.4rem;
     }
-    .foot-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.7rem; }
-    .foot-lbl { font-size: 0.62rem; font-weight: 700; color: rgba(255,255,255,0.35); text-transform: uppercase; letter-spacing: .07em; }
-    .foot-sub { font-size: 0.62rem; color: rgba(255,255,255,0.2); margin-top: 0.2rem; }
-    .foot-amt .sym { font-size: 1rem;  color: var(--pink); font-weight: 700; }
-    .foot-amt .num { font-size: 1.8rem; font-weight: 900; color: #fff; letter-spacing: -.03em; }
+    .foot-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.65rem; }
+    .foot-lbl { font-size: 0.6rem; font-weight: 800; color: var(--text-sub); text-transform: uppercase; letter-spacing: .08em; }
+    .foot-sub { font-size: 0.6rem; color: var(--text-muted); margin-top: 0.18rem; }
+    .foot-amt .sym { font-size: 1rem; color: var(--blue); font-weight: 800; }
+    .foot-amt .num { font-size: 1.8rem; font-weight: 900; color: var(--text); letter-spacing: -.03em; }
     .obtn {
       width: 100%;
-      background: linear-gradient(135deg, #e74694, #c2336e 50%, #7551ff);
-      border: none; border-radius: 0.7rem; padding: 0.85rem;
+      background: linear-gradient(135deg, #1d4ed8, #2563eb 50%, #3b82f6);
+      border: none; border-radius: 0.7rem; padding: 0.9rem;
       color: #fff; font-family: inherit; font-size: 1rem; font-weight: 900;
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
       transition: opacity .15s, transform .15s;
-      box-shadow: 0 4px 24px rgba(231,70,148,0.45);
+      box-shadow: 0 4px 20px rgba(37,99,235,0.3);
       touch-action: manipulation;
     }
     .obtn:hover:not(:disabled) { opacity: .9; transform: translateY(-2px); }
-    .obtn:disabled { opacity: .3; cursor: not-allowed; transform: none; }
+    .obtn:disabled { opacity: .35; cursor: not-allowed; transform: none; }
 
     /* SUCCESS */
     .sov {
       position: fixed; inset: 0; z-index: 500;
-      background: rgba(0,0,0,0.75); backdrop-filter: blur(12px);
+      background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
       display: none; align-items: center; justify-content: center; padding: 1rem;
     }
     .sov.show { display: flex; }
     .sbox {
-      background: #fff; border: 2px solid rgba(231,70,148,0.3); border-radius: 1.2rem;
+      background: #fff; border: 2px solid var(--border); border-radius: 1.2rem;
       padding: 1.8rem 1.4rem; text-align: center; max-width: 22rem; width: 100%;
       animation: popIn .3s cubic-bezier(.34,1.56,.64,1);
     }
     @keyframes popIn { from{opacity:0;transform:scale(.8)} to{opacity:1;transform:scale(1)} }
-    .sbox .si { font-size: 3.2rem; margin-bottom: 0.6rem; }
-    .sbox h2  { font-size: 1.2rem; font-weight: 900; color: #111; margin-bottom: 0.4rem; }
-    .sbox p   { color: #888; font-size: 0.82rem; line-height: 1.65; }
-    .soid {
-      margin: 0.9rem 0; background: #fdf4fb; border: 1.5px solid #f5d0ea;
-      border-radius: 0.55rem; padding: 0.55rem 0.9rem;
-      font-size: 0.78rem; font-weight: 700; color: var(--pink2);
-    }
-    .sclose {
-      width: 100%; background: linear-gradient(135deg,#e74694,#7551ff);
-      border: none; border-radius: 0.65rem; padding: 0.85rem;
-      color: #fff; font-family: inherit; font-size: 0.95rem; font-weight: 900; cursor: pointer;
-    }
+    .sbox .si { font-size: 3rem; margin-bottom: 0.6rem; }
+    .sbox h2  { font-size: 1.2rem; font-weight: 900; color: var(--text); margin-bottom: 0.4rem; }
+    .sbox p   { color: var(--text-muted); font-size: 0.8rem; line-height: 1.65; }
+    .soid { margin: 0.85rem 0; background: var(--blue-bg); border: 1.5px solid var(--border); border-radius: 0.5rem; padding: 0.5rem 0.9rem; font-size: 0.75rem; font-weight: 700; color: var(--blue-dark); }
+    .sclose { width: 100%; background: linear-gradient(135deg,#1d4ed8,#3b82f6); border: none; border-radius: 0.65rem; padding: 0.85rem; color: #fff; font-family: inherit; font-size: 0.95rem; font-weight: 900; cursor: pointer; }
 
     @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
     .shake { animation: shake .3s ease; }
@@ -245,14 +245,14 @@
     <div class="hdr-logo">AD</div>
     <div>
       <div class="hdr-title">Apna Dhaba</div>
-      <div class="hdr-sub">Place your order below</div>
+      <div class="hdr-sub">Tap an item to order</div>
     </div>
     <div class="live"><div class="ldot"></div> Live Menu</div>
   </div>
 
   <!-- CUSTOMER -->
   <div class="cust">
-    <div class="cust-lbl"><i class="fas fa-user" style="margin-right:5px"></i>Your Details</div>
+    <div class="cust-lbl"><i class="fas fa-user" style="margin-right:4px"></i>Your Details</div>
     <div class="cust-row">
       <div class="fw">
         <label>Full Name</label>
@@ -273,7 +273,7 @@
     </div>
   </div>
 
-  <!-- TOTAL — flows below menu, pushes down when categories expand -->
+  <!-- TOTAL -->
   <div class="footer">
     <div class="foot-row">
       <div>
@@ -287,7 +287,7 @@
     </button>
   </div>
 
-</div><!-- /card -->
+</div>
 
 <!-- SUCCESS -->
 <div class="sov" id="sov">
@@ -312,33 +312,112 @@ const ICONS = {
 };
 const ico = c => ICONS[String(c).toLowerCase()] || '🍽';
 
-// FETCH
+// Curated food image map — matched by item name keywords
+const IMG_MAP = [
+  // Indian starters
+  ['paneer tikka',       'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6?w=150&q=80&fit=crop'],
+  ['chicken tikka',      'https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=150&q=80&fit=crop'],
+  ['seekh kebab',        'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=150&q=80&fit=crop'],
+  ['kebab',              'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=150&q=80&fit=crop'],
+  ['samosa',             'https://images.unsplash.com/photo-1601050690597-df0568f70950?w=150&q=80&fit=crop'],
+  ['spring roll',        'https://images.unsplash.com/photo-1548469796-e79b0d07e36f?w=150&q=80&fit=crop'],
+  ['soup',               'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150&q=80&fit=crop'],
+  ['manchurian',         'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=150&q=80&fit=crop'],
+  // Mains
+  ['butter chicken',     'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=150&q=80&fit=crop'],
+  ['chicken curry',      'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=150&q=80&fit=crop'],
+  ['mutton',             'https://images.unsplash.com/photo-1574653853027-5382a3d23a15?w=150&q=80&fit=crop'],
+  ['paneer butter',      'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=150&q=80&fit=crop'],
+  ['paneer masala',      'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6?w=150&q=80&fit=crop'],
+  ['paneer',             'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6?w=150&q=80&fit=crop'],
+  ['dal makhani',        'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=150&q=80&fit=crop'],
+  ['dal fry',            'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=150&q=80&fit=crop'],
+  ['dal',                'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=150&q=80&fit=crop'],
+  ['fish',               'https://images.unsplash.com/photo-1580822184713-fc5400e7fe10?w=150&q=80&fit=crop'],
+  ['prawn',              'https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?w=150&q=80&fit=crop'],
+  ['chicken',            'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=150&q=80&fit=crop'],
+  // Rice & Biryani
+  ['biryani',            'https://images.unsplash.com/photo-1563379091339-03246963d25e?w=150&q=80&fit=crop'],
+  ['fried rice',         'https://images.unsplash.com/photo-1603133872878-684f208fb84b?w=150&q=80&fit=crop'],
+  ['rice',               'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=150&q=80&fit=crop'],
+  // Breads
+  ['garlic naan',        'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=150&q=80&fit=crop'],
+  ['naan',               'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=150&q=80&fit=crop'],
+  ['paratha',            'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=150&q=80&fit=crop'],
+  ['roti',               'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=150&q=80&fit=crop'],
+  ['kulcha',             'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=150&q=80&fit=crop'],
+  // Drinks
+  ['mango lassi',        'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=150&q=80&fit=crop'],
+  ['lassi',              'https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=150&q=80&fit=crop'],
+  ['chai',               'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=150&q=80&fit=crop'],
+  ['tea',                'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=150&q=80&fit=crop'],
+  ['coffee',             'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=150&q=80&fit=crop'],
+  ['juice',              'https://images.unsplash.com/photo-1543362906-acfc16c67564?w=150&q=80&fit=crop'],
+  ['shake',              'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=150&q=80&fit=crop'],
+  ['cold drink',         'https://images.unsplash.com/photo-1543362906-acfc16c67564?w=150&q=80&fit=crop'],
+  // Desserts
+  ['gulab jamun',        'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150&q=80&fit=crop'],
+  ['kheer',              'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150&q=80&fit=crop'],
+  ['rasgulla',           'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150&q=80&fit=crop'],
+  ['halwa',              'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150&q=80&fit=crop'],
+  ['ice cream',          'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=150&q=80&fit=crop'],
+  ['kulfi',              'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=150&q=80&fit=crop'],
+  ['cake',               'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=150&q=80&fit=crop'],
+];
+
+// Category fallback images
+const CAT_IMG = {
+  'starter':     'https://images.unsplash.com/photo-1540189549336-e6e99eb4b895?w=150&q=80&fit=crop',
+  'starters':    'https://images.unsplash.com/photo-1540189549336-e6e99eb4b895?w=150&q=80&fit=crop',
+  'main course': 'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=150&q=80&fit=crop',
+  'main':        'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=150&q=80&fit=crop',
+  'mains':       'https://images.unsplash.com/photo-1585937421612-70a008356fbe?w=150&q=80&fit=crop',
+  'biryani':     'https://images.unsplash.com/photo-1563379091339-03246963d25e?w=150&q=80&fit=crop',
+  'rice':        'https://images.unsplash.com/photo-1516684732162-798a0062be99?w=150&q=80&fit=crop',
+  'bread':       'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=150&q=80&fit=crop',
+  'breads':      'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=150&q=80&fit=crop',
+  'roti':        'https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=150&q=80&fit=crop',
+  'drinks':      'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=150&q=80&fit=crop',
+  'beverages':   'https://images.unsplash.com/photo-1544145945-f90425340c7e?w=150&q=80&fit=crop',
+  'desserts':    'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150&q=80&fit=crop',
+  'dessert':     'https://images.unsplash.com/photo-1587314168485-3236d6710814?w=150&q=80&fit=crop',
+  'soups':       'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150&q=80&fit=crop',
+  'soup':        'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=150&q=80&fit=crop',
+  'snacks':      'https://images.unsplash.com/photo-1553361371-9b22f78e8b1d?w=150&q=80&fit=crop',
+  'chicken':     'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?w=150&q=80&fit=crop',
+  'paneer':      'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d6?w=150&q=80&fit=crop',
+  'dal':         'https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=150&q=80&fit=crop',
+};
+
+function getItemImg(name, cat) {
+  const n = name.toLowerCase();
+  for (const [kw, url] of IMG_MAP) {
+    if (n.includes(kw)) return url;
+  }
+  return CAT_IMG[cat.toLowerCase()] || '';
+}
+
 fetch(API + '?action=getMenuItems&t=' + Date.now())
   .then(r => r.json())
   .then(r => {
-    const items = (r.items || []).filter(m => {
-      const av = String(m['Available'] || '').trim().toLowerCase();
-      return av === 'yes' || av === 'y';
-    });
+    const items = (r.items || []).filter(m => ['yes','y'].includes(String(m['Available']||'').trim().toLowerCase()));
     buildMenu(items);
   })
   .catch(err => {
     document.getElementById('mbody').innerHTML =
-      `<div style="text-align:center;padding:50px 20px;color:rgba(255,255,255,0.3)">
-        <i class="fas fa-wifi-slash" style="font-size:28px;display:block;margin-bottom:10px;color:rgba(231,70,148,0.4)"></i>
-        <p style="color:#fff;font-weight:700;font-size:14px">Couldn't load menu</p>
-        <p style="font-size:11px;margin-top:5px"><a href="" style="color:#e74694">Tap to retry</a></p>
-        <p style="font-size:10px;margin-top:4px;color:rgba(255,255,255,0.2)">${err.message}</p>
+      `<div style="text-align:center;padding:3rem 1rem;color:#b89ac8">
+        <i class="fas fa-wifi-slash" style="font-size:2rem;display:block;margin-bottom:.6rem;color:#e0b0d0"></i>
+        <p style="color:#1a0a2e;font-weight:700;font-size:.9rem">Couldn't load menu</p>
+        <p style="font-size:.75rem;margin-top:.3rem"><a href="" style="color:#e74694">Tap to retry</a></p>
+        <p style="font-size:.65rem;margin-top:.25rem;color:#c0a0b8">${err.message}</p>
       </div>`;
   });
 
 function buildMenu(items) {
   if (!items.length) {
-    document.getElementById('mbody').innerHTML =
-      `<div style="text-align:center;padding:50px;color:rgba(255,255,255,0.3)">No items available.</div>`;
+    document.getElementById('mbody').innerHTML = `<div style="text-align:center;padding:3rem;color:#b89ac8;font-size:.85rem">No items available.</div>`;
     return;
   }
-
   const grouped = {};
   items.forEach(m => {
     const cat = (m['Category'] || 'Other').trim();
@@ -359,26 +438,30 @@ function buildMenu(items) {
           const name  = (m['Item Name'] || m['Name'] || 'Item').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
           const price = Number(m['Price'] || m['Price (Rs)'] || 0);
           const desc  = m['Description'] || '';
-          const img   = m['Image'] || m['Image URL'] || '';
           const isNv  = String(m['Type'] || m['Veg/Non-Veg'] || '').toLowerCase().includes('non');
           const uid   = 'q' + ci + '_' + j;
-          const imgHtml = img
-            ? `<img src="${img}" alt="" onerror="this.outerHTML='<span style=font-size:18px>${ico(cat)}</span>'" />`
-            : `<span style="font-size:18px">${ico(cat)}</span>`;
-          return `<div class="item-row">
-            <div class="item-img">${imgHtml}</div>
-            <div class="vdot ${isNv ? 'non-veg' : 'veg'}"></div>
-            <div class="item-info">
-              <div class="item-name">${name}</div>
-              ${desc ? `<div class="item-desc">${desc}</div>` : ''}
+          return `
+          <div class="item-row" id="row_${uid}" onclick="toggleItem('${uid}')">
+            <div class="item-top">
+              <div class="vdot ${isNv ? 'non-veg' : 'veg'}"></div>
+              <div class="item-info">
+                <div class="item-name">${name}</div>
+                ${desc ? `<div class="item-desc">${desc}</div>` : ''}
+              </div>
+              <div class="tap-hint"><i class="fas fa-plus-circle" style="color:#e74694"></i></div>
             </div>
-            <div class="item-price">₹${price}</div>
-            <div class="qty">
-              <button class="qb" onclick="chg('${uid}',-1)">−</button>
-              <input class="qi" type="number" id="${uid}" value="0" min="0" max="20"
-                data-name="${name}" data-price="${price}"
-                oninput="clamp(this);calc()" />
-              <button class="qb" onclick="chg('${uid}',1)">＋</button>
+            <div class="item-expand">
+              <div class="item-expand-inner">
+                <div class="item-price">₹${price}</div>
+                <div class="qty">
+                  <button class="qb" onclick="event.stopPropagation();chg('${uid}',-1)">−</button>
+                  <input class="qi" type="number" id="${uid}" value="0" min="0" max="20"
+                    data-name="${name}" data-price="${price}"
+                    onclick="event.stopPropagation()"
+                    oninput="clamp(this);calc()" />
+                  <button class="qb" onclick="event.stopPropagation();chg('${uid}',1)">＋</button>
+                </div>
+              </div>
             </div>
           </div>`;
         }).join('')}
@@ -386,11 +469,30 @@ function buildMenu(items) {
     </div>`).join('');
 }
 
+// Toggle category
 function tog(ci) {
   const el = document.getElementById('cb' + ci);
   const wasOpen = el.classList.contains('open');
   document.querySelectorAll('.cat-block.open').forEach(b => b.classList.remove('open'));
   if (!wasOpen) el.classList.add('open');
+}
+
+// Toggle item expand
+function toggleItem(uid) {
+  const row = document.getElementById('row_' + uid);
+  const wasExpanded = row.classList.contains('expanded');
+  // close all others in same category panel
+  row.closest('.cat-panel').querySelectorAll('.item-row.expanded').forEach(r => r.classList.remove('expanded'));
+  if (!wasExpanded) {
+    row.classList.add('expanded');
+    // auto-set qty to 1 if still 0
+    const inp = document.getElementById(uid);
+    if (inp && parseInt(inp.value) === 0) { inp.value = 1; calc(); }
+  } else {
+    // collapsing — reset qty to 0
+    const inp = document.getElementById(uid);
+    if (inp) { inp.value = 0; calc(); }
+  }
 }
 
 function chg(id, d) {
@@ -444,15 +546,12 @@ function placeOrder() {
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Placing…';
 
   const itemsStr = cart.map(i => `${i.name} x${i.qty} (@₹${i.price})`).join(', ');
-  const url = API + '?action=createOrder'
+  fetch(API + '?action=createOrder'
     + '&name='     + encodeURIComponent(name)
     + '&phone='    + encodeURIComponent(phone)
     + '&items='    + encodeURIComponent(itemsStr)
     + '&cartJson=' + encodeURIComponent(JSON.stringify(cart))
-    + '&total='    + total
-    + '&t='        + Date.now();
-
-  fetch(url)
+    + '&total='    + total + '&t=' + Date.now())
     .then(r => r.json())
     .then(r => {
       if (r.error) throw new Error(r.error);
@@ -460,14 +559,12 @@ function placeOrder() {
       document.getElementById('sov').classList.add('show');
     })
     .catch(err => alert('❌ ' + err.message))
-    .finally(() => {
-      btn.innerHTML = '<i class="fas fa-shopping-bag"></i> Order Now';
-      calc();
-    });
+    .finally(() => { btn.innerHTML = '<i class="fas fa-shopping-bag"></i> Order Now'; calc(); });
 }
 
 function resetOrder() {
   document.querySelectorAll('.qi').forEach(el => el.value = 0);
+  document.querySelectorAll('.item-row.expanded').forEach(r => r.classList.remove('expanded'));
   calc();
   document.getElementById('sov').classList.remove('show');
 }
