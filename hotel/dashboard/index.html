@@ -40,7 +40,33 @@
     body { font-family: 'Plus Jakarta Sans', sans-serif; background: #060b18; color: var(--text); display: flex; min-height: 100vh; overflow-x: hidden; }
 
     /* SIDEBAR */
-    .sidebar { width: var(--sidebar-w); background: linear-gradient(180deg, #3d1259 0%, #1a103a 40%, #0d1224 100%); border: none; display: flex; flex-direction: column; position: fixed; top: 20px; left: 20px; height: calc(100vh - 20px); border-radius: 20px 20px 0 0; z-index: 100; transition: transform .3s; border-radius: 20px; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.4); }
+    .sidebar { width: var(--sidebar-w); background: linear-gradient(180deg, #e91e8c 0%, #c2336e 30%, #9b30cc 65%, #6c3af5 100%); border: none; display: flex; flex-direction: column; position: fixed; top: 20px; left: 20px; height: calc(100vh - 20px); border-radius: 20px; z-index: 100; transition: transform .35s cubic-bezier(.4,0,.2,1); overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.4); }
+    .sidebar.collapsed { transform: translateX(calc(-100% - 24px)); }
+
+    /* Bottom collapse/expand button — LEFT sidebar */
+    .sb-collapse-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin: 12px 16px 20px; padding: 10px 0; border-radius: 12px;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.8); font-size: 12px; font-weight: 700;
+      cursor: pointer; font-family: inherit; letter-spacing: .03em;
+      transition: background .15s; flex-shrink: 0;
+    }
+    .sb-collapse-btn:hover { background: rgba(255,255,255,.2); color: #fff; }
+
+    /* Floating expand tab — appears at bottom-left when sidebar is collapsed */
+    .sb-expand-tab {
+      position: fixed; bottom: 30px; left: -60px;
+      width: 48px; height: 48px; border-radius: 0 14px 14px 0;
+      background: linear-gradient(180deg, #e91e8c 0%, #6c3af5 100%);
+      border: none; color: #fff; font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 102; box-shadow: 4px 4px 16px rgba(0,0,0,.4);
+      transition: left .35s cubic-bezier(.4,0,.2,1);
+    }
+    .sb-expand-tab.visible { left: 0; }
+    .sb-expand-tab:hover { filter: brightness(1.15); }
+
     .sidebar-brand { padding: 22px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,.08); }
     .sidebar-brand .brand-icon { width: 36px; height: 36px; border-radius: 10px; background: rgba(255,255,255,.15); backdrop-filter: blur(8px); display: flex; align-items: center; justify-content: center; font-size: 16px; font-weight: 800; color: #fff; }
     .sidebar-brand .brand-name { font-size: 15px; font-weight: 800; letter-spacing: -.02em; }
@@ -70,7 +96,32 @@
 
     /* RIGHT SIDEBAR */
     :root { --rsb-w: 280px; }
-    .right-sidebar { width: var(--rsb-w); background: linear-gradient(180deg,#1a0f2e 0%,#0f1224 60%,#060b18 100%); position: fixed; top: 20px; right: 20px; height: calc(100vh - 20px); border-radius: 20px; z-index: 100; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.5); }
+    .right-sidebar { width: var(--rsb-w); background: linear-gradient(180deg, #e91e8c 0%, #c2336e 30%, #9b30cc 65%, #6c3af5 100%); position: fixed; top: 20px; right: 20px; height: calc(100vh - 20px); border-radius: 20px; z-index: 100; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 8px 40px rgba(0,0,0,.5); transition: transform .35s cubic-bezier(.4,0,.2,1); }
+    .right-sidebar.collapsed { transform: translateX(calc(100% + 24px)); }
+
+    /* Bottom collapse button — RIGHT sidebar */
+    .rsb-collapse-btn {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin: 12px 16px 20px; padding: 10px 0; border-radius: 12px;
+      background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.8); font-size: 12px; font-weight: 700;
+      cursor: pointer; font-family: inherit; letter-spacing: .03em;
+      transition: background .15s; flex-shrink: 0;
+    }
+    .rsb-collapse-btn:hover { background: rgba(255,255,255,.2); color: #fff; }
+
+    /* Floating expand tab — appears at bottom-right when right sidebar collapsed */
+    .rsb-expand-tab {
+      position: fixed; bottom: 30px; right: -60px;
+      width: 48px; height: 48px; border-radius: 14px 0 0 14px;
+      background: linear-gradient(180deg, #e91e8c 0%, #6c3af5 100%);
+      border: none; color: #fff; font-size: 16px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 102; box-shadow: -4px 4px 16px rgba(0,0,0,.4);
+      transition: right .35s cubic-bezier(.4,0,.2,1);
+    }
+    .rsb-expand-tab.visible { right: 0; }
+    .rsb-expand-tab:hover { filter: brightness(1.15); }
     .rsb-top { padding: 22px 20px 18px; border-bottom: 1px solid rgba(255,255,255,.07); flex-shrink: 0; }
     .rsb-day { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; color: rgba(255,255,255,.35); margin-bottom: 4px; }
     .rsb-date { font-size: 20px; font-weight: 800; color: #fff; letter-spacing: -.02em; }
@@ -324,7 +375,16 @@
       <a class="nav-item" data-page="reports"><i class="fas fa-chart-line"></i> Reports</a>
     </div>
   </nav>
+  <!-- Bottom collapse button -->
+  <button class="sb-collapse-btn" onclick="toggleLeftSidebar()">
+    <i class="fas fa-chevron-left"></i> Collapse
+  </button>
 </aside>
+
+<!-- Floating expand tab for left sidebar -->
+<button class="sb-expand-tab" id="sbExpandTab" onclick="toggleLeftSidebar()">
+  <i class="fas fa-chevron-right"></i>
+</button>
 
 <!-- MAIN -->
 <div class="main">
@@ -710,7 +770,16 @@
     <button class="rsb-add-btn" onclick="addNote()" title="Add note">＋</button>
   </div>
   <div class="rsb-notes-list" id="notesList"></div>
+  <!-- Bottom collapse button -->
+  <button class="rsb-collapse-btn" onclick="toggleRightSidebar()">
+    Collapse <i class="fas fa-chevron-right"></i>
+  </button>
 </aside>
+
+<!-- Floating expand tab for right sidebar -->
+<button class="rsb-expand-tab" id="rsbExpandTab" onclick="toggleRightSidebar()">
+  <i class="fas fa-chevron-left"></i>
+</button>
 
 <!-- THEME PICKER PANEL -->
 <div class="theme-panel" id="themePanel">
@@ -718,15 +787,27 @@
   <div class="theme-panel-title">Theme Settings</div>
   <div class="theme-section">
     <div class="theme-section-title">Sidebar Color</div>
-    <div class="theme-colors" id="sidebarColors">
-      <div class="theme-dot active" style="background:linear-gradient(180deg,#3d1259,#1a103a)" data-sidebar="linear-gradient(180deg, #3d1259 0%, #1a103a 40%, #0d1224 100%)" title="Purple Haze"></div>
-      <div class="theme-dot" style="background:linear-gradient(180deg,#1a3a5c,#0a1628)" data-sidebar="linear-gradient(180deg, #1a3a5c 0%, #0f2137 40%, #0a1628 100%)" title="Ocean Blue"></div>
-      <div class="theme-dot" style="background:linear-gradient(180deg,#2d1b38,#0f0f1a)" data-sidebar="linear-gradient(180deg, #2d1b38 0%, #1a1028 40%, #0f0f1a 100%)" title="Dark Violet"></div>
-      <div class="theme-dot" style="background:linear-gradient(180deg,#0f3429,#0a1a14)" data-sidebar="linear-gradient(180deg, #0f3429 0%, #0c2620 40%, #0a1a14 100%)" title="Forest Green"></div>
-      <div class="theme-dot" style="background:linear-gradient(180deg,#3a1c1c,#1a0f0f)" data-sidebar="linear-gradient(180deg, #3a1c1c 0%, #2a1212 40%, #1a0f0f 100%)" title="Deep Red"></div>
-      <div class="theme-dot" style="background:linear-gradient(180deg,#2c2416,#1a150d)" data-sidebar="linear-gradient(180deg, #2c2416 0%, #221b10 40%, #1a150d 100%)" title="Warm Brown"></div>
-      <div class="theme-dot" style="background:linear-gradient(180deg,#0b1120,#0b1120)" data-sidebar="linear-gradient(180deg, #0b1120 0%, #0b1120 100%)" title="Solid Dark"></div>
-      <div class="theme-dot" style="background:linear-gradient(180deg,#e74694,#6c3af5)" data-sidebar="linear-gradient(135deg, #e74694 0%, #9b59b6 50%, #6c3af5 100%)" title="Neon Pink"></div>
+    <div class="theme-colors" id="sidebarColors" style="grid-template-columns:repeat(4,1fr)">
+      <!-- ROW 1 — Vivid -->
+      <div class="theme-dot active" style="background:linear-gradient(180deg,#e91e8c,#6c3af5)" data-sidebar="linear-gradient(180deg,#e91e8c 0%,#c2336e 30%,#9b30cc 65%,#6c3af5 100%)" title="Hot Pink Purple (Default)"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#f72585,#480ca8)" data-sidebar="linear-gradient(180deg,#f72585 0%,#b5179e 35%,#7209b7 65%,#480ca8 100%)" title="Magenta Violet"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#ff6b6b,#c9184a)" data-sidebar="linear-gradient(180deg,#ff6b6b 0%,#ff4757 35%,#c9184a 70%,#800f2f 100%)" title="Crimson Flame"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#f77f00,#d62828)" data-sidebar="linear-gradient(180deg,#f77f00 0%,#e63946 40%,#d62828 100%)" title="Sunset Orange"></div>
+      <!-- ROW 2 — Cool -->
+      <div class="theme-dot" style="background:linear-gradient(180deg,#0077b6,#03045e)" data-sidebar="linear-gradient(180deg,#0096c7 0%,#0077b6 40%,#023e8a 70%,#03045e 100%)" title="Ocean Deep"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#00b4d8,#1b4332)" data-sidebar="linear-gradient(180deg,#00b4d8 0%,#0096c7 35%,#1a6b45 65%,#1b4332 100%)" title="Teal Forest"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#52b788,#1b4332)" data-sidebar="linear-gradient(180deg,#74c69d 0%,#52b788 35%,#2d6a4f 65%,#1b4332 100%)" title="Forest Green"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#4361ee,#3a0ca3)" data-sidebar="linear-gradient(180deg,#4cc9f0 0%,#4361ee 35%,#3f37c9 65%,#3a0ca3 100%)" title="Electric Blue"></div>
+      <!-- ROW 3 — Dark/Neutral -->
+      <div class="theme-dot" style="background:linear-gradient(180deg,#3d1259,#0d1224)" data-sidebar="linear-gradient(180deg,#3d1259 0%,#1a103a 40%,#0d1224 100%)" title="Purple Haze"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#2d3561,#0a1628)" data-sidebar="linear-gradient(180deg,#2d3561 0%,#1a2a5c 40%,#0a1628 100%)" title="Midnight Navy"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#2c2c54,#0f0f1a)" data-sidebar="linear-gradient(180deg,#2c2c54 0%,#1a1a2e 40%,#0f0f1a 100%)" title="Dark Void"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#3a1c1c,#1a0f0f)" data-sidebar="linear-gradient(180deg,#3a1c1c 0%,#2a1212 40%,#1a0f0f 100%)" title="Deep Red"></div>
+      <!-- ROW 4 — Special -->
+      <div class="theme-dot" style="background:linear-gradient(180deg,#2c2416,#1a150d)" data-sidebar="linear-gradient(180deg,#2c2416 0%,#221b10 40%,#1a150d 100%)" title="Warm Coffee"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#1a1a1a,#0a0a0a)" data-sidebar="linear-gradient(180deg,#2a2a2a 0%,#1a1a1a 50%,#0a0a0a 100%)" title="Pure Black"></div>
+      <div class="theme-dot" style="background:linear-gradient(180deg,#6b2fa0,#1a0f2e)" data-sidebar="linear-gradient(180deg,#6b2fa0 0%,#3d1259 40%,#1a0f2e 100%)" title="Royal Purple"></div>
+      <div class="theme-dot" style="background:linear-gradient(135deg,#gold,#ff6b35);background:linear-gradient(180deg,#b8860b,#8b4513)" data-sidebar="linear-gradient(180deg,#c9a22a 0%,#b8860b 40%,#8b4513 100%)" title="Golden Brown"></div>
     </div>
   </div>
   <div class="theme-section">
@@ -1369,12 +1450,38 @@ function toggleSubItem(el) {
   }
 }
 
+// ===================== SIDEBAR COLLAPSE =====================
+function toggleLeftSidebar() {
+  const sidebar   = document.getElementById('sidebar');
+  const expandTab = document.getElementById('sbExpandTab');
+  const main      = document.querySelector('.main');
+  const collapsed = sidebar.classList.toggle('collapsed');
+  expandTab.classList.toggle('visible', collapsed);
+  main.style.transition = 'margin-left .35s cubic-bezier(.4,0,.2,1)';
+  main.style.marginLeft = collapsed ? '20px' : 'calc(var(--sidebar-w) + 40px)';
+}
+
+function toggleRightSidebar() {
+  const rsb       = document.getElementById('rightSidebar');
+  const expandTab = document.getElementById('rsbExpandTab');
+  const main      = document.querySelector('.main');
+  const collapsed = rsb.classList.toggle('collapsed');
+  expandTab.classList.toggle('visible', collapsed);
+  main.style.transition = 'margin-right .35s cubic-bezier(.4,0,.2,1)';
+  main.style.marginRight = collapsed ? '20px' : 'calc(var(--rsb-w) + 40px)';
+}
+
 // ===================== THEME PICKER =====================
 document.querySelectorAll('#sidebarColors .theme-dot').forEach(dot => {
   dot.addEventListener('click', () => {
     document.querySelectorAll('#sidebarColors .theme-dot').forEach(d => d.classList.remove('active'));
     dot.classList.add('active');
-    document.querySelector('.sidebar').style.background = dot.dataset.sidebar;
+    const bg = dot.dataset.sidebar;
+    // Apply to both sidebars + both floating expand tabs
+    document.querySelector('.sidebar').style.background = bg;
+    document.getElementById('rightSidebar').style.background = bg;
+    document.getElementById('sbExpandTab').style.background = bg;
+    document.getElementById('rsbExpandTab').style.background = bg;
   });
 });
 document.querySelectorAll('#accentColors .theme-dot').forEach(dot => {
