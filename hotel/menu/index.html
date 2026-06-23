@@ -16,7 +16,7 @@
      * Tablet 768px → 1rem ≈ 20px
      * Desktop 1440px → capped at 22px
     */
-    html { font-size: clamp(15px, 4.2vw, 22px); }
+    html { font-size: clamp(17px, 4.8vw, 24px); }
 
     :root {
       --pink:   #e74694;
@@ -32,11 +32,23 @@
       font-family: 'Plus Jakarta Sans', sans-serif;
       background: var(--grad);
       min-height: 100vh;
-      padding: 0;
+      /* zoom out from all sides so gradient border shows */
+      padding: clamp(10px, 2.5vw, 20px);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
     }
 
-    /* CARD — full width always */
-    .card { width: 100%; overflow: hidden; }
+    /* CARD — fills screen minus the padding gap, border visible all around */
+    .card {
+      width: 100%;
+      flex: 1;
+      border: 2px solid rgba(231,70,148,0.45);
+      border-radius: clamp(14px, 3vw, 22px);
+      overflow: hidden;
+      box-shadow: 0 0 0 1px rgba(117,81,255,0.2),
+                  0 8px 40px rgba(0,0,0,0.4);
+    }
 
     /* HEADER */
     .hdr {
