@@ -397,93 +397,216 @@
     .rg-subitem:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.85); transform: translateX(-3px) scale(1.01); }
     .rg-subitem::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.25); flex-shrink: 0; }
 
-    /* RESPONSIVE */
-    .hamburger { display: none; background: none; border: none; color: var(--text); font-size: 20px; cursor: pointer; padding: 4px 8px; }
-    .mob-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.55); z-index: 200; backdrop-filter: blur(2px); }
-    .mob-overlay.show { display: block; }
+    /* ═══════════════════════════════════════
+       RESPONSIVE — Mobile / Tablet / iPad / PC
+       ═══════════════════════════════════════ */
+    .hamburger { display:none;background:none;border:none;color:var(--text);font-size:22px;cursor:pointer;padding:6px 10px;border-radius:8px;line-height:1; }
+    .hamburger:hover { background:var(--bg-card-hover); }
+    .mob-overlay { display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;backdrop-filter:blur(3px); }
+    .mob-overlay.show { display:block; }
 
-    /* ── Tablet ── */
-    @media (max-width: 1400px) {
-      :root { --rsb-w: 240px; }
+    /* ── Large Desktop 1440px+ ── */
+    @media (min-width: 1440px) {
+      :root { --sidebar-w: 280px; }
+      .kpi-grid { grid-template-columns: repeat(4, 1fr); }
     }
+
+    /* ── Laptop / Large Tablet 1200px ── */
     @media (max-width: 1200px) {
-      .right-sidebar { display: none !important; }
-      .rsb-expand-tab { display: none !important; }
-      .main { margin-right: 20px !important; }
+      .right-sidebar  { display:none !important; }
+      .rsb-expand-tab { display:none !important; }
+      .main { margin-right:20px !important; }
     }
+
+    /* ── iPad Landscape / Small Laptop 1024px ── */
     @media (max-width: 1024px) {
-      .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-      .cards-2, .cards-3, .cards-2eq { grid-template-columns: 1fr; }
+      :root { --sidebar-w: 220px; }
+      .kpi-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
+      .cards-2, .cards-3, .cards-2eq { grid-template-columns:1fr; }
+      .quick-stats { grid-template-columns:repeat(3,1fr); }
+      .chart-container { height:200px; }
+      .content { padding:18px 20px; }
+      table { font-size:12px; }
+      table td, table th { padding:10px 10px; }
     }
 
-    /* ── Mobile ── */
+    /* ── iPad Portrait 768px – 1024px ── */
+    @media (max-width: 900px) {
+      :root { --sidebar-w: 64px; }
+      .sidebar { width:64px;overflow:visible; }
+      .sidebar .nav-lbl,
+      .sidebar .nav-section-title,
+      .sidebar .nav-badge,
+      .sidebar .sb-brand,
+      .sidebar .sb-sub,
+      .sidebar .sb-collapse-btn { display:none !important; }
+      .sidebar .nav-item { padding:12px;justify-content:center; }
+      .sidebar .nav-item i { margin:0; }
+      .sidebar-brand { padding:16px;justify-content:center; }
+      .main { margin-left:calc(64px + 16px) !important; }
+      .kpi-grid { grid-template-columns:repeat(2,1fr); }
+      .quick-stats { grid-template-columns:repeat(3,1fr); }
+      .header-search { width:160px; }
+      .cards-2 { grid-template-columns:1fr; }
+    }
+
+    /* ── Mobile Landscape / Large Phone 768px ── */
     @media (max-width: 768px) {
-      body { overflow-x: hidden; }
+      body { overflow-x:hidden; }
 
-      /* Sidebar: off-screen left, slides in as drawer */
+      /* Sidebar — full drawer */
       .sidebar {
+        width: var(--sidebar-w, 270px) !important;
         transform: translateX(calc(-100% - 24px)) !important;
-        top: 0 !important; left: 0 !important;
-        height: 100vh !important;
-        border-radius: 0 20px 20px 0 !important;
-        z-index: 300 !important;
-        transition: transform .3s cubic-bezier(.4,0,.2,1) !important;
+        top:0 !important; left:0 !important;
+        height:100vh !important;
+        border-radius:0 20px 20px 0 !important;
+        z-index:300 !important;
+        transition:transform .3s cubic-bezier(.4,0,.2,1) !important;
+        overflow:hidden !important;
       }
-      .sidebar.mob-open { transform: translateX(0) !important; }
+      .sidebar .nav-lbl,
+      .sidebar .nav-section-title,
+      .sidebar .nav-badge,
+      .sidebar .sb-brand,
+      .sidebar .sb-sub,
+      .sidebar .sb-collapse-btn { display:flex !important; }
+      .sidebar .nav-item { padding:11px 16px !important; justify-content:flex-start !important; }
+      .sidebar.mob-open { transform:translateX(0) !important; }
 
-      /* Right sidebar hidden on mobile */
-      .right-sidebar { display: none !important; }
-      .rsb-expand-tab { display: none !important; }
-      .sb-expand-tab { display: none !important; }
-      /* Collapse buttons inside sidebar still work via hamburger */
-      .sb-collapse-btn { display: none; }
+      /* Right sidebar & floating tabs — hidden */
+      .right-sidebar  { display:none !important; }
+      .rsb-expand-tab { display:none !important; }
+      .sb-expand-tab  { display:none !important; }
 
-      /* Main: full width, no margins, no border-radius */
+      /* Main — full width */
       .main {
-        margin-left: 0 !important;
-        margin-right: 0 !important;
-        margin-top: 0 !important;
-        border-radius: 0 !important;
-        min-height: 100vh !important;
+        margin-left:0 !important;
+        margin-right:0 !important;
+        margin-top:0 !important;
+        border-radius:0 !important;
+        min-height:100vh !important;
+        min-width:0 !important;
       }
 
       /* Header */
-      .hamburger { display: block; }
-      .header { padding: 0 14px; border-radius: 0 !important; height: 56px; }
-      .header-search { display: none; }
-      .search-wrap { display: none; }
-      .live-badge span { display: none; }
-      .header-breadcrumb { display: none; }
-      .header-title { font-size: 15px; }
+      .hamburger { display:flex;align-items:center; }
+      .header { padding:0 12px;border-radius:0 !important;height:54px; }
+      .header-search, .search-wrap { display:none !important; }
+      .live-badge span { display:none; }
+      .header-breadcrumb { display:none; }
+      .header-title { font-size:14px; }
+      .header-icon { width:32px;height:32px; }
 
-      /* KPI */
-      .kpi-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
-      .kpi-info .kpi-value { font-size: 22px; }
-      .content { padding: 14px 12px; }
+      /* Content padding */
+      .content { padding:12px; }
 
-      /* Tables scroll */
-      .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-      table { min-width: 560px; }
+      /* KPI 2 columns */
+      .kpi-grid { grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px; }
+      .kpi-info .kpi-value { font-size:20px; }
+      .kpi-card { padding:14px; }
 
-      /* Cards */
-      .cards-2, .cards-3, .cards-2eq { grid-template-columns: 1fr; }
-      .card { padding: 14px; }
-      .chart-container { height: 180px; }
+      /* Charts */
+      .cards-2, .cards-3, .cards-2eq { grid-template-columns:1fr; gap:12px; }
+      .chart-container { height:180px; }
+      .card { padding:14px; }
+      .card-header { flex-direction:column;align-items:flex-start;gap:8px; }
+      .donut-wrap { flex-direction:column;gap:12px; }
 
-      /* Period bar wraps */
-      .period-bar { gap: 6px; }
-      .period-btn { padding: 6px 10px; font-size: 11px; }
-      .period-date { padding: 6px 8px; font-size: 11px; }
+      /* Quick stats */
+      .quick-stats { grid-template-columns:repeat(3,1fr);gap:10px; }
 
-      /* Action buttons */
-      .action-btns { flex-wrap: wrap; gap: 4px; }
-      .action-btn { font-size: 10px; padding: 4px 8px; }
+      /* Period bar */
+      .period-bar { gap:5px;padding:8px 12px; }
+      .period-btn { padding:5px 10px;font-size:11px; }
+      .period-date { padding:5px 8px;font-size:11px; }
+      .period-apply { padding:5px 12px;font-size:11px; }
+
+      /* Table */
+      .table-wrap { overflow-x:auto;-webkit-overflow-scrolling:touch; }
+      table { min-width:520px; }
+      table td, table th { padding:10px 8px;font-size:11px; }
+
+      /* Action buttons in table */
+      .action-btns { flex-wrap:wrap;gap:3px; }
+      .ab { padding:4px 8px;font-size:10px; }
+
+      /* Order search bar */
+      #ordersSearch { width:100% !important; }
+      .period-bar input[type="text"] { width:100%; }
+
+      /* Bell dropdown */
+      .bell-dropdown { width:260px;right:-60px; }
+
+      /* New Order Modal */
+      .nom-overlay { align-items:flex-end; }
+      .nom-box {
+        width:100% !important;
+        max-width:100% !important;
+        border-radius:20px 20px 0 0 !important;
+        max-height:92vh !important;
+        padding:20px 16px !important;
+      }
+      .nom-row { grid-template-columns:1fr !important; }
+      .nom-type-row { gap:6px; }
+      .nom-type-btn { font-size:11px;padding:8px 6px; }
+      .nom-add-row { flex-wrap:wrap; }
+      .nom-add-row .nom-select { width:100%; }
+
+      /* Edit order panel grid → single col */
+      .edit-grid-3 { grid-template-columns:1fr !important; }
     }
 
+    /* ── Small Phone 480px ── */
     @media (max-width: 480px) {
-      .kpi-grid { grid-template-columns: 1fr; }
-      .kpi-info .kpi-value { font-size: 26px; }
-      .header-icon:not(:first-child) { display: none; }
+      .kpi-grid { grid-template-columns:1fr;gap:8px; }
+      .kpi-info .kpi-value { font-size:24px; }
+      .quick-stats { grid-template-columns:1fr 1fr; }
+      .content { padding:10px; }
+      .card { padding:12px; }
+
+      /* Header — show fewer icons */
+      .header-icon:not(:first-child) { display:none; }
+      .header-title { font-size:13px; }
+
+      /* Period bar — stack dates */
+      .period-bar { flex-wrap:wrap;row-gap:6px; }
+      .period-date { flex:1;min-width:110px; }
+
+      /* Larger touch targets */
+      .nav-item { padding:14px 16px; }
+      .ab { padding:5px 9px;font-size:10px; }
+      .action-btn { padding:5px 9px;font-size:10px; }
+
+      /* Table — allow more horizontal scroll */
+      table { min-width:600px; }
+
+      /* Charts */
+      .chart-container { height:150px; }
+      .donut-container { width:110px;height:110px; }
+
+      /* Bell dropdown */
+      .bell-dropdown { width:240px;right:-80px; }
+
+      /* Modal full height */
+      .nom-box { max-height:100vh !important;border-radius:0 !important; }
+    }
+
+    /* ── Very Small Phone 360px ── */
+    @media (max-width: 360px) {
+      .kpi-grid { grid-template-columns:1fr; }
+      .quick-stats { grid-template-columns:1fr; }
+      .content { padding:8px; }
+      .header { padding:0 8px; }
+    }
+
+    /* ── Print ── */
+    @media print {
+      .sidebar,.right-sidebar,.header,.period-bar,.ab,.action-btn { display:none !important; }
+      .main { margin:0 !important;box-shadow:none !important; }
+      .content { padding:8px !important; }
+      body { background:#fff !important;color:#000 !important; }
+      .card { box-shadow:none !important;border:1px solid #ddd !important; }
     }
   </style>
 </head>
@@ -2107,7 +2230,7 @@ function renderEditPanel(oid, o) {
       <div style="font-size:13px;font-weight:800;color:var(--accent);margin-bottom:16px">✏️ Edit Order — ${oid}</div>
 
       <!-- Customer Info -->
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px">
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px" class="edit-grid-3">
         <div>
           <div style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Customer Name</div>
           <input id="ei-name-${oid}" value="${(o['Customer Name']||'').replace(/"/g,'&quot;')}"
@@ -2128,6 +2251,15 @@ function renderEditPanel(oid, o) {
             <option ${(o['Status']||'')==='Cancelled'?'selected':''}>Cancelled</option>
           </select>
         </div>
+      </div>
+      <!-- Address field -->
+      <div style="margin-bottom:16px">
+        <div style="font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">
+          📍 Address <span style="font-weight:400;text-transform:none;color:#a0aec0">(required for Online orders)</span>
+        </div>
+        <input id="ei-address-${oid}" value="${(o['Address']||'').replace(/"/g,'&quot;')}"
+          placeholder="Delivery address..."
+          style="width:100%;padding:8px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;outline:none;background:var(--bg-card-solid);color:var(--text)">
       </div>
 
       <!-- Add Item from Menu -->
@@ -2249,9 +2381,10 @@ function editRemoveItem(oid, idx) {
 
 function saveOrderEdit(oid) {
   const o      = allOrders.find(x => x['Order ID'] === oid);
-  const name   = document.getElementById('ei-name-'   + oid)?.value || (o?.['Customer Name'] || '');
-  const phone  = document.getElementById('ei-phone-'  + oid)?.value || (o?.['Phone'] || '');
-  const status = document.getElementById('ei-status-' + oid)?.value || 'New';
+  const name    = document.getElementById('ei-name-'    + oid)?.value || (o?.['Customer Name'] || '');
+  const phone   = document.getElementById('ei-phone-'   + oid)?.value || (o?.['Phone'] || '');
+  const status  = document.getElementById('ei-status-'  + oid)?.value || 'New';
+  const address = document.getElementById('ei-address-' + oid)?.value || (o?.['Address'] || '');
   const cart   = editCarts[oid] || [];
   const items  = cart.length ? cartToItemsStr(cart) : (o?.['Items'] || '');
   const total  = cart.length ? calcCartTotal(cart).toFixed(2) : (o?.['Total (Rs)'] || '0');
@@ -2260,7 +2393,7 @@ function saveOrderEdit(oid) {
   api({
     action: 'updateOrder',
     orderId: oid,
-    updates: JSON.stringify({ 'Customer Name': name, Phone: phone, Items: items, 'Total (Rs)': total, Status: status })
+    updates: JSON.stringify({ 'Customer Name': name, Phone: phone, Items: items, 'Total (Rs)': total, Status: status, Address: address })
   }).then(r => {
     if (r && r.error) { showToast('❌ ' + r.error, 'error'); return; }
     if (o) { o['Customer Name']=name; o['Phone']=phone; o['Items']=items; o['Total (Rs)']=total; o['Status']=status; }
